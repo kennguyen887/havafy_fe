@@ -1,0 +1,7 @@
+{
+  "baseUrl": "https://theodorusclarence.com",
+  "projectId": "zk1sui",
+  "retries": {
+    "runMode": 2
+  }
+}

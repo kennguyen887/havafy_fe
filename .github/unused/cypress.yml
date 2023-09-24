@@ -1,0 +1,35 @@
+name: Cypress End to End
+# https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+on: [deployment_status]
+
+concurrency:
+  group: ${{ github.job }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cypress-run:
+    if: ${{ github.event.deployment_status.state == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print URL 🖨
+        run: echo Testing URL ${{ github.event.deployment_status.target_url }}
+
+      - name: Print GitHub env variables 🖨
+        run: npx @bahmutov/print-env GITHUB
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v2
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          record: true
+          spec: |
+            cypress/e2e/ta
+        env:
+          CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+#
+# Required Config
+# Add CYPRESS_RECORD_KEY to github secrets

@@ -1,0 +1,208 @@
+.prose {
+  max-width: 50rem;
+}
+
+.prose a {
+  text-decoration: none;
+}
+
+.prose > ol > li > :last-child,
+.prose > ul > li > :last-child {
+  margin-bottom: 0;
+}
+.prose > ol > li > :first-child,
+.prose > ul > li > :first-child {
+  margin-top: 0;
+}
+
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+  content: '';
+}
+
+.prose blockquote {
+  border-style: solid;
+  border-width: 0 0 0 0.25rem;
+  border-image: linear-gradient(to top, #00ff94, #00e0f3, #00c4fd) 1;
+}
+
+.prose hr {
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-image: linear-gradient(to right, #00ff9480, #00e0f380, #00c4fd80) 1;
+}
+
+.mdx.prose :where(h1, h2, h3, h4) {
+  scroll-margin-top: 100px;
+  position: relative;
+  display: block;
+  margin-right: 0.5rem;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.mdx.prose :where(h1, h2, h3, h4) > a {
+  border-bottom: none;
+}
+
+/* Custom Heading Style for Projects */
+.mdx.prose.projects blockquote {
+  font-style: normal;
+}
+.mdx.prose.projects blockquote:first-of-type h2 {
+  margin-top: 1rem;
+}
+.mdx.prose.projects blockquote.with-icons h2 {
+  margin-bottom: 0;
+}
+
+/* Apply shadow to Youtube Embed */
+.mdx.prose .yt-lite {
+  @apply overflow-hidden rounded shadow-sm dark:shadow-none;
+}
+
+/* #region  /**=========== Hash Anchor =========== */
+.hash-anchor {
+  @apply inset-y-0 w-full;
+  position: absolute;
+  background-image: none;
+  transition: none;
+}
+
+.hash-anchor:hover {
+  background-image: linear-gradient(to right, #00ff94, #00e0f3, #00c4fd);
+  background-size: 100% 2px;
+}
+
+.hash-anchor:hover:after,
+.hash-anchor:focus:after {
+  visibility: visible;
+}
+
+.hash-anchor:after {
+  @apply invisible absolute -right-5 top-1/2 -translate-y-1/2 text-lg text-primary-400 dark:text-primary-300;
+  content: '#';
+}
+/* #endregion  /**======== Hash Anchor =========== */
+
+/* #region  /**=========== Shiki =========== */
+.prose pre {
+  @apply rounded-none !px-0;
+}
+
+html.dark pre {
+  @apply !bg-[#24292e];
+}
+html.light pre {
+  @apply !bg-[#f2f7fc];
+}
+
+.prose pre > code {
+  @apply grid;
+  counter-reset: line;
+}
+
+[data-line] {
+  @apply border-l-2 border-l-transparent px-6;
+}
+[data-highlighted-line] {
+  @apply border-l-primary-300 bg-primary-300/10;
+}
+[data-highlighted-chars] {
+  box-shadow: 0 0 0 4px var(--tw-shadow-color);
+  @apply rounded bg-blue-500/[14%] shadow-blue-500/[14%] dark:bg-zinc-500/50 dark:shadow-zinc-500/50;
+}
+[data-chars-id] {
+  @apply border-b-2 p-1 shadow-none;
+}
+[data-chars-id] span {
+  @apply !text-inherit;
+}
+
+[data-chars-id='v'] {
+  @apply border-b-pink-600 bg-rose-400/50 font-bold !text-pink-700 dark:bg-rose-800/50 dark:!text-pink-300;
+}
+[data-chars-id='s'] {
+  @apply border-b-yellow-600 bg-yellow-400/50 font-bold !text-yellow-700 dark:bg-yellow-800/50 dark:!text-yellow-300;
+}
+[data-chars-id='i'] {
+  @apply border-b-purple-600 bg-purple-400/50 font-bold !text-purple-700 dark:bg-purple-800/50 dark:!text-purple-200;
+}
+
+code {
+  counter-reset: line;
+}
+code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+
+  display: inline-block;
+  width: 1rem;
+  padding-right: 2rem;
+  text-align: right;
+  color: gray;
+}
+
+html.light .prose [data-theme='dark'] {
+  display: none;
+}
+html.dark .prose [data-theme='light'] {
+  display: none;
+}
+
+[data-rehype-pretty-code-fragment] {
+  @apply overflow-hidden rounded-lg;
+  margin-top: 1.7142857em;
+  margin-bottom: 1.7142857em;
+}
+
+[data-rehype-pretty-code-fragment] code {
+  overflow: auto;
+}
+
+[data-rehype-pretty-code-fragment] > pre {
+  @apply m-0;
+}
+[data-rehype-pretty-code-title],
+[data-rehype-pretty-code-caption] {
+  @apply bg-[#e6eff9] px-6 py-2 text-xs font-medium dark:bg-gray-700;
+}
+
+/* Word Wrap */
+[data-word-wrap='true'] [data-line] {
+  @apply whitespace-pre-wrap break-words;
+}
+[data-word-wrap='true'] [data-line]::before {
+  @apply whitespace-pre;
+}
+/* #endregion  /**======== Shiki =========== */
+
+html.dark {
+  --shiki-color-text: #e1e4e8;
+  --shiki-color-background: #0e1111;
+
+  --shiki-token-constant: #79b8ff;
+  --shiki-token-string: #9ecbff;
+  --shiki-token-comment: #6a737d;
+  --shiki-token-keyword: #f97583;
+  --shiki-token-parameter: #e1e4e8;
+  --shiki-token-function: #e1e4e8;
+  --shiki-token-string-expression: #85e89d;
+  --shiki-token-punctuation: #e1e4e8;
+  --shiki-token-link: #e1e4e8;
+}
+
+html.light {
+  --shiki-color-text: #24292e;
+  --shiki-color-background: #fff;
+
+  --shiki-token-constant: #005cc5;
+  --shiki-token-string: #032f62;
+  --shiki-token-comment: #6a737d;
+  --shiki-token-keyword: #d73a49;
+  --shiki-token-parameter: #24292e;
+  --shiki-token-function: #24292e;
+  --shiki-token-string-expression: #22863a;
+  --shiki-token-punctuation: #24292e;
+  --shiki-token-link: #24292e;
+}
