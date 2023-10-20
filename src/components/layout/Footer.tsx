@@ -8,6 +8,7 @@ import { trackEvent } from '@/lib/analytics';
 import useCopyToClipboard from '@/hooks/useCopyToClipboard';
 
 import Accent from '@/components/Accent';
+import ThemeButton from '@/components/buttons/ThemeButton';
 import Spotify from '@/components/layout/Spotify';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import Tooltip from '@/components/Tooltip';
@@ -120,6 +121,9 @@ function SocialLinks() {
           </UnstyledLink>
         </Tooltip>
       ))}
+      <div>
+        <ThemeButton />
+      </div>
     </div>
   );
 }

@@ -3,8 +3,9 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 
 import Accent from '@/components/Accent';
-import ThemeButton from '@/components/buttons/ThemeButton';
+import Logo from '@/components/layout/Logo';
 import UnstyledLink from '@/components/links/UnstyledLink';
+import User from '@/components/users/User';
 
 type HeaderProps = {
   large?: boolean;
@@ -53,10 +54,6 @@ export default function Header({ large = false }: HeaderProps) {
       >
         <Accent>Skip to main content</Accent>
       </a>
-
-      {/* Gradient List */}
-      <div className='h-1 bg-gradient-to-tr from-primary-200 via-primary-300 to-primary-400' />
-
       <div className='bg-white transition-colors dark:bg-dark dark:text-white'>
         <nav
           className={clsx(
@@ -64,7 +61,8 @@ export default function Header({ large = false }: HeaderProps) {
             large && 'lg:max-w-[68rem]'
           )}
         >
-          <ul className='flex items-center justify-between space-x-3 text-xs md:space-x-4 md:text-base'>
+          <Logo />
+          <ul className='flex items-center justify-between space-x-5 text-xs md:space-x-6 md:text-base'>
             {links.map(({ href, label }) => (
               <li key={`${href}${label}`}>
                 <UnstyledLink
@@ -90,7 +88,7 @@ export default function Header({ large = false }: HeaderProps) {
               </li>
             ))}
           </ul>
-          <ThemeButton />
+          <User />
         </nav>
       </div>
     </header>
