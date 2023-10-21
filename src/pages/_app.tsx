@@ -1,3 +1,4 @@
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import axios from 'axios';
 import { AppProps } from 'next/app';
 import Router from 'next/router';
@@ -48,7 +49,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           fetcher: (url) => axios.get(url).then((res) => res.data),
         }}
       >
-        <Component {...pageProps} />
+        <GoogleOAuthProvider clientId='<your_client_id>'>
+          <Component {...pageProps} />
+        </GoogleOAuthProvider>
       </SWRConfig>
     </ThemeProvider>
   );

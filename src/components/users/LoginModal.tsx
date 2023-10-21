@@ -29,8 +29,9 @@ export default function LoginModal() {
       </button>
 
       <Modal
-        title='Login and Register an account'
+        title=''
         footer={null}
+        width={700}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}

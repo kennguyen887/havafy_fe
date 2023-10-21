@@ -1,12 +1,7 @@
 import { GoogleLogin } from '@react-oauth/google';
 import { Form, Input } from 'antd';
-import clsx from 'clsx';
-import React, { useState } from 'react';
 
-import RegisterForm from '@/components/users/RegisterForm';
-
-export default function LoginForm() {
-  const [showsLoginForm, setShowsLoginForm] = useState(true);
+export default function RegisterForm() {
   //   const onFinish = () => {
 
   //   };
@@ -15,13 +10,9 @@ export default function LoginForm() {
   //   };
 
   return (
-    <div>
-      <div className={clsx('register-box', showsLoginForm ? 'hidden' : '')}>
-        <RegisterForm />
-      </div>
-
-      <div className={clsx('login-box', showsLoginForm ? '' : 'hidden')}>
-        <h1 className='mt-5 text-2xl'>Sign in to your account</h1>
+    <div className='login-page'>
+      <div className='login-box'>
+        <h1 className='mt-5 text-2xl'>Create a new account</h1>
 
         <div className='flex items-center'>
           <div className='w-3/6 pr-10'>
@@ -32,13 +23,8 @@ export default function LoginForm() {
               //   onFinishFailed={onFinishFailed}
             >
               <div className='py-5 text-base text-gray-600'>
-                Don’t have an account?
-                <button
-                  className='text-dark underline'
-                  onClick={() => setShowsLoginForm(false)}
-                >
-                  Join here
-                </button>
+                Already have an account?{' '}
+                <span className='text-dark underline'>Sign in</span>
               </div>
 
               <Form.Item
