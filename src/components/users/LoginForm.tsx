@@ -1,12 +1,24 @@
 import { GoogleLogin } from '@react-oauth/google';
 import { Form, Input } from 'antd';
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import dynamic from "next/dynamic";
+import React from 'react';
 
-import RegisterForm from '@/components/users/RegisterForm';
+import useUserForm from '@/hooks/useUserForm';
+
+const DynamicRegisterFormComponent = dynamic(
+  () => import("@/components/users/RegisterForm"),
+  {
+    loading: () => (
+      <p className="loadingText subtitle-4">
+        Register Form us Loading, please wait...
+      </p>
+    ),
+  }
+);
 
 export default function LoginForm() {
-  const [showsLoginForm, setShowsLoginForm] = useState(true);
+  const [form, userForm] = useUserForm();
   //   const onFinish = () => {
 
   //   };
@@ -16,11 +28,17 @@ export default function LoginForm() {
 
   return (
     <div>
-      <div className={clsx('register-box', showsLoginForm ? 'hidden' : '')}>
-        <RegisterForm />
+      <div className={clsx('register-box', userForm === 'register' ? '' : 'hidden')}>
+        <h1 className='mt-5 text-2xl'>Create a new account</h1>
+
+        <div className='py-5 text-base text-gray-600'>
+          Already have an account?
+          <button type='button' className='text-dark underline ml-2' onClick={() => form('login')}>Sign in</button>
+        </div>
+        <DynamicRegisterFormComponent />
       </div>
 
-      <div className={clsx('login-box', showsLoginForm ? '' : 'hidden')}>
+      <div className={clsx('login-box', [null, 'login'].includes(userForm) ? '' : 'hidden')}>
         <h1 className='mt-5 text-2xl'>Sign in to your account</h1>
 
         <div className='flex items-center'>
@@ -28,14 +46,15 @@ export default function LoginForm() {
             <Form
               name='login-form'
               initialValues={{ remember: true }}
-              //   onFinish={onFinish}
-              //   onFinishFailed={onFinishFailed}
+            //   onFinish={onFinish}
+            //   onFinishFailed={onFinishFailed}
             >
               <div className='py-5 text-base text-gray-600'>
                 Don’t have an account?
                 <button
-                  className='text-dark underline'
-                  onClick={() => setShowsLoginForm(false)}
+                  className='text-dark underline ml-2'
+                  type='button'
+                  onClick={() => form('register')}
                 >
                   Join here
                 </button>
@@ -73,14 +92,16 @@ export default function LoginForm() {
           <div className='mr-10 h-[250px] min-h-[1em] w-px self-stretch bg-gradient-to-tr from-transparent via-neutral-500 to-transparent opacity-20 dark:opacity-100'></div>
           <div>
             <GoogleLogin
-            // onSuccess={(credentialResponse) => {
-            //   console.log(credentialResponse);
-            // }}
-            // onError={() => {
-            //   console.log('Login Failed');
-            // }}
+              onSuccess={(credentialResponse) => {
+                // eslint-disable-next-line no-console
+                console.log(credentialResponse);
+              }}
+              onError={() => {
+                // eslint-disable-next-line no-console
+                console.log('Login Failed');
+              }}
             />
-          </div>{' '}
+          </div>
         </div>
       </div>
     </div>
