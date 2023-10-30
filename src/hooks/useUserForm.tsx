@@ -7,8 +7,8 @@ export default function useUserForm(): [updateFormFn, UserFormValue] {
   const [userForm, setUserForm] = React.useState<UserFormValue>(null);
 
   const form: updateFormFn = async (text) => {
-      setUserForm(text);
-      return true;
+    setUserForm(text);
+    return true;
   };
 
   return [form, userForm];

@@ -1,105 +1,128 @@
 import { GoogleLogin } from '@react-oauth/google';
-import { Form, Input } from 'antd';
-import React, { useCallback } from "react";
-import { GoogleReCaptchaProvider, useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { useRouter } from 'next/router';
+import React, { useCallback, useState } from 'react';
+import {
+  GoogleReCaptchaProvider,
+  useGoogleReCaptcha,
+} from 'react-google-recaptcha-v3';
 
-import { usePost } from '@/lib/request';
+import { post } from '@/lib/request';
 
-const RegisterInputForm = () => {
+import PrimaryButton from '@/components/form/PrimaryButton';
+import TextInput from '@/components/form/TextInput';
+
+export const RegisterInputForm = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
+  const [email, setEmail] = useState<string>();
+  const [firstName, setFirstName] = useState<string>();
+  const [lastName, setLastName] = useState<string>();
+  const [password, setPassword] = useState<string>();
+
+
+  const router = useRouter();
 
   // Create an event handler so you can call the verification on button click event or form submit
-  const handleReCaptchaVerify = useCallback(async (values: any) => {
+  const submitForm = useCallback(
+    async () => {
 
-    if (!executeRecaptcha) {
-      return;
-    }
+      if (!executeRecaptcha) {
+        return;
+      }
 
-    const token = await executeRecaptcha();
+      const token = await executeRecaptcha();
 
-    usePost('user/register', {
-      ...values,
-      token,
-    })
-    // Do whatever you want with the token
-  }, [executeRecaptcha]);
+      const res = await post('user/register', {
+        email,
+        password,
+        firstName,
+        lastName,
+        token,
+      });
+      if (res.statusCode === 400) {
+        return;
+      }
+      if (res.statusCode) {
+        router.push('/');
+      }
+      // Do whatever you want with the token
+    },
+    [email, executeRecaptcha, firstName, lastName, password, router]
+  );
 
-  return   <Form
-              name='login-form'
-              initialValues={{ remember: true }}
-              onFinish={(values)=>handleReCaptchaVerify(values)}
-              //   onFinish={onFinish}
-              //   onFinishFailed={onFinishFailed}
-            >
-              <Form.Item
-                name='username'
-                rules={[
-                  { required: true, message: 'Please input your username!' },
-                ]}
-              >
-                <Input placeholder='Username' />
-              </Form.Item>
+  // onFinish={(values) => handleReCaptchaVerify(values)}
 
-              <Form.Item
-                name='password'
-                rules={[
-                  { required: true, message: 'Please input your password!' },
-                ]}
-              >
-                <Input.Password placeholder='Password' />
-              </Form.Item>
-              <div className='mt-10'>
-                <div className='flex items-baseline justify-between'>
-                  <Form.Item>
-                    <button 
-          
-                    className='block rounded-md bg-slate-700 px-5 py-2 text-white'>
-                      Login
-                    </button>
-  
-                  </Form.Item>
-                  <div className='text-right'>Forgot Password?</div>
-                </div>
-              </div>
-            </Form>
-      
+  return (
+
+
+    <div>
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        submitForm()
+      }} noValidate>
+        <TextInput
+          name='Your email'
+          id='email'
+          type='email'
+          onChange={(event) => setEmail(event.target.value)}
+          className='mb-7'
+        />
+        <div className='grid grid-cols-2 gap-4 mb-7'>
+          <TextInput
+            name='First name'
+            id='firstName'
+            onChange={(event) => setFirstName(event.target.value)}
+          />
+
+          <TextInput
+            name='Last name'
+            id='lastName'
+            onChange={(event) => setLastName(event.target.value)}
+          />
+        </div>
+        <TextInput
+          name='Password'
+          id='password'
+          onChange={(event) => setPassword(event.target.value)}
+        />
+
+        <div className='mt-7 flex items-center justify-center'>
+          <PrimaryButton name="Sign Up" onClick={() => submitForm()} />
+        </div>
+      </form>
+    </div>
+
+  );
 };
 
 export default function RegisterForm() {
-
   return (
-    <div className='login-page'>
-      <div className='register-box'>
-      <GoogleReCaptchaProvider
-        reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTHA_SITE_KEY!}
-        scriptProps={{
-          async: false,
-          defer: true,
-          appendTo: "body",
-          nonce: undefined,
-        }}>
-   
-        <div className='flex items-center'>
-          <div className='w-3/6 pr-10'>
+
+    <div className='items-center'>
+      <div className='mr-10'>
+        <GoogleReCaptchaProvider
+          reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTHA_SITE_KEY || ''}
+          scriptProps={{
+            async: false,
+            defer: true,
+            appendTo: 'body',
+            nonce: undefined,
+          }}
+        >
           <RegisterInputForm />
-          </div>
-          <div 
-     
-          className='mr-10 h-[250px] min-h-[1em] w-px self-stretch bg-gradient-to-tr from-transparent via-neutral-500 to-transparent opacity-20 dark:opacity-100'></div>
-          <div>
-            <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              // eslint-disable-next-line no-console
-              console.log(credentialResponse);
-            }}
-            onError={() => {
-              // eslint-disable-next-line no-console
-              console.log('Login Failed');
-            }}
-            />
-          </div>{' '}
-        </div>
         </GoogleReCaptchaProvider>
+      </div>
+      <div>
+        <div className='my-8 text-center'>or sign up with</div>
+        <GoogleLogin
+          onSuccess={(credentialResponse) => {
+            // eslint-disable-next-line no-console
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            // eslint-disable-next-line no-console
+            console.log('Login Failed');
+          }}
+        />
       </div>
     </div>
   );

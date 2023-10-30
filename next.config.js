@@ -12,12 +12,7 @@ const nextConfig = {
     dirs: ['src'],
   },
   images: {
-    domains: [
-      'res.cloudinary.com',
-
-      // Spotify Album
-      'i.scdn.co',
-    ],
+    domains: ['res.cloudinary.com', 'localhost', 'i.scdn.co'],
   },
   async redirects() {
     return [

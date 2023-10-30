@@ -1,23 +1,17 @@
 import axios from 'axios';
 
-import { useFetchToken } from '@/lib/authToken'
-
-export async function usePost(apiPath: string, payload: unknown) {
-  try {
-    const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_RECAPTHA_SITE_KEY}/${apiPath}`,
-      payload,
-      {
-        headers: {
-          'Authorization': 'Bearer ' + useFetchToken()
-        },
-      }
-    );
-
-    return res.data
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
-  }
+export async function post(apiPath: string, payload: unknown) {
+  const res = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/${apiPath}`,
+    payload,
+    {
+      headers: {
+        Authorization: 'Bearer ' + window.localStorage.getItem('token'),
+      },
+      validateStatus: function (status) {
+        return status == 400;
+      },
+    }
+  );
+  return res.data;
 }
-
