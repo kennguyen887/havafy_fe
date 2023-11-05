@@ -9,7 +9,7 @@ export async function post(apiPath: string, payload: unknown) {
         Authorization: 'Bearer ' + window.localStorage.getItem('token'),
       },
       validateStatus: function (status) {
-        return status == 400;
+        return [400, 201, 200].includes(status);
       },
     }
   );

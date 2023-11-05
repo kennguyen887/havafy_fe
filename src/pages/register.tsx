@@ -23,15 +23,15 @@ export default function RegisterPage() {
           <div className='layout min-h-main py-20'>
             <div className='flex items-center justify-center'>
               <div>
-            <h1 className='mt-1' data-fade='1'>
-              <Accent>Create a new account</Accent>
-            </h1>
-            <div className='mt-4 align-baseline' data-fade='2'>
-              <div className='max-w-2xl'>
-                <RegisterInputForm />
+                <h1 className='mb-6 mt-1' data-fade='1'>
+                  <Accent>Create a new account</Accent>
+                </h1>
+                <div className='mt-4 align-baseline' data-fade='2'>
+                  <div className='max-w-2xl'>
+                    <RegisterInputForm />
+                  </div>
+                </div>
               </div>
-            </div>
-            </div>
             </div>
           </div>
         </section>

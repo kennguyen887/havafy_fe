@@ -1,11 +1,13 @@
 import { GoogleLogin } from '@react-oauth/google';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import React, { useCallback, useState } from 'react';
 import {
   GoogleReCaptchaProvider,
   useGoogleReCaptcha,
 } from 'react-google-recaptcha-v3';
 
+import { isValidEmail } from '@/lib/email';
+import { setItem } from '@/lib/localStorage';
 import { post } from '@/lib/request';
 
 import PrimaryButton from '@/components/form/PrimaryButton';
@@ -17,86 +19,94 @@ export const RegisterInputForm = () => {
   const [firstName, setFirstName] = useState<string>();
   const [lastName, setLastName] = useState<string>();
   const [password, setPassword] = useState<string>();
-
-
-  const router = useRouter();
-
-  // Create an event handler so you can call the verification on button click event or form submit
+  const [message, setMessage] = useState<string>();
   const submitForm = useCallback(
-    async () => {
-
+    async (e: { preventDefault: () => void }) => {
+      e.preventDefault();
+      if (!email || !password) {
+        return;
+      }
       if (!executeRecaptcha) {
         return;
       }
-
       const token = await executeRecaptcha();
 
-      const res = await post('user/register', {
+      const data = await post('user/register', {
         email,
         password,
         firstName,
         lastName,
         token,
       });
-      if (res.statusCode === 400) {
-        return;
+      if (data) {
+        if (data.statusCode) {
+          setMessage(data.message);
+          return;
+        }
+
+        if (data.user && data.user.token) {
+          setItem('auth', data.user.token);
+          Router.push('/');
+          return;
+        }
       }
-      if (res.statusCode) {
-        router.push('/');
-      }
+
       // Do whatever you want with the token
     },
-    [email, executeRecaptcha, firstName, lastName, password, router]
+    [email, executeRecaptcha, firstName, lastName, password]
   );
 
   // onFinish={(values) => handleReCaptchaVerify(values)}
 
   return (
-
-
     <div>
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        submitForm()
-      }} noValidate>
+      <form onSubmit={submitForm} noValidate>
+        <div className='mb-5 text-sm text-red-600'>{message}</div>
         <TextInput
           name='Your email'
           id='email'
           type='email'
-          onChange={(event) => setEmail(event.target.value)}
+          currentValue={(value) => setEmail(value)}
+          valueValidate={[
+            (value) => !isValidEmail(value),
+            'Your email is invalid',
+          ]}
           className='mb-7'
         />
-        <div className='grid grid-cols-2 gap-4 mb-7'>
+
+        <div className='grid grid-cols-2 gap-4'>
           <TextInput
             name='First name'
             id='firstName'
-            onChange={(event) => setFirstName(event.target.value)}
+            currentValue={(value) => setFirstName(value)}
           />
 
           <TextInput
             name='Last name'
             id='lastName'
-            onChange={(event) => setLastName(event.target.value)}
+            currentValue={(value) => setLastName(value)}
           />
         </div>
         <TextInput
           name='Password'
           id='password'
-          onChange={(event) => setPassword(event.target.value)}
+          valueValidate={[
+            (value) => value.length < 6,
+            'Your password must have at least 6 characters.',
+          ]}
+          currentValue={(value) => setPassword(value)}
         />
 
         <div className='mt-7 flex items-center justify-center'>
-          <PrimaryButton name="Sign Up" onClick={() => submitForm()} />
+          <PrimaryButton name='Sign Up' />
         </div>
       </form>
     </div>
-
   );
 };
 
 export default function RegisterForm() {
   return (
-
     <div className='items-center'>
       <div className='mr-10'>
         <GoogleReCaptchaProvider
