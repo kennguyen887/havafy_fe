@@ -108,7 +108,7 @@ export const RegisterInputForm = () => {
 export default function RegisterForm() {
   return (
     <div className='items-center'>
-      <div className='mr-10'>
+      <div>
         <GoogleReCaptchaProvider
           reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTHA_SITE_KEY || ''}
           scriptProps={{

@@ -2,7 +2,7 @@ export function setItem(key: string, value: string) {
   window.localStorage.setItem(key, value);
 }
 
-export default function getItem(key: string): string | null {
+export function getItem(key: string): string | null {
   return window.localStorage.getItem(key);
 }
 

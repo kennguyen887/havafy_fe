@@ -6,6 +6,7 @@ import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 
 import { sayHelloFlag } from '@/constants/env';
+import { AuthProvider } from '@/context/AuthContext';
 import { PreloadProvider } from '@/context/PreloadContext';
 
 let saidHello = !sayHelloFlag;
@@ -19,9 +20,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header />
-      <PreloadProvider>
-        <div id='skip-nav'>{children}</div>
-      </PreloadProvider>
+      <AuthProvider>
+        <PreloadProvider>
+          <div id='skip-nav'>{children}</div>
+        </PreloadProvider>
+      </AuthProvider>
       <Footer />
     </>
   );
