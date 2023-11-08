@@ -61,7 +61,7 @@ export const RegisterInputForm = () => {
   return (
     <div>
       <form onSubmit={submitForm} noValidate>
-        <div className='mb-5 text-sm text-red-600'>{message}</div>
+        <div className='mb-5 text-center text-sm text-red-600'>{message}</div>
         <TextInput
           name='Your email'
           id='email'
@@ -109,6 +109,26 @@ export default function RegisterForm() {
   return (
     <div className='items-center'>
       <div>
+        <GoogleLogin
+          logo_alignment='center'
+          onSuccess={(credentialResponse) => {
+            // eslint-disable-next-line no-console
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            // eslint-disable-next-line no-console
+            console.log('Login Failed');
+          }}
+        />
+
+        <div className='inline-flex w-full items-center justify-center'>
+          <hr className='my-12 h-px w-full border-0 bg-gray-200 dark:bg-gray-500' />
+          <span className='absolute left-1/2 -translate-x-1/2 bg-white px-3 text-gray-500 dark:bg-gray-900 dark:text-white'>
+            or sign up with email
+          </span>
+        </div>
+      </div>
+      <div>
         <GoogleReCaptchaProvider
           reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTHA_SITE_KEY || ''}
           scriptProps={{
@@ -120,19 +140,6 @@ export default function RegisterForm() {
         >
           <RegisterInputForm />
         </GoogleReCaptchaProvider>
-      </div>
-      <div>
-        <div className='my-8 text-center'>or sign up with</div>
-        <GoogleLogin
-          onSuccess={(credentialResponse) => {
-            // eslint-disable-next-line no-console
-            console.log(credentialResponse);
-          }}
-          onError={() => {
-            // eslint-disable-next-line no-console
-            console.log('Login Failed');
-          }}
-        />
       </div>
     </div>
   );
