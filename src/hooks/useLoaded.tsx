@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { usePreloadState } from '@/context/PreloadContext';
+import { usePreloadState } from '@/contexts/PreloadContext';
 
 export default function useLoaded() {
   const preloaded = usePreloadState();

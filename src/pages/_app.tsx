@@ -18,6 +18,7 @@ import '@/styles/nprogress.css';
 import { getFromLocalStorage } from '@/lib/helper.client';
 
 import { blockDomainMeta } from '@/constants/env';
+import { AuthProvider } from '@/contexts/AuthContext';
 
 Router.events.on('routeChangeStart', nProgress.start);
 Router.events.on('routeChangeError', nProgress.done);
@@ -43,17 +44,25 @@ function MyApp({ Component, pageProps }: AppProps) {
   useRemoteRefresh();
 
   return (
-    <ThemeProvider attribute='class' defaultTheme='dark' enableSystem={false}>
-      <SWRConfig
-        value={{
-          fetcher: (url) => axios.get(url).then((res) => res.data),
-        }}
-      >
-        <GoogleOAuthProvider clientId='<your_client_id>'>
-          <Component {...pageProps} />
-        </GoogleOAuthProvider>
-      </SWRConfig>
-    </ThemeProvider>
+    <>
+      <AuthProvider>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='dark'
+          enableSystem={false}
+        >
+          <SWRConfig
+            value={{
+              fetcher: (url) => axios.get(url).then((res) => res.data),
+            }}
+          >
+            <GoogleOAuthProvider clientId='<your_client_id>'>
+              <Component {...pageProps} />
+            </GoogleOAuthProvider>
+          </SWRConfig>
+        </ThemeProvider>
+      </AuthProvider>
+    </>
   );
 }
 
