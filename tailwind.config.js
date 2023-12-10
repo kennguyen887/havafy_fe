@@ -8,6 +8,7 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      visibility: ["group-hover"],
       fontFamily: {
         primary: ['Inter', ...fontFamily.sans],
       },
