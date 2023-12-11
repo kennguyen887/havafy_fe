@@ -10,10 +10,13 @@ import { post } from '@/lib/request';
 import PrimaryButton from '@/components/form/PrimaryButton';
 import TextInput from '@/components/form/TextInput';
 
+import { useAuthState } from '@/contexts/AuthContext';
+
 export default function LoginForm() {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [message, setMessage] = useState<string>();
+  const { loadAuth } = useAuthState();
 
   const submitForm = useCallback(
     async (e: { preventDefault: () => void }) => {
@@ -31,12 +34,16 @@ export default function LoginForm() {
 
         if (data.token) {
           setItem('auth', data.token);
+          if (loadAuth) {
+            loadAuth();
+          }
+
           Router.push('/');
           return;
         }
       }
     },
-    [email, password]
+    [email, loadAuth, password]
   );
   return (
     <div>
