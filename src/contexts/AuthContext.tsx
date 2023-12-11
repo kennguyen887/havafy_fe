@@ -1,3 +1,4 @@
+import { plainToInstance } from 'class-transformer';
 import * as jwt from 'jsonwebtoken';
 import {
   createContext,
@@ -9,27 +10,31 @@ import {
 
 import { getItem } from '@/lib/localStorage';
 
-interface UserContextType {
-  id: string;
-  email: string;
+class UserContextTypeDto {
+  id!: string;
+
+  email!: string;
 }
 
-interface AuthContextType {
-  user: UserContextType | null;
-  isAuthenticated: boolean;
+class AuthContextTypeDto {
+  user!: UserContextTypeDto | null;
+
+  isAuthenticated!: boolean;
+
   resetAuth?: () => void;
+
   loadAuth?: () => void;
 }
 
-const defaultAuthState = {
+const defaultAuthState: AuthContextTypeDto = {
   user: null,
   isAuthenticated: false,
 };
 
-const AuthContext = createContext<AuthContextType>(defaultAuthState);
+const AuthContext = createContext<AuthContextTypeDto>(defaultAuthState);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<UserContextType | null>(null);
+  const [user, setUser] = useState<UserContextTypeDto | null>(null);
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -39,11 +44,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const loadAuth = () => {
-    const token = getItem('auth');
-    const decodedPayload = jwt.decode(token);
+    const token = getItem('auth`');
+    const decodedPayload = jwt.decode(token as string);
 
     setIsAuthenticated(decodedPayload ? true : false);
-    setUser(decodedPayload ? { ...decodedPayload } : null);
+    setUser(
+      decodedPayload
+        ? plainToInstance(UserContextTypeDto, decodedPayload)
+        : null
+    );
   };
 
   useEffect(() => {
