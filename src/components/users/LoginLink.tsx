@@ -1,21 +1,11 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
-import Router from 'next/router';
-
-import { removeItem } from '@/lib/localStorage';
 
 import { useAuthState } from '@/contexts/AuthContext';
 
 function AuthenticatedMenuDropdown() {
   const { user, resetAuth } = useAuthState();
-  const logout = () => {
-    if (resetAuth) {
-      resetAuth();
-    }
-    removeItem('auth');
-    Router.push('/');
-  };
 
   return (
     <div className='group'>
@@ -64,9 +54,9 @@ function AuthenticatedMenuDropdown() {
             aria-labelledby='dropdownInformdropdownAvatarNameButtonationButton'
           >
             <li>
-              <Link href='/user/profile'>
+              <Link href='/user/account'>
                 <a className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
-                  Profile
+                  Account
                 </a>
               </Link>
             </li>
@@ -89,7 +79,7 @@ function AuthenticatedMenuDropdown() {
           </ul>
           <div className='my-2'>
             <button
-              onClick={() => logout()}
+              onClick={() => resetAuth !== undefined && resetAuth()}
               className='block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white'
             >
               Sign out

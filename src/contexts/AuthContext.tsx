@@ -1,5 +1,6 @@
 import { plainToInstance } from 'class-transformer';
 import * as jwt from 'jsonwebtoken';
+import Router from 'next/router';
 import {
   createContext,
   ReactNode,
@@ -9,7 +10,7 @@ import {
 } from 'react';
 
 import { getItem } from '@/lib/localStorage';
-
+import { removeItem } from '@/lib/localStorage';
 class UserContextTypeDto {
   id!: string;
 
@@ -39,14 +40,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const resetAuth = () => {
+    removeItem('auth');
     setUser(null);
     setIsAuthenticated(false);
+    Router.push('/');
   };
 
   const loadAuth = () => {
-    const token = getItem('auth`');
+    const token = getItem('auth');
     const decodedPayload = jwt.decode(token as string);
-
     setIsAuthenticated(decodedPayload ? true : false);
     setUser(
       decodedPayload

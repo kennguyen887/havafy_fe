@@ -1,12 +1,22 @@
+import Link from 'next/link';
+import Router from 'next/router';
 import React from 'react';
 
+import { useAuthState } from '@/contexts/AuthContext';
+
 export default function Sidebar() {
+  const { resetAuth } = useAuthState();
+  const gotoPage = (page: string): void => {
+    Router.push(page);
+  };
+
   return (
     <>
       <div className='relative flex flex-col'>
         <nav className='flex min-w-[240px] flex-col gap-1 p-2 font-sans text-sm font-normal text-gray-700'>
           <div
             role='button'
+            onClick={() => gotoPage('/user/account')}
             className='flex w-full items-center rounded-lg p-3 text-start leading-tight outline-none transition-all hover:bg-blue-50 hover:bg-opacity-80 hover:text-blue-900 focus:bg-blue-50 focus:bg-opacity-80 focus:text-blue-900 active:bg-blue-50 active:bg-opacity-80 active:text-blue-900'
           >
             <div className='mr-4 grid place-items-center'>
@@ -24,10 +34,13 @@ export default function Sidebar() {
                 ></path>
               </svg>
             </div>
-            Account
+            <Link href=''>
+              <a> Account</a>
+            </Link>
           </div>
           <div
             role='button'
+            onClick={() => gotoPage('/user/password')}
             className='flex w-full items-center rounded-lg p-3 text-start leading-tight outline-none transition-all hover:bg-blue-50 hover:bg-opacity-80 hover:text-blue-900 focus:bg-blue-50 focus:bg-opacity-80 focus:text-blue-900 active:bg-blue-50 active:bg-opacity-80 active:text-blue-900'
           >
             <div className='mr-4 grid place-items-center'>
@@ -45,7 +58,9 @@ export default function Sidebar() {
                 ></path>
               </svg>
             </div>
-            Password
+            <Link href='/user/password'>
+              <a> Password </a>
+            </Link>
           </div>
 
           <div
@@ -73,6 +88,7 @@ export default function Sidebar() {
           <div className='my-3 border-t border-slate-200'></div>
           <div
             role='button'
+            onClick={() => resetAuth !== undefined && resetAuth()}
             className='flex w-full items-center rounded-lg p-3 text-start leading-tight outline-none transition-all hover:bg-blue-50 hover:bg-opacity-80 hover:text-blue-900 focus:bg-blue-50 focus:bg-opacity-80 focus:text-blue-900 active:bg-blue-50 active:bg-opacity-80 active:text-blue-900'
           >
             <div className='mr-4 grid place-items-center'>
