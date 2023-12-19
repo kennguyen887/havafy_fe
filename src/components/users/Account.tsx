@@ -1,9 +1,12 @@
 import React from 'react';
 
-export default function Account() {
+import { User } from '@/domain/models';
+
+export default function Account({ user }: { user?: User }) {
   return (
     <>
       <form className='max-w-md '>
+        user: {JSON.stringify(user)}
         <div className='group relative z-0 mb-5 w-full'>
           <input
             type='email'
@@ -20,7 +23,6 @@ export default function Account() {
             Email address
           </label>
         </div>
-
         <div className='grid md:grid-cols-2 md:gap-6'>
           <div className='group relative z-0 mb-5 w-full'>
             <input
@@ -55,7 +57,6 @@ export default function Account() {
             </label>
           </div>
         </div>
-
         <button
           type='submit'
           className='mt-5  rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold leading-5 text-white hover:bg-sky-700'

@@ -1,5 +1,5 @@
 module.exports = {
-  siteUrl: 'https://theodorusclarence.com/',
+  siteUrl: 'https://www.havafy.com/',
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [{ userAgent: '*', allow: '/' }],

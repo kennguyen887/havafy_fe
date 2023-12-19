@@ -1,6 +1,8 @@
 import clsx from 'clsx';
+import Router from 'next/router';
 import * as React from 'react';
 
+import { get } from '@/lib/request';
 import useLoaded from '@/hooks/useLoaded';
 
 import Accent from '@/components/Accent';
@@ -9,8 +11,32 @@ import Seo from '@/components/Seo';
 import Account from '@/components/users/Account';
 import Sidebar from '@/components/users/Sidebar';
 
+import { User } from '@/domain/models';
+
+import { useAuthState } from '@/contexts/AuthContext';
+
 export default function RegisterPage() {
   const isLoaded = useLoaded();
+  const [user, setUser] = React.useState<User>();
+  const { resetAuth } = useAuthState();
+
+  React.useEffect(() => {
+    get('user/me')
+      .then(({ data }) => {
+        setUser(data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          const { status } = error.response;
+
+          if (status === 401 && resetAuth) {
+            resetAuth();
+          }
+        }
+
+        Router.push('/');
+      });
+  }, [resetAuth]);
 
   return (
     <Layout>
@@ -30,7 +56,7 @@ export default function RegisterPage() {
                 </h1>
                 <div className='my-3 border-t border-slate-200'></div>
                 <div className='mt-10'>
-                  <Account />
+                  <Account user={user} />
                 </div>
               </div>
             </div>

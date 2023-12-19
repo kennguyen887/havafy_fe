@@ -55,6 +55,7 @@ module.exports = {
           ['^@/data'],
           // components
           ['^@/components'],
+          ['^@/domain/models'],
           // Other imports
           ['^@/'],
           // relative paths up until 3 level
