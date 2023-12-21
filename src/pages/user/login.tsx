@@ -6,7 +6,7 @@ import useLoaded from '@/hooks/useLoaded';
 import Accent from '@/components/Accent';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
-import RegisterInputForm from '@/components/users/RegisterForm';
+import LoginForm from '@/components/users/LoginForm';
 
 export default function RegisterPage() {
   const isLoaded = useLoaded();
@@ -14,7 +14,7 @@ export default function RegisterPage() {
   return (
     <Layout>
       <Seo
-        templateTitle='Register'
+        templateTitle='Sign in to your account'
         description='Clarence is a front-end developer that started learning in May 2020. He write blogs about his approach and mental model on understanding topics in front-end development.'
       />
 
@@ -24,28 +24,15 @@ export default function RegisterPage() {
             <div className='flex items-center justify-center'>
               <div>
                 <h1 className='mb-14 mt-1' data-fade='1'>
-                  <Accent>Create a new account</Accent>
+                  <Accent>Sign in to your account</Accent>
                 </h1>
                 <div className='mt-4 align-baseline' data-fade='2'>
-                  <div className='max-w-2xl'>
-                    <RegisterInputForm />
+                  <div className='max-w-xl'>
+                    <LoginForm />
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        <section>
-          <div className='layout py-6'>
-            <h2>Contact</h2>
-            <article className='prose mt-4 dark:prose-invert'>
-              <p>
-                Do contact me if you need my opinion about web development,
-                especially frontend works. I’ll be happy to help! (find my email
-                in the footer)
-              </p>
-            </article>
           </div>
         </section>
       </main>

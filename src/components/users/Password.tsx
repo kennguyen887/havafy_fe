@@ -1,47 +1,97 @@
+import Router from 'next/router';
 import React from 'react';
 
+import { validatePassword } from '@/lib/password';
+import { putApi } from '@/lib/request';
+
+import Alert from '@/components/form/Alert';
+import TextInput from '@/components/form/TextInput';
+
 export default function Password() {
+  const [password, setPassword] = React.useState<string>();
+  const [rePassword, setRePassword] = React.useState<string>();
+  const [alert, setAlert] = React.useState<string>();
+
+  const submitForm = React.useCallback(
+    async (e: { preventDefault: () => void }) => {
+      e.preventDefault();
+      setAlert(undefined);
+      if (rePassword !== password) {
+        return;
+      }
+
+      if (!password || !validatePassword(password)) {
+        return;
+      }
+
+      const { data } = await putApi('user', { password });
+      if (data.statusCode) {
+        setAlert(data.message);
+        return;
+      }
+      Router.push('/user/password');
+    },
+    [password, rePassword]
+  );
   return (
     <>
-      <form className='max-w-md '>
-        <div className='group relative z-0 mb-5 w-full'>
-          <input
-            type='password'
-            name='floating_password'
-            id='floating_password'
-            className='peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500'
-            placeholder=' '
-            required
-          />
-          <label
-            htmlFor='floating_password'
-            className='absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-600 rtl:peer-focus:translate-x-1/4 dark:text-gray-400 peer-focus:dark:text-blue-500'
+      <form onSubmit={submitForm} noValidate className='max-w-md '>
+        <div
+          className='mb-6 mt-2 flex rounded-lg bg-blue-50 p-4 text-xs text-blue-800 dark:bg-gray-800 dark:text-blue-400'
+          role='alert'
+        >
+          <svg
+            className='me-3 inline h-4 w-4 flex-shrink-0'
+            aria-hidden='true'
+            xmlns='http://www.w3.org/2000/svg'
+            fill='currentColor'
+            viewBox='0 0 20 20'
           >
-            Password
-          </label>
+            <path d='M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z' />
+          </svg>
+          <span className='sr-only'>Password rules</span>
+          <div>
+            <span className='font-medium'>
+              Ensure that these requirements are met:
+            </span>
+            <ul className='mt-1.5 list-inside list-disc'>
+              <li>At least 8 characters (and up to 100 characters)</li>
+              <li>At least one uppercase character</li>
+            </ul>
+          </div>
+        </div>
+        <Alert content={alert} hidden={!alert} />
+        <div className='group relative z-0 mb-5 w-full'>
+          <TextInput
+            name='Your password'
+            id='password'
+            type='password'
+            currentValue={(value) => setPassword(value)}
+            valueValidate={[
+              (value) => !validatePassword(value),
+              'Your password not match rules',
+            ]}
+            className='mb-7'
+          />
         </div>
         <div className='group relative z-0 mb-5 w-full'>
-          <input
+          <TextInput
+            name='Repeat password'
+            id='repeatPassword'
             type='password'
-            name='repeat_password'
-            id='floating_repeat_password'
-            className='peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500'
-            placeholder=' '
-            required
+            currentValue={(value) => setRePassword(value)}
+            valueValidate={[
+              (value) => value !== password,
+              'Your password is not same.',
+            ]}
+            className='mb-7'
           />
-          <label
-            htmlFor='floating_repeat_password'
-            className='absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-600 rtl:peer-focus:translate-x-1/4 dark:text-gray-400 peer-focus:dark:text-blue-500'
-          >
-            Confirm password
-          </label>
         </div>
-
         <button
           type='submit'
-          className='mt-5 rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold leading-5 text-white hover:bg-sky-700'
+          className='rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold leading-5 text-white hover:bg-sky-700'
         >
-          Submit
+          Change password
         </button>
       </form>
     </>

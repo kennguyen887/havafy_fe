@@ -100,9 +100,11 @@ export default function LoginLink() {
         <AuthenticatedMenuDropdown />
       ) : (
         <>
-          <Link href='/login'>Login</Link>
-          <Link href='/register'>
-            <a className='block rounded-md bg-slate-700 px-5 py-2 text-white'>
+          <Link href='/user/login'>
+            <a className='text-sm font-semibold'>Login</a>
+          </Link>
+          <Link href='/user/register'>
+            <a className='block rounded-md bg-slate-700 px-4 py-2 text-sm font-semibold  text-white'>
               Register
             </a>
           </Link>

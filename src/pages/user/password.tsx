@@ -14,7 +14,7 @@ export default function RegisterPage() {
 
   return (
     <Layout>
-      <Seo templateTitle='Your profile' />
+      <Seo templateTitle='Change Password' />
 
       <main>
         <section className={clsx(isLoaded && 'fade-in-start')}>
@@ -26,7 +26,7 @@ export default function RegisterPage() {
 
               <div className='min-h-main grow'>
                 <h1 className='mb-5 mt-1'>
-                  <Accent className='text-2xl'>Account</Accent>
+                  <Accent className='text-2xl'>Change Password</Accent>
                 </h1>
                 <div className='my-3 border-t border-slate-200'></div>
                 <div className='mt-10'>

@@ -7,6 +7,7 @@ import { isValidEmail } from '@/lib/email';
 import { setItem } from '@/lib/localStorage';
 import { postApi } from '@/lib/request';
 
+import Alert from '@/components/form/Alert';
 import PrimaryButton from '@/components/form/PrimaryButton';
 import TextInput from '@/components/form/TextInput';
 
@@ -15,7 +16,7 @@ import { useAuthState } from '@/contexts/AuthContext';
 export default function LoginForm() {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
-  const [message, setMessage] = useState<string>();
+  const [alert, setAlert] = React.useState<string>();
   const { loadAuth } = useAuthState();
 
   const submitForm = useCallback(
@@ -28,7 +29,7 @@ export default function LoginForm() {
       });
       if (data) {
         if (data.statusCode) {
-          setMessage(data.message);
+          setAlert(data.message);
           return;
         }
 
@@ -63,16 +64,14 @@ export default function LoginForm() {
         </div>
         <div className='inline-flex w-full items-center justify-center'>
           <hr className='my-12 h-px w-full border-0 bg-gray-200 dark:bg-gray-500' />
-          <span className='absolute left-1/2 -translate-x-1/2 bg-white px-3 text-gray-500 dark:bg-gray-900 dark:text-white'>
+          <span className='absolute left-1/2 -translate-x-1/2 bg-white px-3 text-sm text-gray-400 dark:bg-gray-900 dark:text-white'>
             Or log in with email
           </span>
         </div>
 
         <div className=''>
           <form onSubmit={submitForm} noValidate>
-            <div className='mb-5 text-center text-sm text-red-600'>
-              {message}
-            </div>
+            <Alert content={alert} hidden={!alert} />
             <TextInput
               name='Your email'
               id='email'
