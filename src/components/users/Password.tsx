@@ -37,7 +37,7 @@ export default function Password() {
     <>
       <form onSubmit={submitForm} noValidate className='max-w-md '>
         <div
-          className='mb-6 mt-2 flex rounded-lg bg-blue-50 p-4 text-xs text-blue-800 dark:bg-gray-800 dark:text-blue-400'
+          className='mb-6 mt-2 flex rounded-lg bg-blue-50 p-4 text-xs text-gray-800 dark:bg-gray-800 dark:text-white'
           role='alert'
         >
           <svg
@@ -51,9 +51,7 @@ export default function Password() {
           </svg>
           <span className='sr-only'>Password rules</span>
           <div>
-            <span className='font-medium'>
-              Ensure that these requirements are met:
-            </span>
+            <span className='font-medium'>Password requirements:</span>
             <ul className='mt-1.5 list-inside list-disc'>
               <li>At least 8 characters (and up to 100 characters)</li>
               <li>At least one uppercase character</li>

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useAuthState } from '@/contexts/AuthContext';
 
 function AuthenticatedMenuDropdown() {
-  const { user, resetAuth } = useAuthState();
+  const { resetAuth } = useAuthState();
 
   return (
     <div className='group'>
@@ -43,12 +43,9 @@ function AuthenticatedMenuDropdown() {
       <div className='mt-2'>
         <div
           className={clsx(
-            'invisible absolute z-10  w-44 divide-y divide-gray-100 rounded-lg bg-white shadow group-hover:visible dark:divide-gray-600 dark:bg-gray-700'
+            'invisible absolute z-10  w-44 divide-y divide-gray-100 rounded bg-white shadow group-hover:visible dark:divide-gray-600 dark:bg-gray-700'
           )}
         >
-          <div className='px-4 py-3 text-sm text-gray-900 dark:text-white'>
-            <div className='truncate font-bold'>{user?.email}</div>
-          </div>
           <ul
             className='my-2 text-sm text-gray-700 dark:text-gray-200'
             aria-labelledby='dropdownInformdropdownAvatarNameButtonationButton'
@@ -61,20 +58,11 @@ function AuthenticatedMenuDropdown() {
               </Link>
             </li>
             <li>
-              <a
-                href='#'
-                className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
-              >
-                Settings
-              </a>
-            </li>
-            <li>
-              <a
-                href='#'
-                className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
-              >
-                Orders
-              </a>
+              <Link href='/user/password'>
+                <a className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
+                  Change password
+                </a>
+              </Link>
             </li>
           </ul>
           <div className='my-2'>
@@ -104,7 +92,7 @@ export default function LoginLink() {
             <a className='text-sm font-semibold'>Login</a>
           </Link>
           <Link href='/user/register'>
-            <a className='block rounded-md bg-slate-700 px-4 py-2 text-sm font-semibold  text-white'>
+            <a className='block rounded-md bg-rose-600 px-4 py-2 text-sm font-semibold  text-white'>
               Register
             </a>
           </Link>

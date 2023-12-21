@@ -1,4 +1,5 @@
 import { GoogleLogin } from '@react-oauth/google';
+import clsx from 'clsx';
 import Router from 'next/router';
 import React, { useCallback, useState } from 'react';
 import {
@@ -106,7 +107,10 @@ export const RegisterInputForm = () => {
         </div>
       </form>
       <div
-        className='mb-6 mt-10 flex rounded-lg bg-blue-50 p-4 text-xs text-blue-800 dark:bg-gray-800 dark:text-blue-400'
+        className={clsx(
+          !password || !validatePassword(password) ? '' : 'hidden',
+          'fade-in-start mt-5 flex rounded-lg bg-blue-50 p-4 text-xs text-gray-800 dark:bg-gray-800 dark:text-white'
+        )}
         role='alert'
       >
         <svg
@@ -120,9 +124,7 @@ export const RegisterInputForm = () => {
         </svg>
         <span className='sr-only'>Password rules</span>
         <div>
-          <span className='font-medium'>
-            Ensure that these requirements are met:
-          </span>
+          <span className='font-medium'>Password requirements:</span>
           <ul className='mt-1.5 list-inside list-disc'>
             <li>At least 8 characters (and up to 100 characters)</li>
             <li>At least one uppercase character</li>
@@ -137,26 +139,6 @@ export default function RegisterForm() {
   return (
     <div className='items-center'>
       <div>
-        <GoogleLogin
-          logo_alignment='center'
-          onSuccess={(credentialResponse) => {
-            // eslint-disable-next-line no-console
-            console.log(credentialResponse);
-          }}
-          onError={() => {
-            // eslint-disable-next-line no-console
-            console.log('Login Failed');
-          }}
-        />
-
-        <div className='inline-flex w-full items-center justify-center'>
-          <hr className='mb-10 mt-12 h-px w-full border-0 bg-gray-200 dark:bg-gray-500' />
-          <span className='absolute left-1/2 -translate-x-1/2 bg-white px-3 text-gray-400 dark:bg-gray-900 dark:text-white'>
-            or sign up with email
-          </span>
-        </div>
-      </div>
-      <div>
         <GoogleReCaptchaProvider
           reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTHA_SITE_KEY || ''}
           scriptProps={{
@@ -168,6 +150,27 @@ export default function RegisterForm() {
         >
           <RegisterInputForm />
         </GoogleReCaptchaProvider>
+      </div>
+
+      <div className='inline-flex w-full items-center justify-center'>
+        <hr className='mb-10 mt-12 h-px w-full border-0 bg-gray-200 dark:bg-gray-500' />
+        <span className='absolute left-1/2 -translate-x-1/2 bg-white px-3 text-xs text-gray-400 dark:bg-gray-900 dark:text-white'>
+          with email
+        </span>
+      </div>
+
+      <div>
+        <GoogleLogin
+          logo_alignment='center'
+          onSuccess={(credentialResponse) => {
+            // eslint-disable-next-line no-console
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            // eslint-disable-next-line no-console
+            console.log('Login Failed');
+          }}
+        />
       </div>
     </div>
   );

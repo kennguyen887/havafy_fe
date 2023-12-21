@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import useLoaded from '@/hooks/useLoaded';
 
-import Accent from '@/components/Accent';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 import LoginForm from '@/components/users/LoginForm';
@@ -23,11 +22,8 @@ export default function RegisterPage() {
           <div className='layout min-h-main py-20'>
             <div className='flex items-center justify-center'>
               <div>
-                <h1 className='mb-14 mt-1' data-fade='1'>
-                  <Accent>Sign in to your account</Accent>
-                </h1>
                 <div className='mt-4 align-baseline' data-fade='2'>
-                  <div className='max-w-xl'>
+                  <div className='max-w-xs'>
                     <LoginForm />
                   </div>
                 </div>

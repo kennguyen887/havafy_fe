@@ -6,7 +6,7 @@ export default function PrimaryButton({
 }: React.ComponentPropsWithoutRef<'button'>) {
   return (
     <button
-      className='group relative inline-flex items-center justify-start overflow-hidden rounded bg-rose-500 py-3 pl-4 pr-12 font-semibold text-white transition-all duration-150 ease-in-out hover:pl-10 hover:pr-6'
+      className='group relative inline-flex items-center justify-start overflow-hidden rounded bg-rose-500 py-2 pl-4 pr-12 text-sm font-semibold text-white transition-all duration-150 ease-in-out hover:pl-10 hover:pr-6'
       onClick={onClick}
     >
       <span className='absolute bottom-0 left-0 h-1 w-full bg-rose-600 transition-all duration-150 ease-in-out group-hover:h-full'></span>
