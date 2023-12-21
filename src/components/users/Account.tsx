@@ -1,67 +1,104 @@
+import Router from 'next/router';
 import React from 'react';
+
+import { isValidEmail } from '@/lib/email';
+import { putApi } from '@/lib/request';
+
+import Alert from '@/components/form/Alert';
+import TextInput from '@/components/form/TextInput';
 
 import { User } from '@/domain/models';
 
 export default function Account({ user }: { user?: User }) {
+  const [email, setEmail] = React.useState<string>();
+  const [lastName, setLastName] = React.useState<string>();
+  const [firstName, setFirstName] = React.useState<string>();
+  const [alert, setAlert] = React.useState<string>();
+  const [data] = React.useState(user);
+
+  const submitForm = React.useCallback(
+    async (e: { preventDefault: () => void }) => {
+      e.preventDefault();
+      setAlert(undefined);
+      let payload: {
+        email?: string;
+        lastName?: string;
+        firstName?: string;
+      } | null = null;
+
+      if (email && email !== data?.email) {
+        payload = { email };
+      }
+      if (firstName && firstName !== data?.firstName) {
+        payload = { ...payload, firstName };
+      }
+      if (lastName && lastName !== data?.firstName) {
+        payload = { ...payload, lastName };
+      }
+
+      if (payload) {
+        const { data } = await putApi('user', payload);
+        if (data.statusCode) {
+          setAlert(data.message);
+          return;
+        }
+
+        Router.push('/user/account');
+      }
+    },
+    [data, email, firstName, lastName]
+  );
   return (
     <>
-      <form className='max-w-md '>
-        user: {JSON.stringify(user)}
+      <form onSubmit={submitForm} noValidate className='max-w-md '>
+        <Alert content={alert} hidden={!alert} />
         <div className='group relative z-0 mb-5 w-full'>
-          <input
+          <TextInput
+            name='Your email'
+            id='email'
             type='email'
-            name='floating_email'
-            id='floating_email'
-            className='peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500'
-            placeholder=' '
-            required
+            defaultValue={user?.email}
+            currentValue={(value) => setEmail(value)}
+            valueValidate={[
+              (value) => !isValidEmail(value),
+              'Your email is invalid',
+            ]}
+            className='mb-7'
           />
-          <label
-            htmlFor='floating_email'
-            className='absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-600 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4 dark:text-gray-400 peer-focus:dark:text-blue-500'
-          >
-            Email address
-          </label>
         </div>
         <div className='grid md:grid-cols-2 md:gap-6'>
           <div className='group relative z-0 mb-5 w-full'>
-            <input
-              type='text'
-              name='floating_first_name'
-              id='floating_first_name'
-              className='peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500'
-              placeholder=' '
-              required
+            <TextInput
+              name='First name'
+              id='firstName'
+              defaultValue={user?.firstName}
+              currentValue={(value) => setFirstName(value)}
+              valueValidate={[
+                (value) => value.length < 1,
+                'Please input your first name.',
+              ]}
+              className='mb-7'
             />
-            <label
-              htmlFor='floating_first_name'
-              className='absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-600 rtl:peer-focus:translate-x-1/4 dark:text-gray-400 peer-focus:dark:text-blue-500'
-            >
-              First name
-            </label>
           </div>
           <div className='group relative z-0 mb-5 w-full'>
-            <input
-              type='text'
-              name='floating_last_name'
-              id='floating_last_name'
-              className='peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500'
-              placeholder=' '
-              required
+            <TextInput
+              name='First name'
+              id='firstName'
+              defaultValue={user?.lastName}
+              currentValue={(value) => setLastName(value)}
+              valueValidate={[
+                (value) => value.length < 1,
+                'Please input your last name.',
+              ]}
+              className='mb-7'
             />
-            <label
-              htmlFor='floating_last_name'
-              className='absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-blue-600 rtl:peer-focus:translate-x-1/4 dark:text-gray-400 peer-focus:dark:text-blue-500'
-            >
-              Last name
-            </label>
           </div>
         </div>
         <button
           type='submit'
-          className='mt-5  rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold leading-5 text-white hover:bg-sky-700'
+          className='rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold leading-5 text-white hover:bg-sky-700'
         >
-          Submit
+          Save
         </button>
       </form>
     </>

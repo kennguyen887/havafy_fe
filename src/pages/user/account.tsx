@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import Router from 'next/router';
 import * as React from 'react';
 
-import { get } from '@/lib/request';
+import { getApi } from '@/lib/request';
 import useLoaded from '@/hooks/useLoaded';
 
 import Accent from '@/components/Accent';
@@ -21,7 +21,7 @@ export default function RegisterPage() {
   const { resetAuth } = useAuthState();
 
   React.useEffect(() => {
-    get('user/me')
+    getApi('user/me')
       .then(({ data }) => {
         setUser(data);
       })

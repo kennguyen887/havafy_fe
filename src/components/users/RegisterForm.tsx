@@ -8,7 +8,7 @@ import {
 
 import { isValidEmail } from '@/lib/email';
 import { setItem } from '@/lib/localStorage';
-import { post } from '@/lib/request';
+import { postApi } from '@/lib/request';
 
 import PrimaryButton from '@/components/form/PrimaryButton';
 import TextInput from '@/components/form/TextInput';
@@ -31,7 +31,7 @@ export const RegisterInputForm = () => {
       }
       const token = await executeRecaptcha();
 
-      const data = await post('user/register', {
+      const data = await postApi('user/register', {
         email,
         password,
         firstName,

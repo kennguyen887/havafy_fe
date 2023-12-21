@@ -5,7 +5,7 @@ import React from 'react';
 
 import { isValidEmail } from '@/lib/email';
 import { setItem } from '@/lib/localStorage';
-import { post } from '@/lib/request';
+import { postApi } from '@/lib/request';
 
 import PrimaryButton from '@/components/form/PrimaryButton';
 import TextInput from '@/components/form/TextInput';
@@ -22,7 +22,7 @@ export default function LoginForm() {
     async (e: { preventDefault: () => void }) => {
       e.preventDefault();
 
-      const data = await post('user/login', {
+      const data = await postApi('user/login', {
         email,
         password,
       });
