@@ -52,7 +52,7 @@ export default function LoginForm() {
   return (
     <div className='w-96'>
       <div id='loginSection' className={clsx(showFP ? 'hidden' : '')}>
-        <h1 className='mb-8 mt-1'>
+        <h1 className='mb-8 mt-1 text-center'>
           <Accent className='text-2xl'>Sign in to your account</Accent>
         </h1>
         <div className='items-center'>
@@ -68,7 +68,7 @@ export default function LoginForm() {
                   (value) => !isValidEmail(value),
                   'Your email is invalid',
                 ]}
-                className='mb-7'
+                className='mb-2'
               />
               <TextInput
                 name='Password'
@@ -79,7 +79,7 @@ export default function LoginForm() {
                   (value) => value.length < 6,
                   'Password is invalid',
                 ]}
-                className='mb-7'
+                className='mb-2'
               />
               <div className='mt-7 flex items-center justify-center'>
                 <PrimaryButton name='Login' />

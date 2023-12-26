@@ -41,7 +41,7 @@ export default function Header({ large = false }: HeaderProps) {
       <div className='bg-white transition-colors dark:bg-dark dark:text-white'>
         <nav
           className={clsx(
-            'layout flex items-center justify-between py-4',
+            'layout flex items-center justify-between py-1',
             large && 'lg:max-w-[68rem]'
           )}
         >
