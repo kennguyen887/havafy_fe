@@ -12,7 +12,6 @@ RUN apk add --no-cache libc6-compat
 RUN rm -rf package-lock.json \
     && echo "BUILD_ENV - ${BUILD_ENV}" \
     && start_counter="$(date +%s)" && echo "[Info] start_counter ..... $start_counter" \
-    && chmod -R 775 ./.next \
     && end_counter="$(date +%s)" && echo "[Info] end_counter ..... $end_counter" \
     && SKIP_HUSKY=1 yarn install \
     && yarn build
