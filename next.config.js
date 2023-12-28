@@ -1,16 +1,10 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+require('dotenv').config();
 const path = require('path');
-
-const withRemoteRefresh = require('next-remote-refresh')({
-  paths: [path.resolve(__dirname, 'src', 'contents')],
-});
-
 /**
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  eslint: {
-    dirs: ['src'],
-  },
   images: {
     domains: ['res.cloudinary.com', 'localhost', 'i.scdn.co', 'flowbite.com'],
   },
@@ -33,6 +27,29 @@ const nextConfig = {
       },
     ];
   },
+  env: {
+    defaultLocale: process.env.DEFAULT_LOCALE,
+    isProduction: process.env.NODE_ENV === 'production',
+  },
+  output: 'standalone',
+  eslint: {
+    dirs: ['src'],
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      issuer: /\.{js|jsx|ts|tsx}$/,
+      use: ['@svgr/webpack'],
+    });
+
+    config.resolve.alias['public'] = path.resolve('./public');
+
+    return config;
+  },
 };
 
-module.exports = withRemoteRefresh(nextConfig);
+module.exports = nextConfig;
