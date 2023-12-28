@@ -9,11 +9,10 @@ import useCopyToClipboard from '@/hooks/useCopyToClipboard';
 
 import Accent from '@/components/Accent';
 import ThemeButton from '@/components/buttons/ThemeButton';
-import Spotify from '@/components/layout/Spotify';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import Tooltip from '@/components/Tooltip';
 
-import { feedbackFlag, spotifyFlag } from '@/constants/env';
+import { feedbackFlag } from '@/constants/env';
 
 export default function Footer() {
   return (
@@ -21,15 +20,13 @@ export default function Footer() {
       <main className='layout flex flex-col items-center border-t pt-6 dark:border-gray-600'>
         <FooterLinks />
 
-        {spotifyFlag && <Spotify className='mt-8' />}
-
         <p className='mt-12 font-medium text-gray-600 dark:text-gray-300'>
           Reach me out
         </p>
         <SocialLinks />
 
         <p className='mt-8 text-sm text-gray-600 dark:text-gray-300'>
-          © Theodorus Clarence {new Date().getFullYear()}
+          © Havafy.com {new Date().getFullYear()}
           {feedbackFlag && (
             <>
               {' • '}
@@ -86,14 +83,14 @@ function SocialLinks() {
                 ? 'Click the mail logo to copy'
                 : 'Copied to clipboard 🥳'}
               <Accent className='inline-block font-medium'>
-                me@theodorusclarence.com
+                me@havafy.com
               </Accent>
             </div>
           }
         >
           <button
             onClick={() => {
-              copy('me@theodorusclarence.com').then(() => {
+              copy('me@havafy.com').then(() => {
                 setCopyStatus('copied');
                 setTimeout(() => setCopyStatus('idle'), 1500);
               });
@@ -131,7 +128,7 @@ function SocialLinks() {
 const footerLinks: { href: string; text: string; tooltip: React.ReactNode }[] =
   [
     {
-      href: 'https://github.com/theodorusclarence/theodorusclarence.com',
+      href: 'https://github.com/havafy/havafy.com',
       text: 'Source Code',
       tooltip: (
         <>
@@ -142,7 +139,7 @@ const footerLinks: { href: string; text: string; tooltip: React.ReactNode }[] =
     {
       href: '/design',
       text: 'Design',
-      tooltip: 'theodorusclarence.com color palette',
+      tooltip: 'havafy.com color palette',
     },
     {
       href: 'https://clarence.link/docs',
@@ -162,7 +159,7 @@ const footerLinks: { href: string; text: string; tooltip: React.ReactNode }[] =
     {
       href: 'https://clarence.link/um',
       text: 'Analytics',
-      tooltip: 'theodorusclarence.com views and visitors analytics',
+      tooltip: 'havafy.com views and visitors analytics',
     },
     {
       href: '/statistics',
@@ -181,9 +178,9 @@ const footerLinks: { href: string; text: string; tooltip: React.ReactNode }[] =
       tooltip: 'Get an email whenever I post, no spam',
     },
     {
-      href: 'https://theodorusclarence.com/rss.xml',
+      href: 'https://havafy.com/rss.xml',
       text: 'RSS',
-      tooltip: 'Add theodorusclarence.com blog to your feeds',
+      tooltip: 'Add havafy.com blog to your feeds',
     },
   ];
 

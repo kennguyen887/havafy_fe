@@ -8,7 +8,7 @@ const defaultMeta = {
   siteName: 'havafy.com',
   description:
     'An online portfolio and blog by Theodorus Clarence. Showcase of my projects, and some of my thoughts about website development.',
-  url: 'https://theodorusclarence.com',
+  url: 'https://havafy.com',
   image: '/images/havafy-favicon.png',
   type: 'website',
   robots: 'follow, index',

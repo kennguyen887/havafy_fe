@@ -29,8 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     // Don't increment views if not on main domain
     if (
       window.location.host !==
-        (process.env.NEXT_PUBLIC_BLOCK_DOMAIN_WHITELIST ||
-          'theodorusclarence.com') &&
+        (process.env.NEXT_PUBLIC_BLOCK_DOMAIN_WHITELIST || 'havafy.com') &&
       blockDomainMeta
     ) {
       if (getFromLocalStorage('incrementMetaFlag') !== 'false') {
@@ -56,7 +55,9 @@ function MyApp({ Component, pageProps }: AppProps) {
               fetcher: (url) => axios.get(url).then((res) => res.data),
             }}
           >
-            <GoogleOAuthProvider clientId='<your_client_id>'>
+            <GoogleOAuthProvider
+              clientId={process.env.NEXT_PUBLIC_GCLOUD_CLIENT_ID || ''}
+            >
               <Component {...pageProps} />
             </GoogleOAuthProvider>
           </SWRConfig>

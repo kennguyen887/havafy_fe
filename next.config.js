@@ -1,6 +1,9 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-require('dotenv').config();
 const path = require('path');
+
+const withRemoteRefresh = require('next-remote-refresh')({
+  paths: [path.resolve(__dirname, 'src', 'contents')],
+});
+
 /**
  * @type {import('next').NextConfig}
  */
@@ -27,10 +30,6 @@ const nextConfig = {
       },
     ];
   },
-  env: {
-    defaultLocale: process.env.DEFAULT_LOCALE,
-    isProduction: process.env.NODE_ENV === 'production',
-  },
   output: 'standalone',
   eslint: {
     dirs: ['src'],
@@ -52,4 +51,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withRemoteRefresh(nextConfig);

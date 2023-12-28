@@ -228,7 +228,7 @@ export default function StatisticsPage() {
     <Layout>
       <Seo
         templateTitle='Statistics'
-        description='Metadata statistics of theodorusclarence.com blogs, projects and libraries.'
+        description='Metadata statistics of havafy.com blogs, projects and libraries.'
       />
 
       <main>

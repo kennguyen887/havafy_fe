@@ -105,6 +105,7 @@ export default function LoginForm() {
                 // eslint-disable-next-line no-console
                 console.log('Login Failed');
               }}
+              useOneTap
             />
           </div>
         </div>

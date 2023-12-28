@@ -23,13 +23,6 @@ class MyDocument extends Document {
             type='font/woff2'
             crossOrigin='anonymous'
           />
-          <script
-            async
-            defer
-            data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID || ''}
-            src='https://umami.thcl.dev/script.js'
-            data-domains='theodorusclarence.com'
-          />
         </Head>
         <body className='bg-white antialiased transition-colors dark:bg-dark dark:text-white'>
           <Main />

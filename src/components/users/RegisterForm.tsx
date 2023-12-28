@@ -170,6 +170,7 @@ export default function RegisterForm() {
             // eslint-disable-next-line no-console
             console.log('Login Failed');
           }}
+          useOneTap
         />
       </div>
     </div>

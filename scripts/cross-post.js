@@ -11,7 +11,7 @@ const quote = '["\']';
 const select = '(.*)';
 
 /**
- * @argument $1 publicId e.g. theodorusclarence/blogs/one-stop-starter/seo-component_xpzsab
+ * @argument $1 publicId e.g. havafy/blogs/one-stop-starter/seo-component_xpzsab
  * @argument $2 alt e.g. seo-component
  */
 const CLOUDINARY_REGEXP = new RegExp(
@@ -20,7 +20,7 @@ const CLOUDINARY_REGEXP = new RegExp(
 );
 
 /**
- * @argument $1 user/reponame e.g. theodorusclarence/ts-nextjs-tailwind-starter
+ * @argument $1 user/reponame e.g. havafy/ts-nextjs-tailwind-starter
  */
 const GITHUB_REGEXP = new RegExp(
   `<GithubCard${dotAll}repo=${quote}${select}${quote}${dotAll}/>`,
@@ -48,16 +48,16 @@ const TWEET_REGEXP = new RegExp(
 const devtoFooter = `
 ---
 
-> Originally posted on [my personal site](https://theodorusclarence.com/?ref=devto), find more [blog posts](https://theodorusclarence.com/blog?ref=devto) and [code snippets library](https://theodorusclarence.com/library?ref=devto) I put up for easy access on my site 🚀
+> Originally posted on [my personal site](https://havafy.com/?ref=devto), find more [blog posts](https://havafy.com/blog?ref=devto) and [code snippets library](https://havafy.com/library?ref=devto) I put up for easy access on my site 🚀
 
-Like this post? [Subscribe to my newsletter](https://theodorusclarence.com/subscribe?ref=devto) to get notified every time a new post is out!`;
+Like this post? [Subscribe to my newsletter](https://havafy.com/subscribe?ref=devto) to get notified every time a new post is out!`;
 
 const hashnodeFooter = `
 ---
 
-> Originally posted on [my personal site](https://theodorusclarence.com/?ref=hashnode), find more [blog posts](https://theodorusclarence.com/blog?ref=hashnode) and [code snippets library](https://theodorusclarence.com/library?ref=hashnode) I put up for easy access on my site 🚀
+> Originally posted on [my personal site](https://havafy.com/?ref=hashnode), find more [blog posts](https://havafy.com/blog?ref=hashnode) and [code snippets library](https://havafy.com/library?ref=hashnode) I put up for easy access on my site 🚀
 
-Like this post? [Subscribe to my newsletter](https://theodorusclarence.com/subscribe?ref=hashnode) to get notified every time a new post is out!`;
+Like this post? [Subscribe to my newsletter](https://havafy.com/subscribe?ref=hashnode) to get notified every time a new post is out!`;
 //#endregion  //*======== Footers ===========
 
 const slug = process.argv[2];
@@ -87,7 +87,7 @@ const devto = () => {
     parsedContent = content;
     parsedContent = parsedContent.replace(
       CLOUDINARY_REGEXP,
-      '![$2](https://res.cloudinary.com/theodorusclarence/image/upload/q_auto,f_auto/$1)'
+      '![$2](https://res.cloudinary.com/havafy/image/upload/q_auto,f_auto/$1)'
     );
     parsedContent = parsedContent.replace(
       GITHUB_REGEXP,
@@ -122,7 +122,7 @@ const hashnode = () => {
 
     parsedContent = parsedContent.replace(
       CLOUDINARY_REGEXP,
-      '![$2](https://res.cloudinary.com/theodorusclarence/image/upload/q_auto,f_auto/$1)'
+      '![$2](https://res.cloudinary.com/havafy/image/upload/q_auto,f_auto/$1)'
     );
     parsedContent = parsedContent.replace(
       GITHUB_REGEXP,
@@ -162,7 +162,7 @@ const getOgImage = () => {
     if (err) reject(err);
 
     const { data: frontmatter } = matter(content);
-    const bannerLink = `https://res.cloudinary.com/theodorusclarence/image/upload/f_auto,c_fill,ar_4:5,w_1200/theodorusclarence/banner/${frontmatter.banner}`;
+    const bannerLink = `https://res.cloudinary.com/havafy/image/upload/f_auto,c_fill,ar_4:5,w_1200/havafy/banner/${frontmatter.banner}`;
     const ogLink = `https://og.clarence.link/api/blog?templateTitle=${encodeURIComponent(
       frontmatter.title
     )}&banner=${encodeURIComponent(bannerLink)}`;
