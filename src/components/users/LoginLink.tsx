@@ -1,12 +1,15 @@
+import { useGoogleOneTapLogin } from '@react-oauth/google';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { setItem } from '@/lib/localStorage';
+import { postApi } from '@/lib/request';
 
 import { useAuthState } from '@/contexts/AuthContext';
 
 function AuthenticatedMenuDropdown() {
   const { resetAuth } = useAuthState();
-
   return (
     <div className='group'>
       <button
@@ -80,7 +83,30 @@ function AuthenticatedMenuDropdown() {
 }
 
 export default function LoginLink() {
-  const { isAuthenticated } = useAuthState();
+  const { isAuthenticated, loadAuth } = useAuthState();
+
+  useGoogleOneTapLogin({
+    onSuccess: async ({ credential }) => {
+      try {
+        const data = await postApi('user/login/google', {
+          credential,
+        });
+        if (data && loadAuth) {
+          setItem('auth', data.token);
+          loadAuth();
+        }
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log('Error on login', e);
+      }
+    },
+    onError: () => {
+      // eslint-disable-next-line no-console
+      console.log('Login Failed');
+    },
+    auto_select: true,
+    disabled: isAuthenticated,
+  });
 
   return (
     <>

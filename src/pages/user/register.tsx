@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Router from 'next/router';
 import * as React from 'react';
 
 import useLoaded from '@/hooks/useLoaded';
@@ -8,8 +9,15 @@ import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 import RegisterInputForm from '@/components/users/RegisterForm';
 
+import { useAuthState } from '@/contexts/AuthContext';
+
 export default function RegisterPage() {
   const isLoaded = useLoaded();
+  const { isAuthenticated } = useAuthState();
+
+  if (isAuthenticated) {
+    Router.push('/');
+  }
 
   return (
     <Layout>

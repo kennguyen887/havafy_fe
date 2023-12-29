@@ -27,7 +27,7 @@
     "@giscus/react": "^2.2.8",
     "@headlessui/react": "^1.7.12",
     "@prisma/client": "^4.11.0",
-    "@react-oauth/google": "^0.11.1",
+    "@react-oauth/google": "^0.12.1",
     "@react-spring/web": "^9.7.3",
     "@tanstack/react-table": "^8.8.5",
     "@types/jsonwebtoken": "^9.0.5",

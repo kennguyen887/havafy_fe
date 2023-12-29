@@ -97,9 +97,20 @@ export default function LoginForm() {
           <div>
             <GoogleLogin
               logo_alignment='center'
-              onSuccess={(credentialResponse) => {
-                // eslint-disable-next-line no-console
-                console.log(credentialResponse);
+              onSuccess={async ({ credential }) => {
+                try {
+                  const data = await postApi('user/login/google', {
+                    credential,
+                  });
+                  if (data && loadAuth) {
+                    setItem('auth', data.token);
+                    loadAuth();
+                    Router.push('/');
+                  }
+                } catch (e) {
+                  // eslint-disable-next-line no-console
+                  console.log('Error on login', e);
+                }
               }}
               onError={() => {
                 // eslint-disable-next-line no-console
