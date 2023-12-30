@@ -10,6 +10,14 @@ const withRemoteRefresh = require('next-remote-refresh')({
 const nextConfig = {
   images: {
     domains: ['res.cloudinary.com', 'localhost', 'i.scdn.co', 'flowbite.com'],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*.googleusercontent.com",
+        port: "",
+        pathname: "**",
+      },
+    ],
   },
   async redirects() {
     return [

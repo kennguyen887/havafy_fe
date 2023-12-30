@@ -9,24 +9,24 @@ import { postApi } from '@/lib/request';
 import { useAuthState } from '@/contexts/AuthContext';
 
 function AuthenticatedMenuDropdown() {
-  const { resetAuth } = useAuthState();
+  const { resetAuth, user } = useAuthState();
   return (
     <div className='group'>
       <button
-        className='flex items-center rounded-full pe-1 text-sm font-medium text-gray-900 group-hover:text-blue-600 group-hover:ring-4 group-hover:ring-gray-100 dark:text-white dark:group-hover:text-blue-500 dark:group-hover:ring-gray-700 md:me-0'
+        className='flex h-5 items-center rounded-full text-sm font-medium text-gray-900 group-hover:text-blue-600 group-hover:ring-4 group-hover:ring-gray-100 dark:text-white dark:group-hover:text-blue-500 dark:group-hover:ring-gray-700 md:me-0'
         type='button'
       >
         <span className='sr-only'>Open user menu</span>
-        <div className='mr-2'>
+        <div className='mr-2 mt-1'>
           <Image
-            className='h-8 w-8 rounded-full'
-            width={32}
-            height={32}
-            src='https://flowbite.com/docs/images/people/profile-picture-3.jpg'
+            className='h-6 w-6 rounded-full'
+            width={24}
+            height={24}
+            src={user?.avatar ? user?.avatar : '/images/user/user.png'}
             alt='user photo'
           />
         </div>
-        Bonnie Green
+        <span className='text-xs'>{user?.firstName}</span>
         <svg
           className='ms-3 h-2.5 w-2.5'
           aria-hidden='true'
@@ -69,12 +69,13 @@ function AuthenticatedMenuDropdown() {
             </li>
           </ul>
           <div className='my-2'>
-            <button
+            <div
+              role='button'
               onClick={() => resetAuth !== undefined && resetAuth()}
               className='block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white'
             >
               Sign out
-            </button>
+            </div>
           </div>
         </div>
       </div>
@@ -91,6 +92,7 @@ export default function LoginLink() {
         const data = await postApi('user/login/google', {
           credential,
         });
+
         if (data && loadAuth) {
           setItem('auth', data.token);
           loadAuth();

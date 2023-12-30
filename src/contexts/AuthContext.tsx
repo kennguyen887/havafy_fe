@@ -1,5 +1,4 @@
 import { plainToInstance } from 'class-transformer';
-import * as jwt from 'jsonwebtoken';
 import Router from 'next/router';
 import {
   createContext,
@@ -8,13 +7,21 @@ import {
   useEffect,
   useState,
 } from 'react';
+import React from 'react';
 
-import { getItem } from '@/lib/localStorage';
 import { removeItem } from '@/lib/localStorage';
+import { getApi } from '@/lib/request';
+
 class UserContextTypeDto {
   id!: string;
 
   email!: string;
+
+  avatar!: string;
+
+  firstName!: string;
+
+  lastName!: string;
 }
 
 class AuthContextTypeDto {
@@ -46,20 +53,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     Router.push('/');
   };
 
-  const loadAuth = () => {
-    const token = getItem('auth');
-    const decodedPayload = jwt.decode(token as string);
-    setIsAuthenticated(decodedPayload ? true : false);
-    setUser(
-      decodedPayload
-        ? plainToInstance(UserContextTypeDto, decodedPayload)
-        : null
-    );
-  };
+  const loadAuth = React.useCallback(async () => {
+    getApi('user/me')
+      .then(({ data }) => {
+        if (!data.id) {
+          return;
+        }
+        setUser(data ? plainToInstance(UserContextTypeDto, data) : null);
+        setIsAuthenticated(true);
+      })
+      .catch((error) => {
+        if (error.response) {
+          const { status } = error.response;
+          if (status === 401) {
+            resetAuth();
+          }
+        }
+      });
+  }, []);
 
   useEffect(() => {
     loadAuth();
-  }, []);
+  }, [loadAuth]);
 
   return (
     <AuthContext.Provider

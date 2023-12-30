@@ -63,6 +63,7 @@ export default function Account({ user }: { user?: User }) {
               (value) => !isValidEmail(value),
               'Your email is invalid',
             ]}
+            disabled
             className='mb-7'
           />
         </div>
