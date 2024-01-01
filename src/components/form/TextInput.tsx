@@ -38,6 +38,7 @@ export default function TextInput({
       <input
         type={type}
         id={id}
+        value={value}
         defaultValue={defaultValue}
         onChange={onChangeInput}
         disabled={disabled}

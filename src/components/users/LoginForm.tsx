@@ -1,7 +1,7 @@
 import { GoogleLogin } from '@react-oauth/google';
 import clsx from 'clsx';
 import Router from 'next/router';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import React from 'react';
 
 import { isValidEmail } from '@/lib/email';
@@ -22,33 +22,30 @@ export default function LoginForm() {
   const [showFP, setShowFP] = React.useState<boolean>(false);
   const { loadAuth } = useAuthState();
 
-  const submitForm = useCallback(
-    async (e: { preventDefault: () => void }) => {
-      e.preventDefault();
+  const submitForm = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
 
-      const data = await postApi('user/login', {
-        email,
-        password,
-      });
-      if (data) {
-        if (data.statusCode) {
-          setAlert(data.message);
-          return;
-        }
-
-        if (data.token) {
-          setItem('auth', data.token);
-          if (loadAuth) {
-            loadAuth();
-          }
-
-          Router.push('/');
-          return;
-        }
+    const data = await postApi('user/login', {
+      email,
+      password,
+    });
+    if (data) {
+      if (data.statusCode) {
+        setAlert(data.message);
+        return;
       }
-    },
-    [email, loadAuth, password]
-  );
+
+      if (data.token) {
+        setItem('auth', data.token);
+        if (loadAuth) {
+          loadAuth();
+        }
+
+        Router.push('/');
+        return;
+      }
+    }
+  };
   return (
     <div className='w-96'>
       <div id='loginSection' className={clsx(showFP ? 'hidden' : '')}>
@@ -133,7 +130,7 @@ export default function LoginForm() {
         <h1 className='mb-8 mt-1' data-fade='1'>
           <Accent className='text-2xl'>Forgot password</Accent>
         </h1>
-
+        {/* 
         <form onSubmit={submitForm} noValidate>
           <Alert content={alert} hidden={!alert} />
           <TextInput
@@ -151,7 +148,7 @@ export default function LoginForm() {
           <div className='mt-7 flex items-center justify-center'>
             <PrimaryButton name='Request reset' />
           </div>
-        </form>
+        </form> */}
 
         <button
           onClick={() => setShowFP(false)}
