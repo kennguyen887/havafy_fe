@@ -15,7 +15,7 @@ import { User } from '@/domain/models';
 
 import { useAuthState } from '@/contexts/AuthContext';
 
-export default function RegisterPage() {
+export default function AccountPage() {
   const isLoaded = useLoaded();
   const [user, setUser] = React.useState<User>();
   const { resetAuth } = useAuthState();

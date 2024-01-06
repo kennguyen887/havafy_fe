@@ -34,7 +34,7 @@ export default function Header({ large = false }: HeaderProps) {
   return (
     <header
       className={clsx(
-        'sticky top-0 z-50 transition-shadow',
+        'shadow-xs sticky top-0 z-50 transition-shadow',
         !onTop && 'shadow-sm'
       )}
     >

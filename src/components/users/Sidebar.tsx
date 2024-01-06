@@ -34,9 +34,7 @@ export default function Sidebar() {
                 ></path>
               </svg>
             </div>
-            <Link href=''>
-              <a> Account</a>
-            </Link>
+            <Link href=''>Account</Link>
           </div>
           <div
             role='button'
@@ -58,9 +56,7 @@ export default function Sidebar() {
                 ></path>
               </svg>
             </div>
-            <Link href='/user/password'>
-              <a> Password </a>
-            </Link>
+            <Link href='/user/password'>Password</Link>
           </div>
 
           <div

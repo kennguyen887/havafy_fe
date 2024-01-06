@@ -16,8 +16,8 @@ import { feedbackFlag } from '@/constants/env';
 
 export default function Footer() {
   return (
-    <footer className='mt-4 pb-2'>
-      <main className='layout flex flex-col items-center border-t pt-6 dark:border-gray-600'>
+    <footer className='mt-4 bg-white pb-2 pt-10'>
+      <main className='layout flex flex-col items-center'>
         <FooterLinks />
 
         <p className='mt-12 font-medium text-gray-600 dark:text-gray-300'>

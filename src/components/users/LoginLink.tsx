@@ -54,17 +54,19 @@ function AuthenticatedMenuDropdown() {
             aria-labelledby='dropdownInformdropdownAvatarNameButtonationButton'
           >
             <li>
-              <Link href='/user/account'>
-                <a className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
-                  Account
-                </a>
+              <Link
+                href='/user/account'
+                className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
+              >
+                Account
               </Link>
             </li>
             <li>
-              <Link href='/user/password'>
-                <a className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
-                  Change password
-                </a>
+              <Link
+                href='/user/password'
+                className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
+              >
+                Change password
               </Link>
             </li>
           </ul>
@@ -116,13 +118,14 @@ export default function LoginLink() {
         <AuthenticatedMenuDropdown />
       ) : (
         <>
-          <Link href='/user/login'>
-            <a className='text-sm font-semibold'>Login</a>
+          <Link href='/user/login' className='text-sm font-semibold'>
+            Login
           </Link>
-          <Link href='/user/register'>
-            <a className='block rounded-md bg-rose-600 px-4 py-2 text-sm font-semibold  text-white'>
-              Register
-            </a>
+          <Link
+            href='/user/register'
+            className='block rounded-md bg-rose-600 px-4 py-2 text-sm font-semibold  text-white'
+          >
+            Register
           </Link>
         </>
       )}

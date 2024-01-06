@@ -9,7 +9,7 @@ import {
 } from 'react';
 import React from 'react';
 
-import { removeItem } from '@/lib/localStorage';
+import { getItem, removeItem } from '@/lib/localStorage';
 import { getApi } from '@/lib/request';
 
 class UserContextTypeDto {
@@ -54,22 +54,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const loadAuth = React.useCallback(async () => {
-    getApi('user/me')
-      .then(({ data }) => {
-        if (!data.id) {
-          return;
-        }
-        setUser(data ? plainToInstance(UserContextTypeDto, data) : null);
-        setIsAuthenticated(true);
-      })
-      .catch((error) => {
-        if (error.response) {
-          const { status } = error.response;
-          if (status === 401) {
-            resetAuth();
+    const token = getItem('auth');
+    token &&
+      getApi('user/me')
+        .then(({ data }) => {
+          if (!data.id) {
+            return;
           }
-        }
-      });
+          setUser(data ? plainToInstance(UserContextTypeDto, data) : null);
+          setIsAuthenticated(true);
+        })
+        .catch((error) => {
+          if (error.response) {
+            const { status } = error.response;
+            if (status === 401) {
+              resetAuth();
+            }
+          }
+        });
   }, []);
 
   useEffect(() => {

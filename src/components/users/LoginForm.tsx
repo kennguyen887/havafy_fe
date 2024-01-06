@@ -78,10 +78,11 @@ export default function LoginForm() {
                 className='mb-2'
               />
               <div className='text-right text-gray-400'>
-                <Link href='/user/forgotPassword'>
-                  <a className='text-sm text-gray-800 hover:text-red-700'>
-                    Forgot password?
-                  </a>
+                <Link
+                  href='/user/forgotPassword'
+                  className='text-sm text-gray-800 hover:text-red-700'
+                >
+                  Forgot password?
                 </Link>
               </div>
               <div className='mt-7 flex items-center justify-center'>
