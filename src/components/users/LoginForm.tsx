@@ -1,5 +1,5 @@
 import { GoogleLogin } from '@react-oauth/google';
-import clsx from 'clsx';
+import Link from 'next/link';
 import Router from 'next/router';
 import { useState } from 'react';
 import React from 'react';
@@ -19,7 +19,6 @@ export default function LoginForm() {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [alert, setAlert] = React.useState<string>();
-  const [showFP, setShowFP] = React.useState<boolean>(false);
   const { loadAuth } = useAuthState();
 
   const submitForm = async (e: { preventDefault: () => void }) => {
@@ -48,7 +47,7 @@ export default function LoginForm() {
   };
   return (
     <div className='w-96'>
-      <div id='loginSection' className={clsx(showFP ? 'hidden' : '')}>
+      <div id='loginSection'>
         <h1 className='mb-8 mt-1 text-center'>
           <Accent className='text-2xl'>Sign in to your account</Accent>
         </h1>
@@ -78,6 +77,13 @@ export default function LoginForm() {
                 ]}
                 className='mb-2'
               />
+              <div className='text-right text-gray-400'>
+                <Link href='/user/forgotPassword'>
+                  <a className='text-sm text-gray-800 hover:text-red-700'>
+                    Forgot password?
+                  </a>
+                </Link>
+              </div>
               <div className='mt-7 flex items-center justify-center'>
                 <PrimaryButton name='Login' />
               </div>
@@ -117,58 +123,6 @@ export default function LoginForm() {
             />
           </div>
         </div>
-        <div className='my-10 text-center'>
-          <button
-            onClick={() => setShowFP(true)}
-            className='text-sm text-gray-800 hover:text-red-700'
-          >
-            Forgot password?
-          </button>
-        </div>
-      </div>
-      <div id='forgotPasswordSection' className={clsx(showFP ? '' : 'hidden')}>
-        <h1 className='mb-8 mt-1' data-fade='1'>
-          <Accent className='text-2xl'>Forgot password</Accent>
-        </h1>
-        {/* 
-        <form onSubmit={submitForm} noValidate>
-          <Alert content={alert} hidden={!alert} />
-          <TextInput
-            name='Your email'
-            id='email'
-            type='email'
-            currentValue={(value) => setEmail(value)}
-            valueValidate={[
-              (value) => !isValidEmail(value),
-              'Your email is invalid',
-            ]}
-            className='mb-7'
-          />
-
-          <div className='mt-7 flex items-center justify-center'>
-            <PrimaryButton name='Request reset' />
-          </div>
-        </form> */}
-
-        <button
-          onClick={() => setShowFP(false)}
-          className='group relative my-8 inline-flex items-center justify-start'
-        >
-          <span className='absolute left-0 -translate-x-2  duration-200 ease-linear group-hover:translate-x-0'>
-            <svg
-              className='h-3 w-3 text-black'
-              fill='none'
-              stroke='currentColor'
-              viewBox='0 0 52 52'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path d='M38,52a2,2,0,0,1-1.41-.59l-24-24a2,2,0,0,1,0-2.82l24-24a2,2,0,0,1,2.82,0,2,2,0,0,1,0,2.82L16.83,26,39.41,48.59A2,2,0,0,1,38,52Z' />
-            </svg>
-          </span>
-          <span className='-translate-x-2 pl-4  duration-200 ease-out group-hover:translate-x-0'>
-            Back to log in
-          </span>
-        </button>
       </div>
     </div>
   );

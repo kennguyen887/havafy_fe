@@ -6,7 +6,7 @@ import useLoaded from '@/hooks/useLoaded';
 
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
-import LoginForm from '@/components/users/LoginForm';
+import ResetPasswordWrap from '@/components/users/ResetPasswordForm';
 
 import { useAuthState } from '@/contexts/AuthContext';
 
@@ -31,7 +31,7 @@ export default function RegisterPage() {
               <div>
                 <div className='mt-4 align-baseline' data-fade='2'>
                   <div className='max-w-xs'>
-                    <LoginForm />
+                    <ResetPasswordWrap />
                   </div>
                 </div>
               </div>
