@@ -33,20 +33,18 @@ export function ResetPasswordForm() {
         return;
       }
       const token = await executeRecaptcha();
-
+      setAlert(undefined);
       setLoading(true);
       const data = await postApi('user/resetPassword', {
         email,
         token,
       });
-      if (data) {
-        setLoading(false);
-        if (data.statusCode) {
-          setAlert(data.message);
-          return;
-        }
-        setSubmitted(true);
+      setLoading(false);
+      if (data?.statusCode) {
+        setAlert(data.message);
+        return;
       }
+      setSubmitted(true);
     },
     [email, loading, executeRecaptcha]
   );

@@ -33,14 +33,13 @@ export default function ChangeResetPasswordForm() {
         password,
         resetToken: params.slug,
       });
-      if (data) {
-        setLoading(false);
-        if (data.statusCode) {
-          setAlert(data.message);
-          return;
-        }
-        setSubmitted(true);
+
+      setLoading(false);
+      if (data?.statusCode) {
+        setAlert(data.message);
+        return;
       }
+      setSubmitted(true);
     },
     [password, loading, params?.slug]
   );
