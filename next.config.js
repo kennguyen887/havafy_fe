@@ -12,10 +12,10 @@ const nextConfig = {
     domains: ['res.cloudinary.com', 'localhost', 'i.scdn.co', 'flowbite.com'],
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "*.googleusercontent.com",
-        port: "",
-        pathname: "**",
+        protocol: 'https',
+        hostname: '*.googleusercontent.com',
+        port: '',
+        pathname: '**',
       },
     ],
   },
