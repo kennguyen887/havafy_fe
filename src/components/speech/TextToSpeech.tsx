@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React from 'react';
 
 import Accent from '@/components/Accent';
@@ -18,7 +19,9 @@ const speeds: SelectDto = SPEECH_SPEED.map((speed) => {
 export default function TextToSpeech() {
   const DEFAULT_SPEECH_COUNTRY = 'vi-VN';
   const DEFAULT_SPEED = 1;
+  const MAX_TEXT_LENGTH = 500;
   const [voices, setVoices] = React.useState<SelectDto>();
+  const [text, setText] = React.useState<string>('');
   // eslint-disable-next-line unused-imports/no-unused-vars
   const [speed, setSpeed] = React.useState<string>(DEFAULT_SPEED.toString());
 
@@ -34,9 +37,15 @@ export default function TextToSpeech() {
     });
     setVoices(voices);
   };
+
+  const isTextToLong = (): boolean => {
+    return text?.length > MAX_TEXT_LENGTH;
+  };
+
   React.useEffect(() => {
     changeLanguage(DEFAULT_SPEECH_COUNTRY);
   }, []);
+
   return (
     <article className='layout max-w-2xl'>
       <h1 className='mt-1 text-2xl md:text-4xl 2xl:text-5xl' data-fade='2'>
@@ -98,12 +107,23 @@ export default function TextToSpeech() {
             </div>
           </div>
         </div>
-        <textarea
-          id='message'
-          rows={6}
-          className='block w-full rounded-lg border border-gray-300 bg-gray-50 bg-white p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500'
-          placeholder='Write your thoughts here...'
-        ></textarea>
+        <div className='relative'>
+          <textarea
+            onChange={(data) => setText(data.target.value)}
+            id='message'
+            rows={8}
+            className='block w-full rounded-lg border border-gray-300 bg-gray-50 bg-white p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500'
+            placeholder='Write your thoughts here...'
+          ></textarea>
+          <div
+            className={clsx(
+              'absolute right-0 text-sm',
+              isTextToLong() ? 'text-red-500' : 'text-gray-500'
+            )}
+          >
+            {text?.length}/{MAX_TEXT_LENGTH}
+          </div>
+        </div>
         <div className='mt-3'>
           <PrimaryButton name='Speech now' />
         </div>
