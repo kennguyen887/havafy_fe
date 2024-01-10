@@ -7,7 +7,7 @@ const defaultMeta = {
   title: 'Havafy',
   siteName: 'havafy.com',
   description:
-    'An online portfolio and blog by Theodorus Clarence. Showcase of my projects, and some of my thoughts about website development.',
+    'An online website provides the AI tools, such as convert text to speech.',
   url: 'https://havafy.com',
   image: '/images/havafy-favicon.png',
   type: 'website',
@@ -45,6 +45,7 @@ export default function Seo(props: SeoProps) {
   return (
     <Head>
       <title>{meta.title}</title>
+      <meta charSet='UTF-8'></meta>
       <meta name='robots' content={meta.robots} />
       <meta content={meta.description} name='description' />
       <meta property='og:url' content={`${meta.url}${router.asPath}`} />

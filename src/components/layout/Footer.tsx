@@ -117,12 +117,12 @@ type Social = {
 };
 const socials: Social[] = [
   {
-    href: 'https://github.com/kennguyen887',
+    href: 'https://www.facebook.com/havafydotcom',
     icon: SiFacebook,
     id: 'Github',
     text: (
       <>
-        See our projects on <Accent className='font-medium'>Github</Accent>
+        See our projects on <Accent className='font-medium'>Facebook</Accent>
       </>
     ),
   },

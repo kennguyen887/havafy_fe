@@ -205,6 +205,11 @@
   @apply rounded-sm focus:outline-none focus-visible:ring focus-visible:ring-primary-300;
 }
 
+input:focus,
+textarea:focus {
+  @apply border-none outline-none focus:outline-none;
+}
+
 .heart-animate:active,
 .heart-button:active .heart-animate {
   transform: scale(1.3);

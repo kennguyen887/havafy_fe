@@ -5,9 +5,9 @@ import { getAllFilesFrontmatter, getFeatured } from '@/lib/mdx.server';
 import { generateRss } from '@/lib/rss';
 import useLoaded from '@/hooks/useLoaded';
 
-import Accent from '@/components/Accent';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
+import TextToSpeech from '@/components/speech/TextToSpeech';
 import TC from '@/components/TC';
 
 export default function IndexPage() {
@@ -24,28 +24,7 @@ export default function IndexPage() {
             isLoaded && 'fade-in-start'
           )}
         >
-          <article className='layout'>
-            <h1
-              className='mt-1 text-2xl md:text-4xl 2xl:text-5xl'
-              data-fade='2'
-            >
-              <Accent>
-                Text to Speech Voice Over
-                <br />
-                with Realistic AI Voices
-              </Accent>
-            </h1>
-            <p
-              className={clsx(
-                'mt-4 max-w-4xl text-gray-700 dark:text-gray-200 md:mt-6',
-                'md:text-lg 2xl:text-xl'
-              )}
-              data-fade='3'
-            >
-              I work with React Ecosystem, and write to teach people how to
-              rebuild and redefine fundamental concepts through mental models.
-            </p>
-          </article>
+          <TextToSpeech />
           <TC
             className={clsx(
               'absolute bottom-0 right-6',
