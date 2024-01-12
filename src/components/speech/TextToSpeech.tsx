@@ -1,5 +1,9 @@
 import clsx from 'clsx';
 import React from 'react';
+import {
+  GoogleReCaptchaProvider,
+  useGoogleReCaptcha,
+} from 'react-google-recaptcha-v3';
 
 import { postApi } from '@/lib/request';
 
@@ -19,10 +23,10 @@ const speeds: SelectDto = SPEECH_SPEED.map((speed) => {
   };
 });
 
-export default function TextToSpeech() {
+export function TextToSpeech() {
   const DEFAULT_SPEECH_COUNTRY = 'vi-VN';
   const DEFAULT_SPEED = 1;
-  const MAX_TEXT_LENGTH = 500;
+  const MAX_TEXT_LENGTH = 300;
   const [voices, setVoices] = React.useState<SelectDto>();
   const [voice, setVoice] = React.useState<string>();
   const [text, setText] = React.useState<string>('');
@@ -30,6 +34,7 @@ export default function TextToSpeech() {
   const [speechFileUrl, setSpeechFileUrl] = React.useState<string>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [speed, setSpeed] = React.useState<string>(DEFAULT_SPEED.toString());
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const changeLanguage = (languageCode: string) => {
     const voices = SPEECH_VOICES.filter((voice) =>
@@ -59,11 +64,19 @@ export default function TextToSpeech() {
       setAlert(undefined);
       setSpeechFileUrl(undefined);
       setLoading(true);
+
+      if (!executeRecaptcha) {
+        return;
+      }
+
+      const token = await executeRecaptcha();
+
       if (text.length > 5) {
         const data = await postApi('speech', {
           text,
           voice,
           speed: Number(speed),
+          token,
         });
 
         if (data.statusCode) {
@@ -76,7 +89,7 @@ export default function TextToSpeech() {
       }
       setLoading(false);
     },
-    [text, speed, voice]
+    [text, speed, voice, executeRecaptcha]
   );
 
   return (
@@ -148,7 +161,7 @@ export default function TextToSpeech() {
           <textarea
             onChange={(data) => setText(data.target.value)}
             id='message'
-            rows={8}
+            rows={6}
             className='block w-full rounded-lg border border-gray-300 bg-gray-50 bg-white p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500'
             placeholder='Write your thoughts here...'
           ></textarea>
@@ -181,5 +194,23 @@ export default function TextToSpeech() {
         </div>
       </form>
     </article>
+  );
+}
+
+export default function TextToSpeechWrap() {
+  return (
+    <div>
+      <GoogleReCaptchaProvider
+        reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTHA_SITE_KEY || ''}
+        scriptProps={{
+          async: false,
+          defer: true,
+          appendTo: 'body',
+          nonce: undefined,
+        }}
+      >
+        <TextToSpeech />
+      </GoogleReCaptchaProvider>
+    </div>
   );
 }

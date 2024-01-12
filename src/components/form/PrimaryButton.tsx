@@ -3,7 +3,7 @@ import * as React from 'react';
 
 interface ButtonProps {
   isLoading?: boolean;
-  className: string;
+  className?: string;
   name: string;
   onClick?: () => void;
 }
