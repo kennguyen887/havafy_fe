@@ -5,6 +5,7 @@ import Document, {
   Main,
   NextScript,
 } from 'next/document';
+import Script from 'next/script';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -13,9 +14,22 @@ class MyDocument extends Document {
   }
 
   render() {
+    const gTagID = process.env.NEXT_PUBLIC_GTAG || '';
     return (
       <Html lang='en'>
         <Head>
+          <Script
+            src={'https://www.googletagmanager.com/gtag/js?id=' + gTagID}
+          />
+          <Script id='google-analytics'>
+            {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          
+            gtag('config', '${gTagID}');
+          `}
+          </Script>
           <link
             rel='preload'
             href='/fonts/inter-var-latin.woff2'
