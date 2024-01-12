@@ -1,7 +1,10 @@
 import clsx from 'clsx';
 import React from 'react';
 
+import { postApi } from '@/lib/request';
+
 import Accent from '@/components/Accent';
+import Alert from '@/components/form/Alert';
 import PrimaryButton from '@/components/form/PrimaryButton';
 
 import { SPEECH_COUNTRIES, SPEECH_SPEED, SPEECH_VOICES } from '@/domain/models';
@@ -21,8 +24,11 @@ export default function TextToSpeech() {
   const DEFAULT_SPEED = 1;
   const MAX_TEXT_LENGTH = 500;
   const [voices, setVoices] = React.useState<SelectDto>();
+  const [voice, setVoice] = React.useState<string>();
   const [text, setText] = React.useState<string>('');
-  // eslint-disable-next-line unused-imports/no-unused-vars
+  const [alert, setAlert] = React.useState<string>();
+  const [speechFileUrl, setSpeechFileUrl] = React.useState<string>();
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [speed, setSpeed] = React.useState<string>(DEFAULT_SPEED.toString());
 
   const changeLanguage = (languageCode: string) => {
@@ -36,6 +42,7 @@ export default function TextToSpeech() {
       };
     });
     setVoices(voices);
+    setVoice(voices[0].code);
   };
 
   const isTextToLong = (): boolean => {
@@ -46,22 +53,49 @@ export default function TextToSpeech() {
     changeLanguage(DEFAULT_SPEECH_COUNTRY);
   }, []);
 
+  const submitForm = React.useCallback(
+    async (e: { preventDefault: () => void }) => {
+      e.preventDefault();
+      setAlert(undefined);
+      setSpeechFileUrl(undefined);
+      setLoading(true);
+      if (text.length > 5) {
+        const data = await postApi('speech', {
+          text,
+          voice,
+          speed: Number(speed),
+        });
+
+        if (data.statusCode) {
+          setAlert(data.message);
+        }
+
+        if (data.speechFileUrl) {
+          setSpeechFileUrl(data.speechFileUrl);
+        }
+      }
+      setLoading(false);
+    },
+    [text, speed, voice]
+  );
+
   return (
     <article className='layout max-w-2xl'>
-      <h1 className='mt-1 text-2xl md:text-4xl 2xl:text-5xl' data-fade='2'>
+      <h1 className='mt-1 text-2xl md:text-4xl 2xl:text-5xl' data-fade='1'>
         <Accent>
           Text to Speech Voice Over
           <br />
           with Realistic AI Voices
         </Accent>
       </h1>
-      <p className='mb-8 mt-5 text-sm text-gray-500' data-fade='3'>
-        Murf offers a selection of 100% natural sounding AI voices in 20
+      <p className='mb-8 mt-5 text-xs text-gray-500' data-fade='2'>
+        Murf offers a selection of 100% natural sounding AI voices in 60
         languages to make professional voice over for your videos and
-        presentations. Start your free trial.
+        presentations.
       </p>
-      <form>
-        <div className='mb-4 grid grid-cols-3  gap-4'>
+      <form onSubmit={submitForm} noValidate>
+        <Alert content={alert} hidden={!alert} />
+        <div className='mb-4 grid grid-cols-3 gap-4' data-fade='2'>
           <div>
             <div className='text-xs font-semibold'>Languages</div>
             <div className='mt-2'>
@@ -81,7 +115,10 @@ export default function TextToSpeech() {
           <div>
             <div className='text-xs font-semibold'>Voices</div>
             <div className='mt-2'>
-              <select className='block w-full rounded-lg border-gray-200 px-2 py-2 pe-9 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600'>
+              <select
+                onChange={(value) => setVoice(value.target.value)}
+                className='block w-full rounded-lg border-gray-200 px-2 py-2 pe-9 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600'
+              >
                 {voices?.map((voice) => (
                   <option value={voice.code} key={voice.code}>
                     {voice.name}
@@ -107,7 +144,7 @@ export default function TextToSpeech() {
             </div>
           </div>
         </div>
-        <div className='relative'>
+        <div className='relative' data-fade='3'>
           <textarea
             onChange={(data) => setText(data.target.value)}
             id='message'
@@ -117,15 +154,30 @@ export default function TextToSpeech() {
           ></textarea>
           <div
             className={clsx(
-              'absolute right-0 text-sm',
+              'absolute right-0 -mt-6 mr-2 text-sm',
               isTextToLong() ? 'text-red-500' : 'text-gray-500'
             )}
           >
             {text?.length}/{MAX_TEXT_LENGTH}
           </div>
         </div>
-        <div className='mt-3'>
-          <PrimaryButton name='Speech now' />
+        <div className='mt-3 flex justify-between' data-fade='4'>
+          <PrimaryButton
+            className='h-12'
+            name='Speech now'
+            isLoading={loading}
+          />
+          <div className=''>
+            {speechFileUrl ? (
+              <span className='h-5'>
+                <audio controls autoPlay>
+                  <source src={speechFileUrl} type='audio/mpeg' />
+                </audio>
+              </span>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       </form>
     </article>
