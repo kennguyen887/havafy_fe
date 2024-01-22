@@ -17,7 +17,7 @@ export default function AboutPage() {
     <Layout>
       <Seo
         templateTitle='About'
-        description='Clarence is a front-end developer that started learning in May 2020. He write blogs about his approach and mental model on understanding topics in front-end development.'
+        description='a selection of 100% natural sounding AI voices in 60 languages to make professional voice over for your videos and presentations.'
       />
 
       <main>

@@ -27,7 +27,7 @@ class UserContextTypeDto {
 class AuthContextTypeDto {
   user!: UserContextTypeDto | null;
 
-  isAuthenticated!: boolean;
+  isAuthenticated!: boolean | null;
 
   resetAuth?: () => void;
 
@@ -44,7 +44,7 @@ const AuthContext = createContext<AuthContextTypeDto>(defaultAuthState);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserContextTypeDto | null>(null);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   const resetAuth = () => {
     removeItem('auth');

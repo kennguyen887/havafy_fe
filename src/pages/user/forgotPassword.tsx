@@ -22,7 +22,7 @@ export default function RegisterPage() {
     <Layout>
       <Seo
         templateTitle='Sign in to your account'
-        description='Clarence is a front-end developer that started learning in May 2020. He write blogs about his approach and mental model on understanding topics in front-end development.'
+        description='a selection of 100% natural sounding AI voices in 60 languages to make professional voice over for your videos and presentations.'
       />
       <main>
         <section className={clsx(isLoaded && 'fade-in-start')}>

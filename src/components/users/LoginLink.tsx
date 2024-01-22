@@ -109,7 +109,7 @@ export default function LoginLink() {
       console.log('Login Failed');
     },
     auto_select: true,
-    disabled: isAuthenticated,
+    disabled: !!isAuthenticated,
   });
 
   return (
