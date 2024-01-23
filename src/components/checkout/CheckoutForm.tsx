@@ -1,26 +1,58 @@
 import clsx from 'clsx';
+import { useSearchParams } from 'next/navigation';
 import Router from 'next/router';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { PayPalButton } from 'react-paypal-button-v2';
 
-import { setItem } from '@/lib/localStorage';
 import { postApi } from '@/lib/request';
 
 import Alert from '@/components/form/Alert';
+import FlatButton from '@/components/form/FlatButton';
 import PrimaryButton from '@/components/form/PrimaryButton';
 import TextInput from '@/components/form/TextInput';
 
 import { useAuthState } from '@/contexts/AuthContext';
+import { GetOrdeItemResDto } from '@/domain/dto';
 
 export default function CheckoutForm() {
-  const [email, setEmail] = useState<string>();
-  const [firstName] = useState<string>();
-  // const [lastName, setLastName] = useState<string>();
-  // const [password, setPassword] = useState<string>();
-  // const [coupon, setCoupon] = useState<string>();
+  const searchParams = useSearchParams();
+  const [promoCode, setPromoCode] = useState<string | null>(null);
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  const [promoDiscount, setPromoDiscount] = useState<number>();
+  const [subtotal, setSubtotal] = useState<number>();
+  const [discountTotal, setDiscountTotal] = useState<number>();
+  const [grandTotal, setGrandTotal] = useState<number | null>(null);
+  const [items, setItems] = useState<GetOrdeItemResDto[]>();
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const [alert, setAlert] = React.useState<string>();
   const [haveCoupon, setHaveCoupon] = React.useState<boolean>(false);
   const { isAuthenticated } = useAuthState();
+  const skuList = searchParams.get('skuList');
+  const getOrderBySkuList = (skuList: string | null) => {
+    postApi('order/getGrandTotal', {
+      promoCode,
+      items: skuList?.split(',').map((sku) => {
+        return {
+          productSku: sku,
+          quantity: 1,
+        };
+      }),
+    }).then((data) => {
+      setPromoDiscount(data.promoDiscount);
+      setSubtotal(data.subtotal);
+      setDiscountTotal(data.discountTotal);
+      setGrandTotal(data.grandTotal);
+      setItems(data.items);
+    });
+  };
+
+  React.useEffect(() => {
+    if (!skuList) {
+      return;
+    }
+    getOrderBySkuList(skuList);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [skuList]);
 
   React.useEffect(() => {
     if (isAuthenticated === false) {
@@ -28,52 +60,47 @@ export default function CheckoutForm() {
     }
   }, [isAuthenticated]);
 
-  const submitForm = useCallback(
-    async (e: { preventDefault: () => void }) => {
-      e.preventDefault();
-      if (!email) {
-        return;
-      }
-
-      const data = await postApi('user/register', {
-        email,
-        firstName,
-        token: '',
-      });
-      if (data) {
-        if (data.statusCode) {
-          setAlert(data.message);
-          return;
-        }
-
-        if (data.user && data.user.token) {
-          setItem('auth', data.user.token);
-          Router.push('/');
-          return;
-        }
-      }
-
-      // Do whatever you want with the token
-    },
-    [email, firstName]
-  );
-
+  const submitForm = ({
+    paymentMethod,
+    paymentOrderId,
+  }: {
+    paymentMethod?: string;
+    paymentOrderId?: string;
+  }) => {
+    postApi('order', {
+      promoCode,
+      paymentMethod,
+      paymentOrderId,
+      items: skuList?.split(',').map((sku) => {
+        return {
+          productSku: sku,
+          quantity: 1,
+        };
+      }),
+    }).then((data) => {
+      setPromoDiscount(data.promoDiscount);
+    });
+  };
   // onFinish={(values) => handleReCaptchaVerify(values)}
 
   return (
     <div className='max-w-24'>
-      <form onSubmit={submitForm} noValidate>
+      <form noValidate>
         <div className='mb-5 bg-white p-5'>
           <Alert content={alert} hidden={!alert} />
-          <div id='cartItems' className='border-b border-gray-300 text-sm'>
-            <div className='flex flex-row'>
-              <div className='basis-2/3 px-2 py-3 font-semibold'>
-                1 million characters for the Text-to-Speech service.
-              </div>
-              <div className='basis-1/3 px-2 py-3 text-right font-semibold'>
-                US$9
-              </div>
-            </div>
+          <div id='cartItems' className='w-96 border-b border-gray-300 text-sm'>
+            {items?.map((item) => {
+              return (
+                <div className='flex flex-row' key={item.sku}>
+                  <div className='basis-2/3 px-2 py-3 font-semibold'>
+                    {item.name}
+                  </div>
+                  <div className='basis-1/3 px-2 py-3 text-right font-semibold'>
+                    US${item.total}
+                  </div>
+                </div>
+              );
+            })}
           </div>
           <div
             id='cartTotal'
@@ -81,17 +108,23 @@ export default function CheckoutForm() {
           >
             <div className='flex flex-row'>
               <div className='basis-2/3 px-2 py-2'>Subtotal</div>
-              <div className='basis-1/3 px-2 py-2 text-right'>US$9</div>
+              <div className='basis-1/3 px-2 py-2 text-right'>
+                US${subtotal}
+              </div>
             </div>
             <div className='flex flex-row'>
-              <div className='basis-2/3 px-2 py-2'>Service fees</div>
-              <div className='basis-1/3 px-2 py-2 text-right'>US$0</div>
+              <div className='basis-2/3 px-2 py-2'>Discount</div>
+              <div className='basis-1/3 px-2 py-2 text-right'>
+                US${discountTotal}
+              </div>
             </div>
           </div>
           <div id='grandTotal' className='font-semibold'>
             <div className='flex flex-row'>
               <div className='basis-2/3 px-2 py-3'>Total</div>
-              <div className='basis-1/3 px-2 py-3 text-right'>US$9</div>
+              <div className='basis-1/3 px-2 py-3 text-right'>
+                US${grandTotal}
+              </div>
             </div>
           </div>
           <div id='couponApply'>
@@ -115,41 +148,47 @@ export default function CheckoutForm() {
                   name='Enter your coupon'
                   id='coupon'
                   className='h-10'
-                  currentValue={(value) => setEmail(value)}
-                  valueValidate={[
-                    (value) => value.length < 3,
-                    'Coupon is invalid',
-                  ]}
+                  currentValue={(value) => setPromoCode(value)}
                 />
               </div>
               <div className='basis-1/4 text-right'>
-                <PrimaryButton className='h-10' name='Apply' />
+                <PrimaryButton
+                  className='h-10'
+                  name='Apply'
+                  onClick={() => getOrderBySkuList(skuList)}
+                />
               </div>
             </div>
           </div>
         </div>
-        <PayPalButton
-          options={{
-            clientId:
-              'AV8-_8dTFiq9NwHnXct-Fdwxhwhn0QP6Ph8KfmwmXR6Aqspj7wXWAkIY9O4Q6iNM6VBkh69xIP2AuQe0',
-          }}
-          amount='9'
-          // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          onSuccess={(details: any, data: any) => {
-            // eslint-disable-next-line no-console
-            console.log('-----------details', details);
-            // eslint-disable-next-line no-console
-            console.log('-----------data', data);
-            // OPTIONAL: Call your server to save the transaction
-            return fetch('/paypal-transaction-complete', {
-              method: 'post',
-              body: JSON.stringify({
-                orderID: data.orderID,
-              }),
-            });
-          }}
-        />
+        {typeof grandTotal === 'number' && grandTotal > 0 ? (
+          <PayPalButton
+            options={{
+              clientId:
+                'AV8-_8dTFiq9NwHnXct-Fdwxhwhn0QP6Ph8KfmwmXR6Aqspj7wXWAkIY9O4Q6iNM6VBkh69xIP2AuQe0',
+            }}
+            amount={grandTotal}
+            // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onSuccess={(details: any, data: any) => {
+              // eslint-disable-next-line no-console
+              console.log('-----------details', details);
+              // eslint-disable-next-line no-console
+              console.log('-----------data', data);
+              // OPTIONAL: Call your server to save the transaction
+              return submitForm({
+                paymentMethod: 'paypal',
+                paymentOrderId: data.orderID,
+              });
+            }}
+          />
+        ) : (
+          <FlatButton
+            name='Checkout'
+            className='w-full'
+            onClick={() => submitForm}
+          />
+        )}
       </form>
     </div>
   );

@@ -104,7 +104,7 @@ const footerLinks: { href: string; text: string; tooltip: React.ReactNode }[] =
     },
     {
       href: '/user/login',
-      text: 'Register',
+      text: 'Login',
       tooltip: 'Login to your account',
     },
   ];
