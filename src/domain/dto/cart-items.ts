@@ -1,4 +1,4 @@
-export type GetOrdeItemResDto = {
+export type GetOrdeItemDto = {
   name: string;
 
   basePrice: number;
@@ -11,3 +11,15 @@ export type GetOrdeItemResDto = {
 
   sku: string;
 };
+
+export class GetOrderReqItemDto {
+  quantity!: number;
+
+  productSku!: string;
+}
+
+export class GetOrderReqDto {
+  items!: GetOrderReqItemDto[];
+
+  promoCode?: string;
+}

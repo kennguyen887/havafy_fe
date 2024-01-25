@@ -12,12 +12,31 @@ import PrimaryButton from '@/components/form/PrimaryButton';
 import TextInput from '@/components/form/TextInput';
 
 import { useAuthState } from '@/contexts/AuthContext';
-import { GetOrdeItemResDto } from '@/domain/dto';
-function CheckoutFormSubmitted({ orderId }: { orderId: string }) {
+import { GetOrdeItemDto, GetOrderReqDto } from '@/domain/dto';
+function CheckoutFormSubmitted({
+  orderId,
+  orderNumber,
+}: {
+  orderId: string;
+  orderNumber: string;
+}) {
   return (
     <div className='mb-5 bg-white p-5'>
-      <h3>Created order</h3>
-      {orderId}
+      <h3 className=''>Created order</h3>
+      <div className='my-10'>
+        {' '}
+        View detail order{' '}
+        <a
+          className='font-semibold text-red-700'
+          href={`/user/order/${orderId}`}
+        >
+          #{orderNumber}
+        </a>
+      </div>
+
+      <div>
+        <PrimaryButton className='h-10' name='Go to home' />
+      </div>
     </div>
   );
 }
@@ -29,21 +48,32 @@ export default function CheckoutForm() {
   const [discountTotal, setDiscountTotal] = useState<number>();
   const [grandTotal, setGrandTotal] = useState<number | null>(null);
   const [orderId, setOrderId] = useState<string>();
-  const [items, setItems] = useState<GetOrdeItemResDto[]>();
+  const [orderNumber, setOrderNumber] = useState<string>('');
+  const [items, setItems] = useState<GetOrdeItemDto[]>();
   const [alert, setAlert] = React.useState<string>();
   const [haveCoupon, setHaveCoupon] = React.useState<boolean>(false);
   const { isAuthenticated } = useAuthState();
   const skuList = searchParams.get('skuList');
   const getOrderBySkuList = (skuList: string | null) => {
-    postApi('order/getGrandTotal', {
-      promoCode,
-      items: skuList?.split(',').map((sku) => {
-        return {
-          productSku: sku,
-          quantity: 1,
-        };
-      }),
-    }).then((data) => {
+    const items = skuList?.split(',').map((sku) => {
+      return {
+        productSku: sku,
+        quantity: 1,
+      };
+    });
+
+    if (!items || !items.length) {
+      return;
+    }
+
+    const payload: GetOrderReqDto = {
+      items,
+    };
+
+    if (promoCode && promoCode?.length > 3) {
+      payload.promoCode = promoCode;
+    }
+    postApi('order/getGrandTotal', payload).then((data) => {
       setSubtotal(data.subtotal);
       setDiscountTotal(data.discountTotal);
       setGrandTotal(data.grandTotal);
@@ -90,6 +120,7 @@ export default function CheckoutForm() {
 
       if (data.orderId) {
         setOrderId(data.orderId);
+        setOrderNumber(data.orderNumber);
       }
     });
   };
@@ -98,7 +129,7 @@ export default function CheckoutForm() {
   return (
     <div className='max-w-24'>
       {orderId ? (
-        <CheckoutFormSubmitted orderId={orderId} />
+        <CheckoutFormSubmitted orderNumber={orderNumber} orderId={orderId} />
       ) : (
         <form noValidate>
           <div className='mb-5 bg-white p-5'>
