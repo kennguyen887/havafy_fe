@@ -1,6 +1,6 @@
 import { GoogleLogin } from '@react-oauth/google';
 import Link from 'next/link';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import React from 'react';
 
@@ -16,6 +16,7 @@ import TextInput from '@/components/form/TextInput';
 import { useAuthState } from '@/contexts/AuthContext';
 
 export default function LoginForm() {
+  const router = useRouter();
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [alert, setAlert] = React.useState<string>();
@@ -40,7 +41,7 @@ export default function LoginForm() {
           loadAuth();
         }
 
-        Router.push('/');
+        router.back();
         return;
       }
     }
@@ -109,7 +110,7 @@ export default function LoginForm() {
                   if (data && loadAuth) {
                     setItem('auth', data.token);
                     loadAuth();
-                    Router.push('/');
+                    router.back();
                   }
                 } catch (e) {
                   // eslint-disable-next-line no-console

@@ -55,6 +55,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const loadAuth = React.useCallback(async () => {
     const token = getItem('auth');
+    if (!token) {
+      setIsAuthenticated(false);
+    }
+
     token &&
       getApi('user/me')
         .then(({ data }) => {

@@ -23,3 +23,13 @@ export class GetOrderReqDto {
 
   promoCode?: string;
 }
+
+export class SubmitOrderReqDto {
+  items!: GetOrderReqItemDto[];
+
+  paymentMethod?: string;
+
+  paymentOrderId?: string;
+
+  promoCode?: string;
+}

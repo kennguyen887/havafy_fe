@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Link from 'next/link';
 import React from 'react';
 import {
   GoogleReCaptchaProvider,
@@ -10,6 +11,7 @@ import { postApi } from '@/lib/request';
 import Accent from '@/components/Accent';
 import Alert from '@/components/form/Alert';
 import PrimaryButton from '@/components/form/PrimaryButton';
+import GoNextButton from '@/components/GoNextButton';
 
 import { SPEECH_COUNTRIES, SPEECH_SPEED, SPEECH_VOICES } from '@/domain/models';
 
@@ -174,23 +176,26 @@ export function TextToSpeech() {
             {text?.length}/{MAX_TEXT_LENGTH}
           </div>
         </div>
-        <div className='mt-3 flex justify-between' data-fade='4'>
-          <PrimaryButton
-            className='h-12'
-            name='Speech now'
-            isLoading={loading}
-          />
-          <div className=''>
-            {speechFileUrl ? (
-              <span className='h-5'>
-                <audio controls autoPlay>
-                  <source src={speechFileUrl} type='audio/mpeg' />
-                </audio>
-              </span>
-            ) : (
-              <></>
-            )}
-          </div>
+        <div className='mt-3 flex' data-fade='4'>
+          <PrimaryButton className='h-12' name='Speech' isLoading={loading} />
+
+          <Link
+            className='ml-6 pt-4 text-sm font-semibold text-gray-300'
+            href='/checkout?skuList=TTS-100'
+          >
+            <GoNextButton name=' Buy 1 milion characters only USD$9' />
+          </Link>
+        </div>
+        <div className='mt-4'>
+          {speechFileUrl ? (
+            <span className='h-5'>
+              <audio controls autoPlay>
+                <source src={speechFileUrl} type='audio/mpeg' />
+              </audio>
+            </span>
+          ) : (
+            <></>
+          )}
         </div>
       </form>
     </article>

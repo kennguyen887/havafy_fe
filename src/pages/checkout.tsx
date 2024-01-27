@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import useLoaded from '@/hooks/useLoaded';
 
-import Accent from '@/components/Accent';
 import CheckoutForm from '@/components/checkout/CheckoutForm';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
@@ -23,9 +22,6 @@ export default function RegisterPage() {
           <div className='layout min-h-main py-20'>
             <div className='flex items-center justify-center'>
               <div className='mt-4 align-baseline' data-fade='2'>
-                <div className='mb-10 text-center'>
-                  <Accent className='text-2xl font-semibold'>Checkout</Accent>
-                </div>
                 <CheckoutForm />
               </div>
             </div>

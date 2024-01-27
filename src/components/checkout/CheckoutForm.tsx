@@ -6,13 +6,20 @@ import { PayPalButton } from 'react-paypal-button-v2';
 
 import { postApi } from '@/lib/request';
 
+import Accent from '@/components/Accent';
 import Alert from '@/components/form/Alert';
 import FlatButton from '@/components/form/FlatButton';
 import PrimaryButton from '@/components/form/PrimaryButton';
 import TextInput from '@/components/form/TextInput';
 
 import { useAuthState } from '@/contexts/AuthContext';
-import { GetOrdeItemDto, GetOrderReqDto } from '@/domain/dto';
+import {
+  GetOrdeItemDto,
+  GetOrderReqDto,
+  PaypalOrderDataResponse,
+  PaypalOrderResponse,
+  SubmitOrderReqDto,
+} from '@/domain/dto';
 function CheckoutFormSubmitted({
   orderId,
   orderNumber,
@@ -21,17 +28,22 @@ function CheckoutFormSubmitted({
   orderNumber: string;
 }) {
   return (
-    <div className='mb-5 bg-white p-5'>
-      <h3 className=''>Created order</h3>
-      <div className='my-10'>
-        {' '}
-        View detail order{' '}
+    <div className='mb-5 bg-white p-10 text-center'>
+      <h3 className='font-extrabold text-red-500'>Thank you for your order!</h3>
+      <div className='my-10 text-sm'>
+        Your order has been confirmed{' '}
         <a
           className='font-semibold text-red-700'
           href={`/user/order/${orderId}`}
         >
           #{orderNumber}
         </a>
+        <div className='mt-5 font-serif text-gray-700'>
+          Use this code at checkout for 5% off your next order.
+          <div className='my-5 space-x-1 font-serif font-semibold'>
+            THANKYOU1024
+          </div>
+        </div>
       </div>
 
       <div>
@@ -50,7 +62,7 @@ export default function CheckoutForm() {
   const [orderId, setOrderId] = useState<string>();
   const [orderNumber, setOrderNumber] = useState<string>('');
   const [items, setItems] = useState<GetOrdeItemDto[]>();
-  const [alert, setAlert] = React.useState<string>();
+  const [alertMessage, setAlertMessage] = React.useState<string>();
   const [haveCoupon, setHaveCoupon] = React.useState<boolean>(false);
   const { isAuthenticated } = useAuthState();
   const skuList = searchParams.get('skuList');
@@ -102,19 +114,30 @@ export default function CheckoutForm() {
     paymentMethod?: string;
     paymentOrderId?: string;
   }) => {
-    postApi('order', {
-      promoCode,
+    const cartItems = items?.map((item) => {
+      return {
+        productSku: item.sku,
+        quantity: 1,
+      };
+    });
+
+    if (!cartItems || !cartItems.length) {
+      return;
+    }
+
+    const paypload: SubmitOrderReqDto = {
       paymentMethod,
       paymentOrderId,
-      items: skuList?.split(',').map((sku) => {
-        return {
-          productSku: sku,
-          quantity: 1,
-        };
-      }),
-    }).then((data) => {
+      items: cartItems,
+    };
+
+    if (promoCode) {
+      paypload.promoCode = promoCode;
+    }
+
+    postApi('order', paypload).then((data) => {
       if (data.statusCode) {
-        setAlert(data.message);
+        setAlertMessage(data.message);
         return;
       }
 
@@ -131,9 +154,12 @@ export default function CheckoutForm() {
       {orderId ? (
         <CheckoutFormSubmitted orderNumber={orderNumber} orderId={orderId} />
       ) : (
-        <form noValidate>
+        <>
+          <div className='mb-10 text-center'>
+            <Accent className='text-2xl font-semibold'>Checkout</Accent>
+          </div>
           <div className='mb-5 bg-white p-5'>
-            <Alert content={alert} hidden={!alert} />
+            <Alert content={alertMessage} hidden={!alertMessage} />
             <div
               id='cartItems'
               className='w-96 border-b border-gray-300 text-sm'
@@ -216,16 +242,12 @@ export default function CheckoutForm() {
                 clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
               }}
               amount={grandTotal}
-              // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              onSuccess={(details: any, data: any) => {
-                // eslint-disable-next-line no-console
-                console.log('-----------details', details);
-                // eslint-disable-next-line no-console
-                console.log('-----------data', data);
-                // OPTIONAL: Call your server to save the transaction
+              onSuccess={(
+                _details: PaypalOrderResponse,
+                data: PaypalOrderDataResponse
+              ) => {
                 return submitForm({
-                  paymentMethod: 'paypal',
+                  paymentMethod: data.paymentSource,
                   paymentOrderId: data.orderID,
                 });
               }}
@@ -234,10 +256,12 @@ export default function CheckoutForm() {
             <FlatButton
               name='Checkout'
               className='w-full'
-              onClick={() => submitForm}
+              onClick={() => {
+                submitForm({});
+              }}
             />
           )}
-        </form>
+        </>
       )}
     </div>
   );
