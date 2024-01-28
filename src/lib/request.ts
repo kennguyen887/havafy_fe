@@ -31,7 +31,7 @@ const instance = () => {
 };
 
 const validateStatus = (status: number) => {
-  return [400, 201, 200].includes(status);
+  return [400, 201, 200, 500].includes(status);
 };
 
 export async function postApi(apiPath: string, payload: unknown) {
@@ -41,8 +41,8 @@ export async function postApi(apiPath: string, payload: unknown) {
   return res.data;
 }
 
-export async function getApi(apiPath: string) {
-  return instance().get(apiPath);
+export async function getApi(apiPath: string, params?: unknown) {
+  return instance().get(apiPath, { params });
 }
 
 export async function putApi(apiPath: string, payload: unknown) {

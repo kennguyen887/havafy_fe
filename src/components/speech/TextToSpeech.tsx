@@ -6,7 +6,7 @@ import {
   useGoogleReCaptcha,
 } from 'react-google-recaptcha-v3';
 
-import { postApi } from '@/lib/request';
+import { getApi, postApi } from '@/lib/request';
 
 import Accent from '@/components/Accent';
 import Alert from '@/components/form/Alert';
@@ -27,11 +27,13 @@ const speeds: SelectDto = SPEECH_SPEED.map((speed) => {
 
 export function TextToSpeech() {
   const DEFAULT_SPEECH_COUNTRY = 'vi-VN';
+  const PRODUCT_SKU = 'TTS-100';
   const DEFAULT_SPEED = 1;
-  const MAX_TEXT_LENGTH = 300;
+  const MAX_TEXT_LENGTH = 6000;
   const [voices, setVoices] = React.useState<SelectDto>();
   const [voice, setVoice] = React.useState<string>();
   const [text, setText] = React.useState<string>('');
+  const [productRemain, setProductRemain] = React.useState<number>();
   const [alert, setAlert] = React.useState<string>();
   const [speechFileUrl, setSpeechFileUrl] = React.useState<string>();
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -52,12 +54,29 @@ export function TextToSpeech() {
     setVoice(voices[0].code);
   };
 
+  const getProductRemain = () => {
+    getApi('product-usage', { skuList: PRODUCT_SKU }).then(
+      ({ data: { data } }) => {
+        if (!data.length) {
+          return;
+        }
+        setProductRemain(
+          data.find(
+            (item: { sku: string; remainAmount: number }) =>
+              item.sku === PRODUCT_SKU
+          )?.remainAmount || 0
+        );
+      }
+    );
+  };
+
   const isTextToLong = (): boolean => {
     return text?.length > MAX_TEXT_LENGTH;
   };
 
   React.useEffect(() => {
     changeLanguage(DEFAULT_SPEECH_COUNTRY);
+    getProductRemain();
   }, []);
 
   const submitForm = React.useCallback(
@@ -81,21 +100,24 @@ export function TextToSpeech() {
           token,
         });
 
-        if (data.statusCode) {
-          setAlert(data.message);
-        }
+        if (data) {
+          setLoading(false);
+          if (data.statusCode) {
+            setAlert(data.message);
+            return;
+          }
 
-        if (data.speechFileUrl) {
-          setSpeechFileUrl(data.speechFileUrl);
+          if (data.speechFileUrl) {
+            setSpeechFileUrl(data.speechFileUrl);
+          }
         }
       }
-      setLoading(false);
     },
     [text, speed, voice, executeRecaptcha]
   );
 
   return (
-    <article className='layout max-w-2xl'>
+    <article className='layout max-w-[820px]'>
       <h1 className='mt-1 text-2xl md:text-4xl 2xl:text-5xl' data-fade='1'>
         <Accent>
           Text to Speech Voice Over
@@ -110,7 +132,7 @@ export function TextToSpeech() {
       </p>
       <form onSubmit={submitForm} noValidate>
         <Alert content={alert} hidden={!alert} />
-        <div className='mb-4 grid grid-cols-3 gap-4' data-fade='2'>
+        <div className='mb-4 grid grid-cols-4 gap-2' data-fade='2'>
           <div>
             <div className='text-xs font-semibold'>Languages</div>
             <div className='mt-2'>
@@ -158,6 +180,12 @@ export function TextToSpeech() {
               </select>
             </div>
           </div>
+          <div className=''>
+            <div className='text-xs font-semibold'>Your Remain</div>
+            <div className='mt-4 text-sm'>
+              {productRemain?.toLocaleString()} chars
+            </div>
+          </div>
         </div>
         <div className='relative' data-fade='3'>
           <textarea
@@ -181,7 +209,7 @@ export function TextToSpeech() {
 
           <Link
             className='ml-6 pt-4 text-sm font-semibold text-gray-300'
-            href='/checkout?skuList=TTS-100'
+            href={`/checkout?skuList=${PRODUCT_SKU}`}
           >
             <GoNextButton name=' Buy 1 milion characters only USD$9' />
           </Link>
