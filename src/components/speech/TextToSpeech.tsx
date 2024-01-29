@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Link from 'next/link';
+import Router from 'next/router';
 import React from 'react';
 import {
   GoogleReCaptchaProvider,
@@ -15,6 +16,7 @@ import GoNextButton from '@/components/GoNextButton';
 
 import { SPEECH_COUNTRIES, SPEECH_SPEED, SPEECH_VOICES } from '@/domain/models';
 
+import { useAuthState } from '@/contexts/AuthContext';
 import { SelectDto } from '@/domain/dto';
 
 const speeds: SelectDto = SPEECH_SPEED.map((speed) => {
@@ -26,6 +28,7 @@ const speeds: SelectDto = SPEECH_SPEED.map((speed) => {
 });
 
 export function TextToSpeech() {
+  const { isAuthenticated } = useAuthState();
   const DEFAULT_SPEECH_COUNTRY = 'vi-VN';
   const PRODUCT_SKU = 'TTS-100';
   const DEFAULT_SPEED = 1;
@@ -55,8 +58,8 @@ export function TextToSpeech() {
   };
 
   const getProductRemain = () => {
-    getApi('product-usage', { skuList: PRODUCT_SKU }).then(
-      ({ data: { data } }) => {
+    getApi('product-usage', { skuList: PRODUCT_SKU })
+      .then(({ data: { data } }) => {
         if (!data.length) {
           return;
         }
@@ -66,8 +69,10 @@ export function TextToSpeech() {
               item.sku === PRODUCT_SKU
           )?.remainAmount || 0
         );
-      }
-    );
+      })
+      .catch((_error) => {
+        setProductRemain(undefined);
+      });
   };
 
   const isTextToLong = (): boolean => {
@@ -82,6 +87,10 @@ export function TextToSpeech() {
   const submitForm = React.useCallback(
     async (e: { preventDefault: () => void }) => {
       e.preventDefault();
+      if (!isAuthenticated) {
+        Router.push('/user/login');
+        return;
+      }
       setAlert(undefined);
       setSpeechFileUrl(undefined);
       setLoading(true);
@@ -109,11 +118,12 @@ export function TextToSpeech() {
 
           if (data.speechFileUrl) {
             setSpeechFileUrl(data.speechFileUrl);
+            getProductRemain();
           }
         }
       }
     },
-    [text, speed, voice, executeRecaptcha]
+    [isAuthenticated, executeRecaptcha, text, voice, speed]
   );
 
   return (
@@ -180,7 +190,9 @@ export function TextToSpeech() {
               </select>
             </div>
           </div>
-          <div className=''>
+          <div
+            className={clsx(isAuthenticated && productRemain ? '' : 'hidden')}
+          >
             <div className='text-xs font-semibold'>Your Remain</div>
             <div className='mt-4 text-sm'>
               {productRemain?.toLocaleString()} chars
@@ -205,7 +217,11 @@ export function TextToSpeech() {
           </div>
         </div>
         <div className='mt-3 flex' data-fade='4'>
-          <PrimaryButton className='h-12' name='Speech' isLoading={loading} />
+          <PrimaryButton
+            className='h-12'
+            name={isAuthenticated ? `Speech` : 'Login to speech'}
+            isLoading={loading}
+          />
 
           <Link
             className='ml-6 pt-4 text-sm font-semibold text-gray-300'

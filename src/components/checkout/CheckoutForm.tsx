@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import Router from 'next/router';
 import React, { useState } from 'react';
@@ -47,7 +48,9 @@ function CheckoutFormSubmitted({
       </div>
 
       <div>
-        <PrimaryButton className='h-10' name='Go to home' />
+        <Link href='/'>
+          <PrimaryButton className='h-10' name='Go to home' />
+        </Link>
       </div>
     </div>
   );
