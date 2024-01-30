@@ -4,11 +4,8 @@ import * as React from 'react';
 import useLoaded from '@/hooks/useLoaded';
 
 import Accent from '@/components/Accent';
-import CloudinaryImg from '@/components/images/CloudinaryImg';
 import Layout from '@/components/layout/Layout';
-import CustomLink from '@/components/links/CustomLink';
 import Seo from '@/components/Seo';
-import TechStack from '@/components/TechStack';
 
 export default function AboutPage() {
   const isLoaded = useLoaded();
@@ -25,47 +22,51 @@ export default function AboutPage() {
           <div className='layout min-h-main py-20'>
             <h2 data-fade='0'>About</h2>
             <h1 className='mt-1' data-fade='1'>
-              <Accent>Theodorus Clarence</Accent>
+              <Accent className='text-3xl'>
+                Havafy: Empowering Your Digital Vision
+              </Accent>
             </h1>
             <div className='mt-4' data-fade='2'>
-              <CloudinaryImg
-                className='float-right ml-6 w-40 md:w-72'
-                publicId='havafy/about/self-3-cropped_cyfuvn.jpg'
-                width='1500'
-                height='1695'
-                alt='Photo of me'
-                preview={false}
-              />
               <article className='prose dark:prose-invert'>
                 <p data-fade='3'>
-                  Hello! I'm Clarence. I started learning web development in May
-                  2020, which is the start of the pandemic. I have nothing much
-                  to do so I decided to learn web development from a udemy
-                  course, then started watching a bunch of{' '}
-                  <CustomLink href='/blog/youtube-list'>
-                    youtube videos
-                  </CustomLink>{' '}
-                  to explore more about web development especially frontend
-                  development.
+                  Havafy is not just a platform; it's your gateway to a world of
+                  digital innovation. We pride ourselves on offering exceptional
+                  AI services, a dynamic marketplace featuring scalable source
+                  code, and a bustling hub for freelance opportunities that
+                  cater to developers worldwide.
                 </p>
+                <h3> AI Services Redefined</h3>
                 <p data-fade='4'>
-                  There are a lot of things and technologies to learn in
-                  frontend development and I am motivated to learn as much as
-                  possible. I enjoy learning something new and getting feedback
-                  to make myself better and improve.
+                  Step into the future with Havafy's unparalleled AI services.
+                  Whether you're seeking to integrate advanced machine learning
+                  models, implement natural language processing, or harness the
+                  capabilities of computer vision, our team of experts is
+                  dedicated to transforming your ideas into groundbreaking
+                  solutions. Experience the next level of innovation with
+                  Havafy.
                 </p>
+                <h3>Freelance Job Tailored for You</h3>
                 <p data-fade='5'>
-                  In this website I will be writing some blogs and showcase my
-                  projects. I believe that writing what I have learned is the
-                  best way to remember things, and I can share my knowledge
-                  along the way. So do contact me and I will be very happy to
-                  help!
+                  Freelance Opportunities Tailored for You: For developers
+                  seeking opportunities beyond the ordinary, Havafy is your
+                  destination. Explore our carefully curated list of freelance
+                  jobs, offering a chance to collaborate on exciting projects
+                  with businesses of all sizes. Whether you're a seasoned
+                  professional or an emerging talent, Havafy is where skills
+                  meet opportunity.
+                </p>
+
+                <h3>Source Code Marketplace</h3>
+                <p>
+                  Discover a curated marketplace at Havafy, where scalability
+                  meets reliability. Our collection of source code for web and
+                  app development is meticulously selected to accelerate your
+                  projects. From robust backend systems to sleek frontend
+                  interfaces, Havafy's marketplace is your one-stop solution for
+                  high-quality, scalable codebases. Transform your concepts into
+                  reality effortlessly.
                 </p>
               </article>
-              <h3 className='mt-12'>Current Favorite Tech Stack</h3>
-              <figure className='mt-2'>
-                <TechStack />
-              </figure>
             </div>
           </div>
         </section>
@@ -75,9 +76,8 @@ export default function AboutPage() {
             <h2>Contact</h2>
             <article className='prose mt-4 dark:prose-invert'>
               <p>
-                Do contact me if you need my opinion about web development,
-                especially frontend works. I’ll be happy to help! (find my email
-                in the footer)
+                Do contact us if you need our opinion about web and app
+                development, especially frontend works.
               </p>
             </article>
           </div>

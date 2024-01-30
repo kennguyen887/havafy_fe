@@ -46,7 +46,7 @@ export default function Header({ large = false }: HeaderProps) {
           )}
         >
           <Logo />
-          <ul className='flex items-center justify-between space-x-5 text-xs md:space-x-6 md:text-base'>
+          <ul className='flex items-center justify-between space-x-8 text-xs md:space-x-6 md:text-base'>
             {links.map(({ href, label }) => (
               <li key={`${href}${label}`}>
                 <UnstyledLink
@@ -81,7 +81,7 @@ export default function Header({ large = false }: HeaderProps) {
 
 const links = [
   { href: '/', label: 'Home' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/about', label: 'About' },
+  { href: '/blog', label: 'Freelancer' },
+  { href: '/projects', label: 'Code & Themes' },
+  { href: '/projects', label: 'AI Services' },
 ];
