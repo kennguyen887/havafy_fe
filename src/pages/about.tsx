@@ -27,7 +27,7 @@ export default function AboutPage() {
               </Accent>
             </h1>
             <div className='mt-4' data-fade='2'>
-              <article className='prose dark:prose-invert'>
+              <article className='dark:prose-invert prose'>
                 <p data-fade='3'>
                   Havafy is not just a platform; it's your gateway to a world of
                   digital innovation. We pride ourselves on offering exceptional
@@ -68,18 +68,6 @@ export default function AboutPage() {
                 </p>
               </article>
             </div>
-          </div>
-        </section>
-
-        <section>
-          <div className='layout py-6'>
-            <h2>Contact</h2>
-            <article className='prose mt-4 dark:prose-invert'>
-              <p>
-                Do contact us if you need our opinion about web and app
-                development, especially frontend works.
-              </p>
-            </article>
           </div>
         </section>
       </main>

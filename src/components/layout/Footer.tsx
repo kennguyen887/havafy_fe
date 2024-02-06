@@ -18,7 +18,7 @@ export default function Footer() {
         <FooterLinks />
         <SocialLinks />
 
-        <p className='mt-8 text-sm text-gray-600 dark:text-gray-300'>
+        <p className='dark:text-gray-300 mt-8 text-sm text-gray-600'>
           © Havafy.com {new Date().getFullYear()}
           {feedbackFlag && (
             <>
@@ -26,7 +26,7 @@ export default function Footer() {
               <FeedbackFish
                 projectId={process.env.NEXT_PUBLIC_FEEDBACK_FISH_ID || ''}
               >
-                <button className='rounded-sm hover:text-gray-800 focus:outline-none focus-visible:ring focus-visible:ring-primary-300 dark:hover:text-gray-100'>
+                <button className='dark:hover:text-gray-100 rounded-sm hover:text-gray-800 focus:outline-none focus-visible:ring focus-visible:ring-primary-300'>
                   Got any feedback?
                 </button>
               </FeedbackFish>
@@ -44,7 +44,7 @@ function FooterLinks() {
       {footerLinks.map(({ href, text, tooltip }) => (
         <Tooltip interactive={false} key={href} tipChildren={tooltip}>
           <UnstyledLink
-            className='animated-underline rounded-sm text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-primary-300 dark:text-gray-200'
+            className='animated-underline dark:text-gray-200 rounded-sm text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
             href={href}
             onClick={() => {
               trackEvent(`Footer Link: ${text}`, { type: 'link' });
@@ -74,7 +74,7 @@ function SocialLinks() {
               trackEvent(`Footer Link: ${social.id}`, { type: 'link' });
             }}
           >
-            <social.icon className='my-auto h-6 w-6 align-middle text-gray-600 transition-colors hover:text-primary-300 dark:text-gray-300 dark:hover:text-primary-300' />
+            <social.icon className='dark:text-gray-300 dark:hover:text-primary-300 my-auto h-6 w-6 align-middle text-gray-600 transition-colors hover:text-primary-300' />
           </UnstyledLink>
         </Tooltip>
       ))}
@@ -91,11 +91,6 @@ const footerLinks: { href: string; text: string; tooltip: React.ReactNode }[] =
       href: '/about',
       text: 'About us',
       tooltip: 'About Havafy',
-    },
-    {
-      href: '/contact',
-      text: 'Contact us',
-      tooltip: 'Contact Havafy',
     },
     {
       href: '/user/register',

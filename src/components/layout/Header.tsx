@@ -79,8 +79,8 @@ export default function Header({ large = false }: HeaderProps) {
 }
 
 const links = [
-  { href: '/', label: 'Home' },
-  { href: '/blog', label: 'Freelancer' },
-  { href: '/projects', label: 'Code & Themes' },
-  { href: '/projects', label: 'AI Services' },
+  { href: '/', label: 'Tasks' },
+  { href: '/talent', label: 'Find talent' },
+  { href: '/market', label: 'Source Market' },
+  { href: '/ai-services', label: 'AI Services' },
 ];
