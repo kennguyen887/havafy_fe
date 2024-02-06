@@ -38,7 +38,7 @@ export default function Header({ large = false }: HeaderProps) {
         !onTop && 'shadow-sm'
       )}
     >
-      <div className='bg-white transition-colors dark:bg-dark dark:text-white'>
+      <div className='bg-white transition-colors'>
         <nav
           className={clsx(
             'layout flex items-center justify-between py-1',
@@ -46,24 +46,23 @@ export default function Header({ large = false }: HeaderProps) {
           )}
         >
           <Logo />
-          <ul className='flex items-center justify-between space-x-8 text-xs md:space-x-6 md:text-base'>
+          <ul className='flex items-center justify-between space-x-10 text-xs md:space-x-10 md:text-base'>
             {links.map(({ href, label }) => (
               <li key={`${href}${label}`}>
                 <UnstyledLink
                   href={href}
                   className={clsx(
                     'rounded-sm py-2 transition-colors',
-                    'font-medium text-black dark:text-white',
-                    'group dark:hover:text-primary-300',
+                    'text-sm font-medium text-gray-600',
+                    'group',
                     'focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
                   )}
                 >
                   <span
                     className={clsx(
-                      'transition-colors',
-                      'bg-primary-300/0 group-hover:bg-primary-300/20 dark:group-hover:bg-primary-300/0',
-                      href === baseRoute &&
-                        '!bg-primary-300/50 dark:bg-gradient-to-tr dark:from-primary-300 dark:to-primary-400 dark:bg-clip-text dark:text-transparent'
+                      'pb-1 transition-colors',
+                      'border-red-600 bg-primary-300/0 group-hover:border-b-2',
+                      href === baseRoute && 'border-b-2'
                     )}
                   >
                     {label}

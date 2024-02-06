@@ -127,7 +127,7 @@ export function TextToSpeech() {
   );
 
   return (
-    <article className='layout max-w-[820px]'>
+    <article className='layout mt-24 max-w-[820px]'>
       <h1 className='mt-1 text-2xl md:text-4xl 2xl:text-5xl' data-fade='1'>
         <Accent>
           Text to Speech Voice Over
@@ -149,7 +149,7 @@ export function TextToSpeech() {
               <select
                 onChange={(value) => changeLanguage(value.target.value)}
                 defaultValue={DEFAULT_SPEECH_COUNTRY}
-                className='block w-full rounded-lg border-gray-200 px-2 py-2 pe-9 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600'
+                className='block w-full rounded-lg border-gray-200 px-2 py-2 pe-9 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50'
               >
                 {SPEECH_COUNTRIES.map((country) => (
                   <option value={country.code} key={country.code}>
@@ -164,7 +164,7 @@ export function TextToSpeech() {
             <div className='mt-2'>
               <select
                 onChange={(value) => setVoice(value.target.value)}
-                className='block w-full rounded-lg border-gray-200 px-2 py-2 pe-9 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600'
+                className='block w-full rounded-lg border-gray-200 px-2 py-2 pe-9 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50'
               >
                 {voices?.map((voice) => (
                   <option value={voice.code} key={voice.code}>
@@ -180,7 +180,7 @@ export function TextToSpeech() {
               <select
                 defaultValue={DEFAULT_SPEED}
                 onChange={(value) => setSpeed(value.target.value)}
-                className='max-w-12 block rounded-lg border-gray-200 px-2 py-2 pe-9 text-sm focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 dark:focus:ring-gray-600'
+                className='max-w-12 block rounded-lg border-gray-200 px-2 py-2 pe-9 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 '
               >
                 {speeds?.map((speed) => (
                   <option value={speed.code} key={speed.code}>
@@ -204,7 +204,7 @@ export function TextToSpeech() {
             onChange={(data) => setText(data.target.value)}
             id='message'
             rows={6}
-            className='block w-full rounded-lg border border-gray-300 bg-gray-50 bg-white p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500'
+            className='block w-full rounded-lg border border-gray-300 bg-gray-50 bg-white p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500'
             placeholder='Write your thoughts here...'
           ></textarea>
           <div

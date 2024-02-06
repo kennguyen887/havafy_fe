@@ -29,7 +29,7 @@
   min-width: 18.75em;
   max-width: calc(130px + 25ch);
   min-height: 100px;
-  @apply overflow-hidden rounded-md border border-gray-300 shadow-sm dark:border-gray-600;
+  @apply overflow-hidden rounded-md border border-gray-300 shadow-sm;
 }
 
 html.light #carbonads > span {

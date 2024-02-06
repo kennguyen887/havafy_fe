@@ -39,6 +39,7 @@ const nextConfig = {
     ];
   },
   output: 'standalone',
+  darkMode: 'false',
   eslint: {
     dirs: ['src'],
     ignoreDuringBuilds: true,
