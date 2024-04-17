@@ -79,8 +79,7 @@ export default function Header({ large = false }: HeaderProps) {
 }
 
 const links = [
-  { href: '/tasks', label: 'Tasks' },
-  { href: '/talents', label: 'Find talent' },
-  { href: '/market', label: 'Source Market' },
-  { href: '/ai-services', label: 'AI Services' },
+  { href: '/tasks', label: 'Công việc' },
+  { href: '/talents', label: 'Tìm freelancer' },
+  { href: '/projects', label: 'Dự án' },
 ];

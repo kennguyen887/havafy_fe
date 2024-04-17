@@ -33,6 +33,7 @@
     "@types/jsonwebtoken": "^9.0.5",
     "axios": "^0.24.0",
     "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "cloudinary-build-url": "^0.2.4",
     "clsx": "^1.2.1",
     "crypto": "^1.0.1",
