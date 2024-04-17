@@ -1,6 +1,11 @@
 import React from 'react';
+import { FaRegClock } from 'react-icons/fa';
+import { IoLocationOutline } from 'react-icons/io5';
+import { LiaFileContractSolid } from 'react-icons/lia';
+import { TbProgress } from 'react-icons/tb';
 
 import { getApi } from '@/lib/request';
+import t from '@/lib/translate';
 
 import { GetTaskListItemDto } from '@/domain/dto';
 
@@ -50,15 +55,34 @@ export default function TaskList() {
                 <div className='basis-5/6 text-base text-gray-900'>
                   {task.title}
                 </div>
-                <div className='basis-1/6 font-semibold'>
+                <div className='basis-1/6 text-right font-semibold'>
                   <Currency value={task.budget} currency={task.currency} />
                 </div>
               </div>
-              <div className='flex flex-row'>
-                <div className='basis-1/4  text-sm'>{task.doneType}</div>
-                <div className='basis-1/4  text-sm'>{task.location}</div>
+              <div className='my-3 flex flex-row text-gray-600'>
+                <div className='basis-1/4 text-sm'>
+                  <FaRegClock className='mr-1 inline-block' />{' '}
+                  {t(task.doneType)}
+                </div>
+                {task.attributes?.workplaceType ? (
+                  <div className='basis-1/4 text-sm'>
+                    <LiaFileContractSolid className='mr-1 inline-block' />{' '}
+                    {t(task.attributes?.workplaceType)}
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
-              <TaskStatusField status={task.status} />
+              <div className='my-3 flex flex-row'>
+                <div className='basis-1/4 text-sm'>
+                  <TbProgress className='mr-1 inline-block' />{' '}
+                  <TaskStatusField status={task.status} />
+                </div>
+                <div className='basis-3/4 text-sm text-gray-600'>
+                  <IoLocationOutline className='mr-1 inline-block' />
+                  {task.location}
+                </div>
+              </div>
             </div>
           ))}
         </div>
