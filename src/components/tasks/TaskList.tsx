@@ -9,6 +9,7 @@ import t from '@/lib/translate';
 
 import { GetTaskListItemDto } from '@/domain/dto';
 
+import TaskDetail from './TaskDetail';
 import TaskStatusField from './TaskStatusField';
 import Currency from '../common/Currency';
 import SearchInput from '../search/SearchInput';
@@ -16,6 +17,7 @@ import CategoryFilter from '../search/SearchInput';
 
 export default function TaskList() {
   const [tasks, setTasks] = React.useState<GetTaskListItemDto[]>([]);
+  const [taskDetail, setTaskDetail] = React.useState<GetTaskListItemDto>();
   const getTaskList = () => {
     getApi('tasks', {}).then(({ data: { data } }) => {
       if (!data.length) {
@@ -28,6 +30,7 @@ export default function TaskList() {
   const goTaskDetail = (id: string) => {
     // Router.push(`/tasks/${id}/detail`, undefined, {shallow:true})
     window.history.replaceState(null, '', `/tasks/${id}/detail`);
+    setTaskDetail(tasks.find((task) => task.id === id));
   };
   React.useEffect(() => {
     getTaskList();
@@ -43,8 +46,8 @@ export default function TaskList() {
           </div>
         </div>
       </div>
-      <div className='layout flex flex-row pt-3'>
-        <div className='basis-2/4'>
+      <div className='layout grid grid-cols-12 pt-3'>
+        <div className='col-start-1 col-end-5'>
           {tasks.map((task) => (
             <div
               onClick={() => goTaskDetail(task.id)}
@@ -60,12 +63,12 @@ export default function TaskList() {
                 </div>
               </div>
               <div className='my-3 flex flex-row text-gray-600'>
-                <div className='basis-1/4 text-sm'>
+                <div className='basis-2/4 text-sm'>
                   <FaRegClock className='mr-1 inline-block' />{' '}
                   {t(task.doneType)}
                 </div>
                 {task.attributes?.workplaceType ? (
-                  <div className='basis-1/4 text-sm'>
+                  <div className='basis-2/4 text-sm'>
                     <LiaFileContractSolid className='mr-1 inline-block' />{' '}
                     {t(task.attributes?.workplaceType)}
                   </div>
@@ -74,11 +77,11 @@ export default function TaskList() {
                 )}
               </div>
               <div className='my-3 flex flex-row'>
-                <div className='basis-1/4 text-sm'>
+                <div className='basis-2/4 text-sm'>
                   <TbProgress className='mr-1 inline-block' />{' '}
                   <TaskStatusField status={task.status} />
                 </div>
-                <div className='basis-3/4 text-sm text-gray-600'>
+                <div className='basis-2/4 text-sm text-gray-600'>
                   <IoLocationOutline className='mr-1 inline-block' />
                   {task.location}
                 </div>
@@ -86,8 +89,10 @@ export default function TaskList() {
             </div>
           ))}
         </div>
-        <div className='basis-2/4'>
-          <div className='min-h-full rounded-md bg-white'></div>
+        <div className='col-start-5 col-end-12'>
+          <div className='min-h-full rounded-md bg-white'>
+            <TaskDetail task={taskDetail} />
+          </div>
         </div>
       </div>
     </div>
