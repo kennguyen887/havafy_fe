@@ -32,7 +32,7 @@ export default function TaskDetail({
               <div className='basis-2/4 pb-3 text-sm'>
                 <div className='flex flex-row'>
                   <div className='pr-3 pt-1'>
-                    <FaRegClock className='mr-1 inline-block h-7 w-7' />
+                    <FaRegClock className='mr-1 inline-block h-5 w-5' />
                   </div>
                   <div className=''>
                     <div className='pb-1 text-xs uppercase text-gray-500'>
@@ -50,7 +50,7 @@ export default function TaskDetail({
                   <div className='flex flex-row'>
                     <div className='pr-3 pt-1'>
                       {' '}
-                      <LiaFileContractSolid className=' mr-1 inline-block  h-7 w-7' />
+                      <LiaFileContractSolid className=' mr-1 inline-block  h-5 w-5' />
                     </div>
                     <div className=''>
                       <div className='pb-1 text-xs uppercase text-gray-500'>
@@ -73,7 +73,7 @@ export default function TaskDetail({
                 <div className='basis-2/4 text-sm'>
                   <div className='flex flex-row'>
                     <div className='pr-3 pt-1'>
-                      <IoLocationOutline className=' mr-1 inline-block  h-7 w-7' />
+                      <IoLocationOutline className=' mr-1 inline-block  h-5 w-5' />
                     </div>
                     <div className=''>
                       <div className='pb-1 text-xs uppercase text-gray-500'>

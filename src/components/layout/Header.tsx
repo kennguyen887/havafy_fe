@@ -47,6 +47,26 @@ export default function Header({ large = false }: HeaderProps) {
         >
           <Logo />
           <ul className='flex items-center justify-between space-x-10 text-xs md:space-x-10 md:text-base'>
+            <li key='post-a-task'>
+              <UnstyledLink
+                href='/tasks/posting'
+                className={clsx(
+                  'block rounded-full bg-rose-600 px-4 py-2 text-sm font-semibold  text-white',
+                  'group',
+                  'focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
+                )}
+              >
+                <span
+                  className={clsx(
+                    'pb-1 transition-colors',
+                    'border-red-600 bg-primary-300/0 group-hover:border-b-2',
+                    '/tasks/posting' === baseRoute && 'border-b-2'
+                  )}
+                >
+                  Tạo việc
+                </span>
+              </UnstyledLink>
+            </li>
             {links.map(({ href, label }) => (
               <li key={`${href}${label}`}>
                 <UnstyledLink
@@ -79,7 +99,7 @@ export default function Header({ large = false }: HeaderProps) {
 }
 
 const links = [
-  { href: '/tasks', label: 'Công việc' },
+  { href: '/tasks', label: 'Danh sách việc' },
   { href: '/talents', label: 'Tìm freelancer' },
   { href: '/projects', label: 'Dự án' },
 ];

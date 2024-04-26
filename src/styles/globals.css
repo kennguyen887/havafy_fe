@@ -76,7 +76,7 @@
   /* #endregion  /**======== Default Typography =========== */
 
   .layout {
-    max-width: 68rem;
+    max-width: 72rem;
     @apply mx-auto w-11/12;
   }
 

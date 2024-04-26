@@ -6,7 +6,6 @@ import useLoaded from '@/hooks/useLoaded';
 import Layout from '@/components/layout/Layout';
 import Seo from '@/components/Seo';
 // import TextToSpeech from '@/components/speech/TextToSpeech';
-import CreateTaskWrap from '@/components/tasks/CreateTask';
 import TC from '@/components/TC';
 
 export default function IndexPage() {
@@ -23,7 +22,6 @@ export default function IndexPage() {
             isLoaded && 'fade-in-start'
           )}
         >
-          <CreateTaskWrap />
           <TC
             className={clsx(
               'absolute bottom-0 right-6',

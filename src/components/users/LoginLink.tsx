@@ -13,7 +13,7 @@ function AuthenticatedMenuDropdown() {
   return (
     <div className='group'>
       <button
-        className='flex h-5 items-center rounded-full text-sm font-medium text-gray-900 group-hover:text-blue-600 group-hover:ring-4 group-hover:ring-gray-100 dark:text-white dark:group-hover:text-blue-500 dark:group-hover:ring-gray-700 md:me-0'
+        className='dark:text-white dark:group-hover:text-blue-500 dark:group-hover:ring-gray-700 flex h-5 items-center rounded-full text-sm font-medium text-gray-900 group-hover:text-blue-600 group-hover:ring-4 group-hover:ring-gray-100 md:me-0'
         type='button'
       >
         <span className='sr-only'>Open user menu</span>
@@ -46,17 +46,17 @@ function AuthenticatedMenuDropdown() {
       <div className='mt-2'>
         <div
           className={clsx(
-            'invisible absolute z-10  w-44 divide-y divide-gray-100 rounded bg-white shadow group-hover:visible dark:divide-gray-600 dark:bg-gray-700'
+            'dark:divide-gray-600 dark:bg-gray-700 invisible  absolute z-10 w-44 divide-y divide-gray-100 rounded bg-white shadow group-hover:visible'
           )}
         >
           <ul
-            className='my-2 text-sm text-gray-700 dark:text-gray-200'
+            className='dark:text-gray-200 my-2 text-sm text-gray-700'
             aria-labelledby='dropdownInformdropdownAvatarNameButtonationButton'
           >
             <li>
               <Link
                 href='/user/account'
-                className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
+                className='dark:hover:bg-gray-600 dark:hover:text-white block px-4 py-2 hover:bg-gray-100'
               >
                 Account
               </Link>
@@ -64,7 +64,7 @@ function AuthenticatedMenuDropdown() {
             <li>
               <Link
                 href='/user/password'
-                className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
+                className='dark:hover:bg-gray-600 dark:hover:text-white block px-4 py-2 hover:bg-gray-100'
               >
                 Change password
               </Link>
@@ -74,7 +74,7 @@ function AuthenticatedMenuDropdown() {
             <div
               role='button'
               onClick={() => resetAuth !== undefined && resetAuth()}
-              className='block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white'
+              className='dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
             >
               Sign out
             </div>
@@ -123,7 +123,7 @@ export default function LoginLink() {
           </Link>
           <Link
             href='/user/register'
-            className='block rounded-md bg-rose-600 px-4 py-2 text-sm font-semibold  text-white'
+            className='block rounded-full bg-rose-200 px-4 py-2 text-sm font-semibold  text-rose-900'
           >
             Register
           </Link>
