@@ -8,7 +8,7 @@ import t from '@/lib/translate';
 
 import { GetTaskListItemDto } from '@/domain/dto';
 
-import TaskDetail from './TaskDetail';
+import TaskDetailOfList from './TaskDetailOfList';
 import Currency from '../common/Currency';
 import SearchInput from '../search/SearchInput';
 import CategoryFilter from '../search/SearchInput';
@@ -27,7 +27,7 @@ export default function TaskList() {
 
   const goTaskDetail = (id: string) => {
     // Router.push(`/tasks/${id}/detail`, undefined, {shallow:true})
-    window.history.replaceState(null, '', `/tasks/${id}/detail`);
+    window.history.replaceState(null, '', `/tasks/view/${id}`);
     setTaskDetail(tasks.find((task) => task.id === id));
   };
   React.useEffect(() => {
@@ -55,7 +55,7 @@ export default function TaskList() {
               <div className='mb-2 flex flex-row'>
                 <div className='basis-5/6 text-base font-semibold text-sky-800'>
                   <Link
-                    href={`/tasks/${task.id}/detail`}
+                    href={`/tasks/view/${task.id}`}
                     onClick={(event) => {
                       event.preventDefault();
                       goTaskDetail(task.id);
@@ -91,7 +91,7 @@ export default function TaskList() {
         </div>
         <div className='max-w-2xl'>
           <div className='min-h-full rounded-md bg-white'>
-            <TaskDetail task={taskDetail} />
+            <TaskDetailOfList task={taskDetail} />
           </div>
         </div>
       </div>

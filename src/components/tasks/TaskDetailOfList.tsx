@@ -1,11 +1,9 @@
-import { useRouter } from 'next/router';
 import React from 'react';
 import { FaRegClock } from 'react-icons/fa';
 import { IoLocationOutline } from 'react-icons/io5';
 import { LiaFileContractSolid } from 'react-icons/lia';
 import { TbProgress } from 'react-icons/tb';
 
-import { getApi } from '@/lib/request';
 import t from '@/lib/translate';
 
 import { GetTaskListItemDto } from '@/domain/dto';
@@ -13,26 +11,16 @@ import { GetTaskListItemDto } from '@/domain/dto';
 import TaskStatusField from './TaskStatusField';
 import Currency from '../common/Currency';
 
-export default function TaskDetail() {
-  const router = useRouter();
-  const { id } = router.query;
-  const [task, setTask] = React.useState<GetTaskListItemDto>();
-
-  React.useEffect(() => {
-    if (!id) return;
-    getApi(`tasks/${id}`, {}).then(({ data }) => {
-      if (!data.id) {
-        return;
-      }
-      setTask(data);
-    });
-  }, [id]);
-
+export default function TaskDetailOfList({
+  task,
+}: {
+  task: GetTaskListItemDto | undefined;
+}) {
   if (task === undefined) return <></>;
 
   return (
-    <div className='layout'>
-      <div className='mt-10 max-w-4xl   bg-white px-5 py-5'>
+    <>
+      <div className='px-5 py-5'>
         <TbProgress className='mr-1 inline-block' />
         <TaskStatusField status={task.status} />
         <div className='mb-2 flex flex-row'>
@@ -117,6 +105,6 @@ export default function TaskDetail() {
           {task.description}
         </div>
       </div>
-    </div>
+    </>
   );
 }
