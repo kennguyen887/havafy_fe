@@ -76,8 +76,7 @@
   /* #endregion  /**======== Default Typography =========== */
 
   .layout {
-    max-width: 72rem;
-    @apply mx-auto w-11/12;
+    @apply mx-auto px-5;
   }
 
   .bg-dark a.custom-link {

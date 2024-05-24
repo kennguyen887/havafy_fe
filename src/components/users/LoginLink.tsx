@@ -118,14 +118,14 @@ export default function LoginLink() {
         <AuthenticatedMenuDropdown />
       ) : (
         <>
-          <Link href='/user/login' className='text-sm font-semibold'>
-            Login
+          <Link href='/become-an-expert' className='text-white'>
+            become an expert
           </Link>
           <Link
-            href='/user/register'
-            className='block rounded-full bg-rose-200 px-4 py-2 text-sm font-semibold  text-rose-900'
+            href='/hire-an-expert'
+            className='block  bg-[#f0f0f0] px-4 py-2 text-sm font-semibold  text-gray-900'
           >
-            Register
+            hire an expert
           </Link>
         </>
       )}
