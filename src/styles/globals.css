@@ -84,7 +84,7 @@
   }
 
   .min-h-main {
-    @apply min-h-[calc(100vh-82px)];
+    @apply min-h-[calc(75vh-60px)];
   }
 
   .accent-highlight {

@@ -10,29 +10,35 @@ export default function HireAnExpertSection({
 }) {
   return (
     <div
-      className={clsx(className, 'layout mx-6 pb-[8vh] pt-[20vh] text-white')}
+      className={clsx(
+        className,
+        'layout mx-2 pb-[2vh] pt-[20vh] text-white lg:mx-6'
+      )}
     >
       <div className='flex flex-col justify-between lg:flex-row'>
         <div>
-          <h1 className='max-w-2xl text-7xl font-light'>
+          <h1 className='max-w-3xl text-4xl font-light lg:text-7xl'>
             Hire the top freelance developers talent
           </h1>
           <div className='my-8 flex space-x-5'>
-            <div className='text-base font-bold '>Fullstack Developers</div>
-            <div className='text-base font-bold'>Backend Developers </div>
-
-            <div className='text-base font-bold'>App Developers</div>
-            <div className='text-base  font-thin'>and more</div>
+            <div className='text-sm font-bold lg:text-base '>
+              Fullstack Developers
+            </div>
+            <div className='text-sm font-bold lg:text-base'>
+              Backend Developers{' '}
+            </div>
+            <div className='text-sm font-bold lg:text-base'>App Developers</div>
+            <div className='text-sm font-thin  lg:text-base'>and more</div>
           </div>
           <div className='max-w-lg text-xl font-light'>
             Get introduced to elite e-commerce freelancers for projects &
             retainers, big and small.
           </div>
           <div className='flex'>
-            <button className='my-10 bg-[#ede3db] px-8 py-5 font-semibold text-gray-800 hover:bg-[#edeae2]'>
+            <button className='my-10 bg-[#ede3db] px-4 py-2 font-semibold text-gray-800 hover:bg-[#edeae2] lg:px-8 lg:py-5'>
               hire an expert
             </button>
-            <div className='mx-10 my-10'>
+            <div className='my-10 ml-5 lg:ml-10'>
               <div className='mb-1 mt-2 flex  space-x-1'>
                 <IoIosStar height={16} />
                 <IoIosStar height={16} />

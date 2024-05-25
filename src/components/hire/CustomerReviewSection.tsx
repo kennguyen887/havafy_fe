@@ -1,18 +1,15 @@
 import clsx from 'clsx';
 import * as React from 'react';
-
-export default function MeetTechStackSection({
+export default function CustomerReviewSection({
   className,
-  title,
 }: {
   className?: string;
-  title: string;
 }) {
   return (
     <div className={clsx(className, 'lg:layout mx-2 my-16')}>
       <div className='mb-3 flex items-center justify-between'>
         <h3 className='max-w-2xl text-base font-semibold lg:text-xl'>
-          {title}
+          Don’t just take our word for it.
         </h3>
       </div>
       <div className='mx-3 my-8 gap-2 lg:mx-0 lg:grid lg:grid-cols-4'>

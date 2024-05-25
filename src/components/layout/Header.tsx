@@ -38,15 +38,12 @@ export default function Header({ large = false }: HeaderProps) {
         !onTop && 'bg-black shadow-sm'
       )}
     >
-      <div className='layout items-centertransition-colors flex flex-col items-center justify-between px-5 py-2 lg:flex-row'>
-        <nav
-          className={clsx(
-            'flex items-center py-1',
-            large && 'lg:max-w-[68rem]'
-          )}
-        >
-          <Logo />
-          <ul className='ml-10 flex justify-between space-x-12 text-xs md:space-x-10 md:text-base'>
+      <div className='layout items-centertransition-colors flex flex-col justify-between px-5 py-2 lg:flex-row lg:items-center'>
+        <nav className={clsx('flex items-center', large && 'lg:max-w-[68rem]')}>
+          <div className='my-1 lg:my-0'>
+            <Logo />
+          </div>
+          <ul className='ml-10 hidden justify-between space-x-12 text-xs md:space-x-10 md:text-base lg:flex'>
             {links.map(({ href, label }) => (
               <li key={`${href}${label}`}>
                 <UnstyledLink

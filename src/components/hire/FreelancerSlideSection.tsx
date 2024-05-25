@@ -14,9 +14,9 @@ export default function FreelancerSlideSection({
   images: string[];
 }) {
   return (
-    <div className={clsx(className, 'layout my-16')}>
+    <div className={clsx(className, 'lg:layout mx-2 my-6 lg:my-16')}>
       <div className='mb-3 flex items-center justify-between'>
-        <h3 className='max-w-2xl  text-xl font-semibold'>
+        <h3 className='max-w-2xl text-base font-semibold lg:text-xl'>
           {title}{' '}
           <span className='font-extralight  italic text-gray-500'>like</span>
         </h3>

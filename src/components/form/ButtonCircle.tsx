@@ -14,12 +14,10 @@ export default function ButtonCircle({
   isLoading,
 }: ButtonProps) {
   return (
-    // <button className='bg-transparent border hover:bg-slate-200 my-3 border-gray-700 rounded-full px-5 py-2'></button>
-
     <button
       className={clsx(
         className,
-        'group relative inline-flex items-center  justify-start overflow-hidden rounded-full border bg-transparent py-2 pl-4 pr-12 text-sm font-semibold text-gray-800 transition-all duration-150 ease-in-out hover:bg-slate-100 hover:pl-10 hover:pr-6'
+        'group relative inline-flex items-center  justify-start overflow-hidden rounded-full border bg-transparent py-2 pl-4 pr-12 text-xs font-semibold text-gray-800 transition-all duration-150 ease-in-out hover:bg-slate-100 hover:pl-10 hover:pr-6 lg:text-sm'
       )}
       onClick={onClick}
     >

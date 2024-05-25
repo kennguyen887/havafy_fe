@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import useLoaded from '@/hooks/useLoaded';
 
+import CustomerReviewSection from '@/components/hire/CustomerReviewSection';
 import FreelanceHiringFixed from '@/components/hire/FreelanceHiringFixed';
 import FreelancerSlideSection from '@/components/hire/FreelancerSlideSection';
 import HireAnExpertSection from '@/components/hire/HireAnExpertSection';
@@ -53,6 +54,7 @@ export default function IndexPage() {
           ]}
         />
         <MeetTechStackSection title='Meet our techstacks' />
+        <CustomerReviewSection />
       </main>
     </Layout>
   );
