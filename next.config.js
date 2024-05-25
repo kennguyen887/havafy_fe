@@ -9,7 +9,7 @@ const withRemoteRefresh = require('next-remote-refresh')({
  */
 const nextConfig = {
   images: {
-    domains: ['res.cloudinary.com', 'localhost', 'i.scdn.co', 'flowbite.com'],
+    domains: ['res.cloudinary.com', 'localhost', 'i.scdn.co', 'img.daisyui.com', 'flowbite.com'],
     remotePatterns: [
       {
         protocol: 'https',
