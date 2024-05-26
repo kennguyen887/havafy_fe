@@ -1,4 +1,3 @@
-import { FeedbackFish } from '@feedback-fish/react';
 import * as React from 'react';
 import { IconType } from 'react-icons/lib';
 import { SiFacebook, SiLinkedin, SiYoutube } from 'react-icons/si';
@@ -9,58 +8,85 @@ import Accent from '@/components/Accent';
 import UnstyledLink from '@/components/links/UnstyledLink';
 import Tooltip from '@/components/Tooltip';
 
-import { feedbackFlag } from '@/constants/env';
-
 export default function Footer() {
   return (
-    <footer className='mt-4 bg-white pb-2 pt-10'>
-      <main className='layout flex flex-col items-center'>
-        <FooterLinks />
-        <SocialLinks />
+    <footer className='bg-gray-950 px-10 py-[80px]'>
+      <FooterLinks />
+      <SocialLinks />
 
-        <p className='dark:text-gray-300 mt-8 text-sm text-gray-600'>
-          © Havafy.com {new Date().getFullYear()}
-          {feedbackFlag && (
-            <>
-              {' • '}
-              <FeedbackFish
-                projectId={process.env.NEXT_PUBLIC_FEEDBACK_FISH_ID || ''}
-              >
-                <button className='dark:hover:text-gray-100 rounded-sm hover:text-gray-800 focus:outline-none focus-visible:ring focus-visible:ring-primary-300'>
-                  Got any feedback?
-                </button>
-              </FeedbackFish>
-            </>
-          )}
-        </p>
-      </main>
+      <div className='dark:text-gray-300 mt-10 flex space-x-4  text-sm text-gray-500'>
+        <div className=''>© {new Date().getFullYear()} Havafy.com, Inc.</div>
+
+        <div>privacy policy</div>
+        <div>terms of service</div>
+      </div>
     </footer>
   );
 }
 
 function FooterLinks() {
   return (
-    <div className='flex flex-wrap justify-center gap-x-8 gap-y-4'>
-      {footerLinks.map(({ href, text, tooltip }) => (
-        <Tooltip interactive={false} key={href} tipChildren={tooltip}>
-          <UnstyledLink
-            className='animated-underline dark:text-gray-200 rounded-sm text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
-            href={href}
-            onClick={() => {
-              trackEvent(`Footer Link: ${text}`, { type: 'link' });
-            }}
-          >
-            {text}
-          </UnstyledLink>
-        </Tooltip>
-      ))}
+    <div className='grid gap-2 md:grid-cols-2 md:gap-4 lg:grid-cols-4'>
+      <div>
+        {footerLinks.map(({ href, text }) => (
+          <div key={href} className='my-4 '>
+            <UnstyledLink
+              className='animated-underline rounded-sm text-xl font-medium text-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
+              href={href}
+              onClick={() => {
+                trackEvent(`Footer Link: ${text}`, { type: 'link' });
+              }}
+            >
+              {text}
+            </UnstyledLink>
+          </div>
+        ))}
+      </div>
+      <div className=''>
+        {[
+          {
+            href: '/home',
+            text: 'become an expert ',
+          },
+          {
+            href: '/how-it-works',
+            text: 'partner with us',
+          },
+          {
+            href: '/our-customers',
+            text: 'expert login',
+          },
+          {
+            href: '/pricing',
+            text: 'partner login',
+          },
+        ].map(({ href, text }) => (
+          <div key={href} className=' my-4 '>
+            <UnstyledLink
+              className='animated-underline rounded-sm text-xl font-medium text-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
+              href={href}
+              onClick={() => {
+                trackEvent(`Footer Link: ${text}`, { type: 'link' });
+              }}
+            >
+              {text}
+            </UnstyledLink>
+          </div>
+        ))}
+      </div>
+      <div>
+        <div className='font-mono text-3xl text-gray-50'>
+          {' '}
+          Are you become an expert?{' '}
+        </div>
+      </div>
     </div>
   );
 }
 
 function SocialLinks() {
   return (
-    <div className='mt-10 flex space-x-8'>
+    <div className='mt-16 flex space-x-8'>
       {socials.map((social) => (
         <Tooltip
           interactive={false}
@@ -74,7 +100,7 @@ function SocialLinks() {
               trackEvent(`Footer Link: ${social.id}`, { type: 'link' });
             }}
           >
-            <social.icon className='dark:text-gray-300 dark:hover:text-primary-300 my-auto h-6 w-6 align-middle text-gray-600 transition-colors hover:text-primary-300' />
+            <social.icon className='dark:text-gray-300 dark:hover:text-primary-300 my-auto h-6 w-6 align-middle text-gray-100 transition-colors hover:text-primary-300' />
           </UnstyledLink>
         </Tooltip>
       ))}
@@ -85,24 +111,28 @@ function SocialLinks() {
   );
 }
 
-const footerLinks: { href: string; text: string; tooltip: React.ReactNode }[] =
-  [
-    {
-      href: '/about',
-      text: 'About us',
-      tooltip: 'About Havafy',
-    },
-    {
-      href: '/user/register',
-      text: 'Register',
-      tooltip: 'Register a account',
-    },
-    {
-      href: '/user/login',
-      text: 'Login',
-      tooltip: 'Login to your account',
-    },
-  ];
+const footerLinks: { href: string; text: string }[] = [
+  {
+    href: '/home',
+    text: 'home',
+  },
+  {
+    href: '/how-it-works',
+    text: 'how it works',
+  },
+  {
+    href: '/our-customers',
+    text: 'our customers',
+  },
+  {
+    href: '/pricing',
+    text: 'pricing',
+  },
+  {
+    href: '/pricing',
+    text: 'blog',
+  },
+];
 
 type Social = {
   href: string;
