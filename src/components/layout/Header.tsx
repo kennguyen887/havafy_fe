@@ -35,7 +35,7 @@ export default function Header({ large = false }: HeaderProps) {
     <header
       className={clsx(
         'shadow-xs sticky top-0 z-50 transition-shadow',
-        !onTop && 'bg-black shadow-sm'
+        !onTop && 'bg-gray-900 shadow-sm'
       )}
     >
       <div className='layout items-centertransition-colors flex flex-col justify-between px-5 py-2 lg:flex-row lg:items-center'>
@@ -49,16 +49,14 @@ export default function Header({ large = false }: HeaderProps) {
                 <UnstyledLink
                   href={href}
                   className={clsx(
-                    'rounded-sm py-2 transition-colors',
-                    'text-sm font-medium text-white',
-                    'group',
-                    'focus:outline-none focus-visible:ring focus-visible:ring-primary-300'
+                    'animated-underline py-1 transition-colors',
+                    'text-sm font-medium text-white'
                   )}
                 >
                   <span
                     className={clsx(
-                      'pb-1 transition-colors',
-                      'mx-1 border-gray-400 bg-primary-300/0 group-hover:border-b-2',
+                      ' transition-colors',
+                      ' border-gray-400 bg-primary-300/0 group-hover:border-b-2',
                       href === baseRoute && 'border-b-1'
                     )}
                   >

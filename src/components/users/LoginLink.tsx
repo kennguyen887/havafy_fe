@@ -118,7 +118,10 @@ export default function LoginLink() {
         <AuthenticatedMenuDropdown />
       ) : (
         <>
-          <Link href='/become-an-expert' className='text-white'>
+          <Link
+            href='/become-an-expert'
+            className='animated-underline text-white'
+          >
             become an expert
           </Link>
           <Link

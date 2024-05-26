@@ -14,7 +14,7 @@ export default function FreelanceHiringFixed({
           'border-b-1  border  border-l-0  border-r-0 border-t-0 border-gray-200 text-gray-900'
         )}
       >
-        <div className='mx-2 px-6 pb-[20px] pt-[10px] lg:mx-6 lg:px-20 lg:pb-[50px] lg:pt-[20px]'>
+        <div className='mx-2 px-6 pb-[20px] pt-[10px] lg:mx-6 lg:px-7 lg:pb-[50px] lg:pt-[20px]'>
           <h3 className='my-10 text-3xl lg:text-4xl'>
             Freelance hiring -{' '}
             <span className='font-serif font-extralight text-gray-400'>
