@@ -21,7 +21,7 @@ export default function IndexPage() {
       <main>
         <section
           className={clsx(
-            'min-h-main -mt-20 bg-[#1c3d62]',
+            '-mt-20 bg-[#1c3d62] pb-10',
             isLoaded && 'fade-in-start'
           )}
         >

@@ -12,15 +12,15 @@ export default function HireAnExpertSection({
     <div
       className={clsx(
         className,
-        'layout mx-2 pb-[2vh] pt-[20vh] text-white lg:mx-6'
+        'layout mx-0 pb-2 pt-[16vh] text-white lg:mx-6 lg:pb-[2vh] lg:pt-[20vh]'
       )}
     >
       <div className='flex flex-col justify-between lg:flex-row'>
         <div>
-          <h1 className='max-w-3xl text-4xl font-light lg:text-7xl'>
+          <h1 className='max-w-3xl text-5xl font-light lg:text-7xl'>
             Hire the top freelance developers talent
           </h1>
-          <div className='my-8 flex space-x-5'>
+          <div className='my-8 flex space-x-3 lg:space-x-5'>
             <div className='text-sm font-bold lg:text-base '>
               Fullstack Developers
             </div>
@@ -28,14 +28,16 @@ export default function HireAnExpertSection({
               Backend Developers{' '}
             </div>
             <div className='text-sm font-bold lg:text-base'>App Developers</div>
-            <div className='text-sm font-thin  lg:text-base'>and more</div>
+            <div className='font-serif text-sm font-thin lg:text-base'>
+              and more
+            </div>
           </div>
           <div className='max-w-lg text-xl font-light'>
             Get introduced to elite e-commerce freelancers for projects &
             retainers, big and small.
           </div>
           <div className='flex'>
-            <button className='my-10 bg-[#ede3db] px-4 py-2 font-semibold text-gray-800 hover:bg-[#edeae2] lg:px-8 lg:py-5'>
+            <button className='my-10 bg-[#ede3db] px-2 py-2 font-semibold text-gray-800 hover:bg-[#edeae2] lg:px-8 lg:py-5'>
               hire an expert
             </button>
             <div className='my-10 ml-5 lg:ml-10'>

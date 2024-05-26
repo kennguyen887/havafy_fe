@@ -10,14 +10,14 @@ export default function MeetTechStackSection({
 }) {
   return (
     <div className={clsx(className, 'lg:layout mx-2 my-16')}>
-      <div className='mb-3 flex items-center justify-between'>
-        <h3 className='max-w-2xl text-base font-semibold lg:text-xl'>
+      <div className=' flex items-center justify-between'>
+        <h3 className='mb-3 max-w-2xl text-3xl font-semibold lg:text-3xl'>
           {title}
         </h3>
       </div>
-      <div className='mx-3 my-8 gap-2 lg:mx-0 lg:grid lg:grid-cols-4'>
+      <div className='mx-3 mb-8 mt-2 gap-2 lg:mx-0 lg:grid lg:grid-cols-4'>
         <div className='my-5 lg:my-0'>
-          <div className='my-6 text-xl font-semibold italic lg:w-3/4'>
+          <div className='my-5 font-serif text-xl font-semibold  lg:w-3/4'>
             Full-stack Developers
           </div>
           <div className='text-base lg:w-3/4'>
@@ -31,7 +31,7 @@ export default function MeetTechStackSection({
         </div>
 
         <div className='my-7 lg:my-0'>
-          <div className='my-6 text-xl font-semibold italic lg:w-3/4'>
+          <div className='my-5 font-serif text-xl font-semibold  lg:w-3/4'>
             Backend Developers
           </div>
           <div className='text-base lg:w-3/4'>
@@ -45,7 +45,7 @@ export default function MeetTechStackSection({
         </div>
 
         <div className='my-7 lg:my-0'>
-          <div className='my-6 text-xl font-semibold italic lg:w-3/4'>
+          <div className='my-5 font-serif text-xl font-semibold  lg:w-3/4'>
             Designers
           </div>
           <div className='text-base lg:w-3/4'>
@@ -57,7 +57,7 @@ export default function MeetTechStackSection({
           </div>
         </div>
         <div className='my-7 lg:my-0'>
-          <div className='my-6 text-xl font-semibold italic lg:w-3/4'>
+          <div className='my-5 font-serif text-xl font-semibold lg:w-3/4'>
             And more
           </div>
           <div className='text-base lg:w-3/4'>

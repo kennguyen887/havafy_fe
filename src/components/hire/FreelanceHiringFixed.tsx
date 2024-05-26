@@ -16,7 +16,10 @@ export default function FreelanceHiringFixed({
       >
         <div className='mx-2 px-6 pb-[20px] pt-[10px] lg:mx-6 lg:px-20 lg:pb-[50px] lg:pt-[20px]'>
           <h3 className='my-10 text-3xl lg:text-4xl'>
-            Freelance hiring - <span className='font-extralight'>fixed</span>
+            Freelance hiring -{' '}
+            <span className='font-serif font-extralight text-gray-400'>
+              fixed
+            </span>
           </h3>
           <div className='my-8 gap-2 lg:grid lg:grid-cols-3'>
             <div className='my-5 lg:my-0'>
@@ -61,12 +64,12 @@ export default function FreelanceHiringFixed({
 
       <div className='layout my-10 gap-6 lg:my-20 lg:grid lg:grid-cols-12'>
         <div className='col-span-8 mb-5 lg:mb-0'>
-          <div className='max-w-lg text-2xl  font-semibold text-gray-800 lg:ml-8 lg:text-4xl'>
+          <div className='max-w-lg font-mono text-2xl font-semibold text-gray-800 lg:ml-8 lg:text-4xl'>
             The most experienced network of freelance web application talent
           </div>
         </div>
         <div className='col-span-4 '>
-          <div className='text-lg font-light lg:w-3/4'>
+          <div className='font-serif text-xl font-light lg:w-3/4'>
             We've reviewed over 500 developers, designers, and QA and hand
             selected the top 20%.
           </div>
