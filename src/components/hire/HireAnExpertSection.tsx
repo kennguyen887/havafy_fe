@@ -37,9 +37,19 @@ export default function HireAnExpertSection({
             retainers, big and small.
           </div>
           <div className='flex'>
-            <button className='my-10 bg-[#ede3db] px-2 py-2 font-semibold text-gray-800 hover:bg-[#edeae2] lg:px-8 lg:py-5'>
+            <button
+              onClick={() =>
+                (
+                  document.getElementById(
+                    'HireAnExpertModal'
+                  ) as HTMLDialogElement
+                ).showModal()
+              }
+              className='my-10 bg-[#ede3db] px-2 py-2 font-semibold text-gray-800 hover:bg-[#edeae2] lg:px-8 lg:py-5'
+            >
               hire an expert
             </button>
+
             <div className='my-10 ml-5 lg:ml-10'>
               <div className='mb-1 mt-2 flex  space-x-1'>
                 <IoIosStar height={16} />

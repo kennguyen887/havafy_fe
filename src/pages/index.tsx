@@ -6,6 +6,7 @@ import useLoaded from '@/hooks/useLoaded';
 import CustomerReviewSection from '@/components/hire/CustomerReviewSection';
 import FreelanceHiringFixed from '@/components/hire/FreelanceHiringFixed';
 import FreelancerSlideSection from '@/components/hire/FreelancerSlideSection';
+import HireAnExpertModal from '@/components/hire/HireAnExpertModal';
 import HireAnExpertSection from '@/components/hire/HireAnExpertSection';
 import MeetTechStackSection from '@/components/hire/MeetTechStackSection';
 import Layout from '@/components/layout/Layout';
@@ -55,6 +56,7 @@ export default function IndexPage() {
         />
         <MeetTechStackSection title='Meet our techstacks' />
         <CustomerReviewSection />
+        <HireAnExpertModal />
       </main>
     </Layout>
   );

@@ -65,7 +65,7 @@ export default function LoginForm() {
                   (value) => !isValidEmail(value),
                   'Your email is invalid',
                 ]}
-                className='mb-2'
+                className='mb-6'
               />
               <TextInput
                 name='Password'
@@ -76,7 +76,7 @@ export default function LoginForm() {
                   (value) => value.length < 6,
                   'Password is invalid',
                 ]}
-                className='mb-2'
+                className='mb-'
               />
               <div className='text-right text-gray-400'>
                 <Link

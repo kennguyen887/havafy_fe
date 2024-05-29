@@ -203,7 +203,7 @@
 
 input:focus,
 textarea:focus {
-  @apply border-none outline-none focus:outline-none;
+  @apply outline-none focus:outline-none;
 }
 
 .heart-animate:active,
@@ -233,3 +233,22 @@ textarea:focus {
   animation: emoji-animation 0.7s cubic-bezier(0.33, 1, 0.68, 1);
 }
 /* #endregion /**======== Like Button Animation =========== */
+input {
+  background: transparent !important;
+  @apply ring-0 ring-offset-0;
+}
+
+button:focus,
+select:focus {
+  outline: none;
+}
+
+.sun-editor .se-btn {
+  width: 18px !important;
+  height: 18px !important;
+}
+.sun-editor .se-menu-list,
+.sun-editor .se-menu-list li {
+  margin: 0;
+  padding: 0px 10px 0px 4px !important;
+}
