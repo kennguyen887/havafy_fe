@@ -252,3 +252,12 @@ select:focus {
   margin: 0;
   padding: 0px 10px 0px 4px !important;
 }
+.sun-editor-editable {
+  padding: 7px !important;
+  margin: 0 !important;
+}
+.sun-editor-editable h3 {
+  font-size: 1.17em;
+  margin-block-start: 5px !important;
+  margin-block-end: 5px !important;
+}

@@ -76,7 +76,7 @@ export default function LoginForm() {
                   (value) => value.length < 6,
                   'Password is invalid',
                 ]}
-                className='mb-'
+                className='mb-3'
               />
               <div className='text-right text-gray-400'>
                 <Link
