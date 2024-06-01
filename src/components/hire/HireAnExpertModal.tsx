@@ -3,6 +3,7 @@ import * as React from 'react';
 import { IoMdClose } from 'react-icons/io';
 import { IoMdArrowBack } from 'react-icons/io';
 
+import TagSelector from '@/components/common/TagSelector';
 import ButtonPrimary from '@/components/form/ButtonPrimary';
 import Editor from '@/components/form/Editor';
 import TextInput from '@/components/form/TextInput';
@@ -54,7 +55,7 @@ export default function HireAnExpertModal() {
             <h1>Get Started</h1>
             <p className='max-w-lg py-4 text-sm text-gray-600'>
               It only takes a few minutes to kick off your first project. Then
-              we'll introduce you to an e-commerce expert in our network.
+              we'll introduce you to an developer/design expert in our network.
             </p>
 
             <div>
@@ -72,7 +73,28 @@ export default function HireAnExpertModal() {
                   (optional)
                 </span>
               </div>
-
+              <div className=''>
+                <TagSelector
+                  tags={[
+                    'ReactJs',
+                    'VueJs',
+                    'C#/.NET',
+                    'Java',
+                    'Ruby',
+                    'NodeJs/Typescript',
+                    'PHP/Laravel',
+                    'Figma',
+                    'Python',
+                    'Flutter',
+                    'AWS/Azure',
+                    'AI/LLM',
+                  ]}
+                  // eslint-disable-next-line no-console
+                  onChange={(tags) => {
+                    console.log('------', tags);
+                  }}
+                />
+              </div>
               <div></div>
             </div>
             <div className='flex'>
