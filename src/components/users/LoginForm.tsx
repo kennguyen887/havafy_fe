@@ -103,10 +103,7 @@ export default function LoginForm() {
             </Link>
           </div>
 
-          <div className='my-10 items-center text-center text-gray-400'>
-            {' '}
-            OR{' '}
-          </div>
+          <div className='my-10 items-center text-center text-gray-400'>OR</div>
 
           <div>
             <GoogleLogin

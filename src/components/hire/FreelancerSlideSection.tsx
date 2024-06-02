@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Image from 'next/image';
+import Link from 'next/link';
 import * as React from 'react';
 
 import ButtonCircle from '@/components/form/ButtonCircle';
@@ -21,7 +22,9 @@ export default function FreelancerSlideSection({
           <span className='font-extralight  italic text-gray-500'>like</span>
         </h3>
         <div>
-          <ButtonCircle name='hire an expert' />
+          <Link href='/hire/expert'>
+            <ButtonCircle name='hire an expert' />
+          </Link>
         </div>
       </div>
 

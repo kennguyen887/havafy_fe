@@ -4,9 +4,9 @@ import * as React from 'react';
 
 import useLoaded from '@/hooks/useLoaded';
 
+import HireAnExpertFormWrap from '@/components/hire/HireAnExpertForm';
 import BaseLayout from '@/components/layout/BaseLayout';
 import Seo from '@/components/Seo';
-import ResetPasswordWrap from '@/components/users/ResetPasswordForm';
 
 import { useAuthState } from '@/contexts/AuthContext';
 
@@ -20,18 +20,12 @@ export default function RegisterPage() {
 
   return (
     <BaseLayout>
-      <Seo templateTitle='Forgot password?' />
+      <Seo templateTitle='Hire a Expert' />
       <main>
         <section className={clsx(isLoaded && 'fade-in-start')}>
-          <div className='layout min-h-main py-20'>
-            <div className='flex items-center justify-center'>
-              <div>
-                <div className='mt-4 align-baseline' data-fade='2'>
-                  <div className='max-w-xs'>
-                    <ResetPasswordWrap />
-                  </div>
-                </div>
-              </div>
+          <div className='flex items-center justify-center'>
+            <div className='mt-4 align-baseline' data-fade='2'>
+              <HireAnExpertFormWrap />
             </div>
           </div>
         </section>

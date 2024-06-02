@@ -131,19 +131,11 @@ export default function LoginLink() {
           >
             become an expert
           </button>
-          <button
-            onClick={() => {
-              const sidebar = document.getElementById('HireAnExpertForm');
-              const sidebarBg = document.getElementById(
-                'HireAnExpertFormBackground'
-              );
-              sidebar?.classList.toggle('-translate-x-full');
-              sidebarBg?.classList.remove('hidden');
-            }}
-            className='block  bg-[#f0f0f0] px-4 py-2 text-sm font-semibold  text-gray-900'
-          >
-            hire an expert
-          </button>
+          <Link href='/hire/expert'>
+            <button className='block  bg-[#f0f0f0] px-4 py-2 text-sm font-semibold  text-gray-900'>
+              hire an expert
+            </button>
+          </Link>
         </>
       )}
     </>

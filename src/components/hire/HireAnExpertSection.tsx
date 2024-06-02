@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Image from 'next/image';
+import Link from 'next/link';
 import * as React from 'react';
 import { IoIosStar, IoIosStarHalf } from 'react-icons/io';
 
@@ -37,18 +38,11 @@ export default function HireAnExpertSection({
             retainers, big and small.
           </div>
           <div className='flex'>
-            <button
-              onClick={() =>
-                (
-                  document.getElementById(
-                    'HireAnExpertModal'
-                  ) as HTMLDialogElement
-                ).showModal()
-              }
-              className='my-10 bg-[#ede3db] px-2 py-2 font-semibold text-gray-800 hover:bg-[#edeae2] lg:px-8 lg:py-5'
-            >
-              hire an expert
-            </button>
+            <Link href='/hire/expert'>
+              <button className='my-10 bg-[#ede3db] px-2 py-2 font-semibold text-gray-800 hover:bg-[#edeae2] lg:px-8 lg:py-5'>
+                hire an expert
+              </button>
+            </Link>
 
             <div className='my-10 ml-5 lg:ml-10'>
               <div className='mb-1 mt-2 flex  space-x-1'>

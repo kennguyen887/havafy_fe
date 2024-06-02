@@ -12,7 +12,7 @@ import { postApi } from '@/lib/request';
 
 import Accent from '@/components/Accent';
 import Alert from '@/components/form/Alert';
-import PrimaryButton from '@/components/form/PrimaryButton';
+import ButtonPrimary from '@/components/form/ButtonPrimary';
 import TextInput from '@/components/form/TextInput';
 import GoBackButton from '@/components/GoBackButton';
 
@@ -52,7 +52,9 @@ export function ResetPasswordForm() {
     <div className='w-96'>
       <div className={clsx(submitted ? 'hidden' : '')}>
         <h1 className='mb-8 mt-1 text-center'>
-          <Accent className='text-2xl'>Forgot password?</Accent>
+          <h1 className='mb-8 mt-1 text-center text-xl uppercase'>
+            Forgot password?
+          </h1>
         </h1>
         <div className='mb-5 text-sm text-gray-500'>
           Please enter your email address below so we can send you a link to
@@ -73,7 +75,10 @@ export function ResetPasswordForm() {
             className='mb-2'
           />
           <div className='mt-7 flex items-center justify-center'>
-            <PrimaryButton name={loading ? 'Loading...' : 'Send email'} />
+            <ButtonPrimary
+              className='w-full'
+              name={loading ? 'Loading...' : 'Send email'}
+            />
           </div>
         </form>
       </div>
