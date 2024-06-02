@@ -1,6 +1,7 @@
 import { GoogleLogin } from '@react-oauth/google';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import Router from 'next/router';
 import React, { useCallback, useState } from 'react';
 import {
@@ -22,7 +23,8 @@ export const RegisterInputForm = () => {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [alert, setAlert] = React.useState<string>();
-
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get('redirect');
   const submitForm = useCallback(
     async (e: { preventDefault: () => void }) => {
       e.preventDefault();
@@ -100,6 +102,18 @@ export const RegisterInputForm = () => {
         </div>
       </form>
 
+      <div className='my-4 text-base'>
+        Already have an account?
+        <Link
+          href={{
+            pathname: '/user/login',
+            query: { redirect },
+          }}
+          className='ml-3 text-indigo-500'
+        >
+          Log in
+        </Link>
+      </div>
       <div
         className={clsx(
           !password || !validatePassword(password) ? '' : 'hidden'
@@ -126,18 +140,12 @@ export default function RegisterForm() {
         </GoogleReCaptchaProvider>
       </div>
 
-      <div className='my-4 text-base'>
-        {' '}
-        Already have an account?
-        <Link href='/user/login' className='ml-3 text-indigo-500'>
-          Log in
-        </Link>
-      </div>
       <div className='my-10 items-center text-center text-gray-400'>OR</div>
 
       <div>
         <GoogleLogin
           logo_alignment='center'
+          width={360}
           onSuccess={(credentialResponse) => {
             // eslint-disable-next-line no-console
             console.log(credentialResponse);

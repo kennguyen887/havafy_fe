@@ -2,6 +2,7 @@
 import clsx from 'clsx';
 // import { IoMdClose } from 'react-icons/io';
 import Link from 'next/link';
+import Router from 'next/router';
 import * as React from 'react';
 import {
   GoogleReCaptchaProvider,
@@ -15,6 +16,7 @@ import TagSelector from '@/components/common/TagSelector';
 import ButtonPrimary from '@/components/form/ButtonPrimary';
 import Editor from '@/components/form/Editor';
 
+import { useAuthState } from '@/contexts/AuthContext';
 import { ItemType } from '@/domain/dto';
 
 const DEFAULT_ABOUT_PROJECT = `
@@ -33,6 +35,7 @@ export function HireAnExpertForm() {
   const [tags, setTags] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
   const { executeRecaptcha } = useGoogleReCaptcha();
+  const { isAuthenticated } = useAuthState();
 
   const submitForm = React.useCallback(async () => {
     setLoading(true);
@@ -46,16 +49,23 @@ export function HireAnExpertForm() {
     const data = await postApi('items', {
       description,
       type: ItemType.HIRE_REQUEST,
-      attributes: JSON.stringify({
-        tags: ['moithu'],
-      }),
+      attributies: {
+        tags,
+      },
       token,
     });
     setLoading(false);
-    if (data && data.statusCode) {
+    if (data && data.id) {
+      if (!isAuthenticated) {
+        const redirect = `/admin/projects?add=${data.id}`;
+        Router.push({
+          pathname: '/user/login',
+          query: { redirect },
+        });
+      }
       return;
     }
-  }, [executeRecaptcha, description]);
+  }, [executeRecaptcha, description, tags, isAuthenticated]);
 
   return (
     <div className='max-w-4xl  px-6 py-2'>

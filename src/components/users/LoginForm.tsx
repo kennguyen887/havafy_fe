@@ -1,6 +1,7 @@
 import { GoogleLogin } from '@react-oauth/google';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
+import Router, { useRouter } from 'next/router';
 import { useState } from 'react';
 import React from 'react';
 
@@ -15,11 +16,13 @@ import TextInput from '@/components/form/TextInput';
 import { useAuthState } from '@/contexts/AuthContext';
 
 export default function LoginForm() {
+  const searchParams = useSearchParams();
   const router = useRouter();
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [alert, setAlert] = React.useState<string>();
   const { loadAuth } = useAuthState();
+  const redirect = searchParams.get('redirect');
 
   const submitForm = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -39,7 +42,10 @@ export default function LoginForm() {
         if (loadAuth) {
           loadAuth();
         }
-
+        if (redirectPath) {
+          Router.push(redirectPath as string);
+          return;
+        }
         router.back();
         return;
       }
@@ -98,7 +104,13 @@ export default function LoginForm() {
           </div>
           <div className='my-4 text-base'>
             Don't have an account?
-            <Link href='/user/register' className='ml-3 text-indigo-500'>
+            <Link
+              href={{
+                pathname: '/user/register',
+                query: { redirect },
+              }}
+              className='ml-3 text-indigo-500'
+            >
               Sign up
             </Link>
           </div>
@@ -108,6 +120,7 @@ export default function LoginForm() {
           <div>
             <GoogleLogin
               logo_alignment='center'
+              width={360}
               onSuccess={async ({ credential }) => {
                 try {
                   const data = await postApi('user/login/google', {
