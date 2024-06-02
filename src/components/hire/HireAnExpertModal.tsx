@@ -6,7 +6,7 @@ import { IoMdArrowBack } from 'react-icons/io';
 import TagSelector from '@/components/common/TagSelector';
 import ButtonPrimary from '@/components/form/ButtonPrimary';
 import Editor from '@/components/form/Editor';
-import TextInput from '@/components/form/TextInput';
+import RegisterInputForm from '@/components/users/RegisterForm';
 
 const DEFAULT_ABOUT_PROJECT = `
       <h3>About Us:</h3>
@@ -91,6 +91,7 @@ export default function HireAnExpertModal() {
                   ]}
                   // eslint-disable-next-line no-console
                   onChange={(tags) => {
+                    // eslint-disable-next-line no-console
                     console.log('------', tags);
                   }}
                 />
@@ -109,55 +110,16 @@ export default function HireAnExpertModal() {
 
           <div
             className={clsx(
-              'h-[500px] max-w-md overflow-y-auto py-4',
+              'max-w-xl overflow-y-auto py-4',
               stepTwo ? '' : 'hidden'
             )}
           >
-            <h1 className='max-w-sm'>
-              Give your new Expert a way to reach you.
-            </h1>
+            <h1 className=''>Sign up to Havafy</h1>
             <p className='py-4 text-sm'>
               You'll be introduced directly via text or email.
             </p>
             <div className='my-6'>
-              <div className='my-1 font-semibold'>Full Name</div>
-
-              <TextInput
-                name='Fullname'
-                id='fullname'
-                type='fullname'
-                currentValue={(value) => value}
-                valueValidate={[
-                  (value) => value.length === 0,
-                  'Full name is requried',
-                ]}
-                className='mb-3'
-              />
-            </div>
-
-            <div className='my-6'>
-              <div className='my-1 font-semibold'>Email Address</div>
-
-              <TextInput
-                name='Email Address'
-                id='email_address'
-                type='email_address'
-                currentValue={(value) => value}
-                valueValidate={[
-                  (value) => value.length === 0,
-                  'Email is requried',
-                ]}
-                className='mb-3'
-              />
-            </div>
-
-            <div className='flex'>
-              <ButtonPrimary
-                onClick={() => {
-                  setStepTwo(true);
-                }}
-                name='Submit'
-              />
+              <RegisterInputForm />
             </div>
           </div>
         </div>

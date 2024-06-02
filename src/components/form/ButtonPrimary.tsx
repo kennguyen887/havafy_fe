@@ -54,7 +54,7 @@ export default function ButtonPrimary({
           ></path>
         </svg>
       </span>
-      <span className='relative flex w-full text-left transition-colors duration-200 ease-in-out group-hover:text-gray-900'>
+      <span className='relative flex w-full items-center justify-center text-center transition-colors duration-200 ease-in-out group-hover:text-gray-900'>
         {isLoading ? (
           <>
             <svg

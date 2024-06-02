@@ -44,11 +44,11 @@ export default function TextInput({
         className={clsx(
           className,
           disabled ? 'bg-gray-100' : '',
-          'peer block w-full appearance-none border-2 border-gray-300 bg-transparent px-3 py-3 text-sm'
+          'peer block w-full appearance-none border-2 border-gray-300 bg-gray-50 px-3 py-3 text-sm'
         )}
         placeholder={name}
       />
-      <div className='z-100 absolute top-10 mt-2 text-sm text-red-500'>
+      <div className='z-100 absolute top-10 mt-3 text-xs text-red-400'>
         {message}
       </div>
     </div>

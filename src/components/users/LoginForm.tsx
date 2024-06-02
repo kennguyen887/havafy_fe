@@ -8,9 +8,8 @@ import { isValidEmail } from '@/lib/email';
 import { setItem } from '@/lib/localStorage';
 import { postApi } from '@/lib/request';
 
-import Accent from '@/components/Accent';
 import Alert from '@/components/form/Alert';
-import PrimaryButton from '@/components/form/PrimaryButton';
+import ButtonPrimary from '@/components/form/ButtonPrimary';
 import TextInput from '@/components/form/TextInput';
 
 import { useAuthState } from '@/contexts/AuthContext';
@@ -47,37 +46,43 @@ export default function LoginForm() {
     }
   };
   return (
-    <div className='w-96'>
-      <div id='loginSection'>
-        <h1 className='mb-8 mt-1 text-center'>
-          <Accent className='text-2xl'>Sign in to your account</Accent>
+    <div className='w-[360px]'>
+      <div>
+        <h1 className='mb-8 mt-1 text-center text-xl uppercase'>
+          Login to your account
         </h1>
         <div className='items-center'>
           <div className=''>
             <form onSubmit={submitForm} noValidate>
               <Alert content={alert} hidden={!alert} />
-              <TextInput
-                name='Your email'
-                id='email'
-                type='email'
-                currentValue={(value) => setEmail(value)}
-                valueValidate={[
-                  (value) => !isValidEmail(value),
-                  'Your email is invalid',
-                ]}
-                className='mb-6'
-              />
-              <TextInput
-                name='Password'
-                id='password'
-                type='password'
-                currentValue={(value) => setPassword(value)}
-                valueValidate={[
-                  (value) => value.length < 6,
-                  'Password is invalid',
-                ]}
-                className='mb-3'
-              />
+              <div className='my-2'>
+                <div className='my-1 text-sm font-semibold'>Email Address</div>
+                <TextInput
+                  name='Your email'
+                  id='email'
+                  type='email'
+                  currentValue={(value) => setEmail(value)}
+                  valueValidate={[
+                    (value) => !isValidEmail(value),
+                    'Your email is invalid',
+                  ]}
+                  className='mb-6'
+                />
+              </div>
+              <div className='my-2'>
+                <div className='my-1 text-sm font-semibold'>Password</div>
+                <TextInput
+                  name='Password'
+                  id='password'
+                  type='password'
+                  currentValue={(value) => setPassword(value)}
+                  valueValidate={[
+                    (value) => value.length < 6,
+                    'Password is invalid',
+                  ]}
+                  className='mb-3'
+                />
+              </div>
               <div className='text-right text-gray-400'>
                 <Link
                   href='/user/forgotPassword'
@@ -87,21 +92,24 @@ export default function LoginForm() {
                 </Link>
               </div>
               <div className='mt-7 flex items-center justify-center'>
-                <PrimaryButton name='Login' />
+                <ButtonPrimary className='w-full' name='Login' />
               </div>
             </form>
           </div>
+          <div className='my-4 text-base'>
+            Don't have an account?
+            <Link href='/user/register' className='ml-3 text-indigo-500'>
+              Sign up
+            </Link>
+          </div>
 
-          <div className='inline-flex w-full items-center justify-center'>
-            <hr className='dark:bg-gray-500 my-12 h-px w-full border-0 bg-gray-200' />
-            <span className='dark:bg-gray-900 dark:text-white absolute left-1/2 -translate-x-1/2 bg-white px-3 text-xs text-gray-400'>
-              with email
-            </span>
+          <div className='my-10 items-center text-center text-gray-400'>
+            {' '}
+            OR{' '}
           </div>
 
           <div>
             <GoogleLogin
-              useOneTap={false}
               logo_alignment='center'
               onSuccess={async ({ credential }) => {
                 try {

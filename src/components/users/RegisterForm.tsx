@@ -1,5 +1,6 @@
 import { GoogleLogin } from '@react-oauth/google';
 import clsx from 'clsx';
+import Link from 'next/link';
 import Router from 'next/router';
 import React, { useCallback, useState } from 'react';
 import {
@@ -13,16 +14,12 @@ import { validatePassword } from '@/lib/password';
 import { postApi } from '@/lib/request';
 
 import Alert from '@/components/form/Alert';
-import PrimaryButton from '@/components/form/PrimaryButton';
+import ButtonPrimary from '@/components/form/ButtonPrimary';
 import TextInput from '@/components/form/TextInput';
-
-import { PasswordRules } from './Password';
 
 export const RegisterInputForm = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [email, setEmail] = useState<string>();
-  const [firstName, setFirstName] = useState<string>();
-  const [lastName, setLastName] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [alert, setAlert] = React.useState<string>();
 
@@ -40,8 +37,6 @@ export const RegisterInputForm = () => {
       const data = await postApi('user/register', {
         email,
         password,
-        firstName,
-        lastName,
         token,
       });
       if (data) {
@@ -59,53 +54,49 @@ export const RegisterInputForm = () => {
 
       // Do whatever you want with the token
     },
-    [email, executeRecaptcha, firstName, lastName, password]
+    [email, executeRecaptcha, password]
   );
 
   // onFinish={(values) => handleReCaptchaVerify(values)}
 
   return (
-    <div>
+    <div className='w-[360px]'>
+      <h1 className='mb-8 mt-1 text-center text-xl uppercase'>
+        Sign up to Havafy
+      </h1>
+
       <form onSubmit={submitForm} noValidate>
         <Alert content={alert} hidden={!alert} />
-        <TextInput
-          name='Your email'
-          id='email'
-          type='email'
-          currentValue={(value) => setEmail(value)}
-          valueValidate={[
-            (value) => !isValidEmail(value),
-            'Your email is invalid',
-          ]}
-          className='mb-7'
-        />
-
-        <div className='mb-7 grid grid-cols-2 gap-4'>
+        <div className='my-2'>
+          <div className='my-1 text-sm font-semibold'>Email Address</div>
           <TextInput
-            name='First name'
-            id='firstName'
-            currentValue={(value) => setFirstName(value)}
-          />
-
-          <TextInput
-            name='Last name'
-            id='lastName'
-            currentValue={(value) => setLastName(value)}
+            name='Your email'
+            id='email'
+            type='email'
+            currentValue={(value) => setEmail(value)}
+            valueValidate={[
+              (value) => !isValidEmail(value),
+              'Your email is invalid',
+            ]}
+            className='mb-5'
           />
         </div>
-        <TextInput
-          name='Password'
-          id='password'
-          type='password'
-          valueValidate={[
-            (value) => !validatePassword(value),
-            'Your password is invalid.',
-          ]}
-          currentValue={(value) => setPassword(value)}
-        />
 
+        <div className='my-2'>
+          <div className='my-1 text-sm font-semibold'>Password</div>
+          <TextInput
+            name='Password'
+            id='password'
+            type='password'
+            valueValidate={[
+              (value) => !validatePassword(value),
+              'Your password is invalid.',
+            ]}
+            currentValue={(value) => setPassword(value)}
+          />
+        </div>
         <div className='mt-7 flex items-center justify-center'>
-          <PrimaryButton name='Sign Up' />
+          <ButtonPrimary className='w-full' name='Sign Up' />
         </div>
       </form>
 
@@ -113,9 +104,7 @@ export const RegisterInputForm = () => {
         className={clsx(
           !password || !validatePassword(password) ? '' : 'hidden'
         )}
-      >
-        <PasswordRules />
-      </div>
+      ></div>
     </div>
   );
 };
@@ -137,12 +126,14 @@ export default function RegisterForm() {
         </GoogleReCaptchaProvider>
       </div>
 
-      <div className='inline-flex w-full items-center justify-center'>
-        <hr className='dark:bg-gray-500 mb-10 mt-12 h-px w-full border-0 bg-gray-200' />
-        <span className='dark:bg-gray-900 dark:text-white absolute left-1/2 -translate-x-1/2 bg-white px-3 text-xs text-gray-400'>
-          with email
-        </span>
+      <div className='my-4 text-base'>
+        {' '}
+        Already have an account?
+        <Link href='/user/login' className='ml-3 text-indigo-500'>
+          Log in
+        </Link>
       </div>
+      <div className='my-10 items-center text-center text-gray-400'>OR</div>
 
       <div>
         <GoogleLogin
