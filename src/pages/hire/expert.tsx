@@ -15,7 +15,7 @@ export default function RegisterPage() {
       <main>
         <section className={clsx(isLoaded && 'fade-in-start')}>
           <div className='flex items-center justify-center'>
-            <div className='mt-4 align-baseline' data-fade='2'>
+            <div className='mx-10 max-w-3xl md:mx-20' data-fade='2'>
               <HireAnExpertFormWrap />
             </div>
           </div>

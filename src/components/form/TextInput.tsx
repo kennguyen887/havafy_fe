@@ -10,6 +10,7 @@ export default function TextInput({
   currentValue,
   defaultValue,
   name,
+  placeholder,
   type = 'text',
   valueValidate = undefined,
   disabled = false,
@@ -46,9 +47,9 @@ export default function TextInput({
           disabled ? 'bg-gray-100' : '',
           'peer block w-full appearance-none border-2 border-gray-300 bg-gray-50 px-3 py-3 text-sm'
         )}
-        placeholder={name}
+        placeholder={placeholder}
       />
-      <div className='z-100 absolute top-10 mt-3 text-xs text-red-400'>
+      <div className='z-100 absolute top-7 mt-3 text-xs text-red-400'>
         {message}
       </div>
     </div>

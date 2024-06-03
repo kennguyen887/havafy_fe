@@ -14,22 +14,24 @@ import { postApi } from '@/lib/request';
 import TagSelector from '@/components/common/TagSelector';
 import ButtonPrimary from '@/components/form/ButtonPrimary';
 import Editor from '@/components/form/Editor';
+import TextInput from '@/components/form/TextInput';
 
 import { useAuthState } from '@/contexts/AuthContext';
 import { ItemType } from '@/domain/dto';
 
 const DEFAULT_ABOUT_PROJECT = `
-      <h3>About Us:</h3>
+      <h4>About Us:</h4>
       <br />
-      <h3>Project Description:</h3>
+      <h4>Project Description:</h4>
     <ul>
     <li></li>
     <li></li>
     </ul>
-    <h3>Project Goal:</h3><br />
-    <h3>Project Budget:</h3><br />`;
+    <h4>Project Goal:</h4>
+    <h4>Project Budget:</h4>`;
 
 export function HireAnExpertForm() {
+  const [title, setTitle] = React.useState<string>();
   const [description, setDescription] = React.useState(DEFAULT_ABOUT_PROJECT);
   const [tags, setTags] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -47,6 +49,7 @@ export function HireAnExpertForm() {
     const token = await executeRecaptcha();
     const data = await postApi('items', {
       description,
+      title,
       type: ItemType.HIRE_REQUEST,
       attributies: {
         tags,
@@ -68,7 +71,7 @@ export function HireAnExpertForm() {
       Router.push(redirect);
       return;
     }
-  }, [executeRecaptcha, description, tags, isAuthenticated]);
+  }, [executeRecaptcha, description, tags, isAuthenticated, title]);
 
   return (
     <div className='max-w-4xl  px-6 py-2'>
@@ -101,13 +104,28 @@ export function HireAnExpertForm() {
           It only takes a few minutes to kick off your first project. Then we'll
           introduce you to an developer/design expert in our network.
         </p>
-
+        <div className='mb-5'>
+          <label className='mb-3 block text-base font-semibold'>
+            Project name
+          </label>
+          <TextInput
+            placeholder='Project name or website address'
+            name='Project name'
+            currentValue={(value) => setTitle(value)}
+            className='h-10'
+          />
+        </div>
         <div>
-          <label className='mb-3 block text-lg font-semibold'>
+          <label className='mb-3 block text-base font-semibold'>
             Tell Us About Your Project
           </label>
           <div className=''>
-            <Editor defaultValue={DEFAULT_ABOUT_PROJECT} />
+            <Editor
+              defaultValue={DEFAULT_ABOUT_PROJECT}
+              handleEditorChange={(value) => {
+                setDescription(value);
+              }}
+            />
           </div>
         </div>
         <div className='my-5'>

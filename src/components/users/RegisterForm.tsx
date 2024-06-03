@@ -18,12 +18,15 @@ import Alert from '@/components/form/Alert';
 import ButtonPrimary from '@/components/form/ButtonPrimary';
 import TextInput from '@/components/form/TextInput';
 
+import { useAuthState } from '@/contexts/AuthContext';
+
 export const RegisterInputForm = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [alert, setAlert] = React.useState<string>();
   const searchParams = useSearchParams();
+  const { loadAuth } = useAuthState();
   const redirect = searchParams.get('redirect');
   const submitForm = useCallback(
     async (e: { preventDefault: () => void }) => {
@@ -49,6 +52,10 @@ export const RegisterInputForm = () => {
 
         if (data.user && data.user.token) {
           setItem('auth', data.user.token);
+          if (redirect) {
+            Router.push(redirect as string);
+            return;
+          }
           Router.push('/');
           return;
         }
@@ -56,70 +63,105 @@ export const RegisterInputForm = () => {
 
       // Do whatever you want with the token
     },
-    [email, executeRecaptcha, password]
+    [email, executeRecaptcha, password, redirect]
   );
 
   // onFinish={(values) => handleReCaptchaVerify(values)}
 
   return (
-    <div className='w-[360px]'>
-      <h1 className='mb-8 mt-1 text-center text-xl uppercase'>
-        Sign up to Havafy
-      </h1>
+    <>
+      <div className='w-[360px]'>
+        <h1 className='mb-8 mt-1 text-center text-xl uppercase'>
+          Sign up to Havafy
+        </h1>
 
-      <form onSubmit={submitForm} noValidate>
-        <Alert content={alert} hidden={!alert} />
-        <div className='my-2'>
-          <div className='my-1 text-sm font-semibold'>Email Address</div>
-          <TextInput
-            name='Your email'
-            id='email'
-            type='email'
-            currentValue={(value) => setEmail(value)}
-            valueValidate={[
-              (value) => !isValidEmail(value),
-              'Your email is invalid',
-            ]}
-            className='mb-5'
-          />
-        </div>
+        <form onSubmit={submitForm} noValidate>
+          <Alert content={alert} hidden={!alert} />
+          <div className='my-2'>
+            <div className='my-1 text-sm font-semibold'>Email Address</div>
+            <TextInput
+              name='Your email'
+              id='email'
+              type='email'
+              currentValue={(value) => setEmail(value)}
+              valueValidate={[
+                (value) => !isValidEmail(value),
+                'Your email is invalid',
+              ]}
+              className='mb-5'
+            />
+          </div>
 
-        <div className='my-2'>
-          <div className='my-1 text-sm font-semibold'>Password</div>
-          <TextInput
-            name='Password'
-            id='password'
-            type='password'
-            valueValidate={[
-              (value) => !validatePassword(value),
-              'Your password is invalid.',
-            ]}
-            currentValue={(value) => setPassword(value)}
-          />
-        </div>
-        <div className='mt-7 flex items-center justify-center'>
-          <ButtonPrimary className='w-full' name='Sign Up' />
-        </div>
-      </form>
+          <div className='my-2'>
+            <div className='my-1 text-sm font-semibold'>Password</div>
+            <TextInput
+              name='Password'
+              id='password'
+              type='password'
+              valueValidate={[
+                (value) => !validatePassword(value),
+                'Your password is invalid.',
+              ]}
+              currentValue={(value) => setPassword(value)}
+            />
+          </div>
+          <div className='mt-7 flex items-center justify-center'>
+            <ButtonPrimary className='w-full' name='Sign Up' />
+          </div>
+        </form>
 
-      <div className='my-4 text-base'>
-        Already have an account?
-        <Link
-          href={{
-            pathname: '/user/login',
-            query: { redirect },
-          }}
-          className='ml-3 text-indigo-500'
-        >
-          Log in
-        </Link>
+        <div className='my-4 text-base'>
+          Already have an account?
+          <Link
+            href={{
+              pathname: '/user/login',
+              query: { redirect },
+            }}
+            className='ml-3 text-indigo-500'
+          >
+            Log in
+          </Link>
+        </div>
+        <div
+          className={clsx(
+            !password || !validatePassword(password) ? '' : 'hidden'
+          )}
+        ></div>
       </div>
-      <div
-        className={clsx(
-          !password || !validatePassword(password) ? '' : 'hidden'
-        )}
-      ></div>
-    </div>
+      <div className='my-10 items-center text-center text-gray-400'>OR</div>
+
+      <div>
+        <GoogleLogin
+          logo_alignment='center'
+          width={360}
+          onSuccess={async ({ credential }) => {
+            try {
+              const data = await postApi('user/login/google', {
+                credential,
+              });
+              if (data && loadAuth) {
+                setItem('auth', data.token);
+                loadAuth();
+
+                if (redirect) {
+                  Router.push({ pathname: redirect });
+                  return;
+                }
+
+                Router.push('/');
+              }
+            } catch (e) {
+              // eslint-disable-next-line no-console
+              console.log('Error on register', e);
+            }
+          }}
+          onError={() => {
+            // eslint-disable-next-line no-console
+            console.log('register failed');
+          }}
+        />
+      </div>
+    </>
   );
 };
 
@@ -138,23 +180,6 @@ export default function RegisterForm() {
         >
           <RegisterInputForm />
         </GoogleReCaptchaProvider>
-      </div>
-
-      <div className='my-10 items-center text-center text-gray-400'>OR</div>
-
-      <div>
-        <GoogleLogin
-          logo_alignment='center'
-          width={360}
-          onSuccess={(credentialResponse) => {
-            // eslint-disable-next-line no-console
-            console.log(credentialResponse);
-          }}
-          onError={() => {
-            // eslint-disable-next-line no-console
-            console.log('Login Failed');
-          }}
-        />
       </div>
     </div>
   );

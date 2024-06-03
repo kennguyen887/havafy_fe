@@ -6,3 +6,17 @@ export enum ItemType {
   CUSTOMER_SERVICE = 'customer_service',
   OTHER = 'other',
 }
+
+export type GetItemDto = {
+  id: string;
+
+  title: string;
+
+  description: number;
+
+  type: ItemType;
+
+  createdAt: string;
+
+  updatedAt: string;
+};

@@ -43,12 +43,12 @@ export default function AccountPage() {
       <Seo templateTitle='Your projects' />
       <main>
         <section className={clsx(isLoaded && 'fade-in-start')}>
-          <div className='mx-3 mt-20 w-full justify-between before:py-20 lg:mx-20'>
-            <div className='flex flex-row'>
-              <div className='mr-10 mt-4 flex-none'>
+          <div className='mx-5 mt-20 w-full justify-between md:mx-20'>
+            <div className='flex '>
+              <div className='mr-10 mt-4'>
                 <Sidebar />
               </div>
-              <div className='min-h-main grow'>
+              <div className='min-h-main'>
                 <ProjectManager />
               </div>
             </div>

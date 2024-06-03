@@ -7,17 +7,20 @@ const SunEditor = dynamic(() => import('suneditor-react'), {
   ssr: false,
 });
 
-const Editor = ({ defaultValue }: { defaultValue: string }) => {
-  const handleEditorChange = (content: string) => {
-    // eslint-disable-next-line no-console
-    console.log(content);
-  };
-
+const Editor = ({
+  defaultValue,
+  handleEditorChange,
+}: {
+  defaultValue: string;
+  handleEditorChange: (value: string) => void;
+}) => {
   return (
     <SunEditor
       // setContents="My contents"
       defaultValue={defaultValue}
-      onChange={handleEditorChange}
+      onChange={(value) => {
+        handleEditorChange(value);
+      }}
       setDefaultStyle='height: auto'
       setOptions={{
         buttonList: [

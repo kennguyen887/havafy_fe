@@ -1,7 +1,7 @@
 import { GoogleLogin } from '@react-oauth/google';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useState } from 'react';
 import React from 'react';
 
@@ -17,7 +17,6 @@ import { useAuthState } from '@/contexts/AuthContext';
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [alert, setAlert] = React.useState<string>();
@@ -46,7 +45,7 @@ export default function LoginForm() {
           Router.push(redirect as string);
           return;
         }
-        router.back();
+        Router.push('/');
         return;
       }
     }
@@ -135,7 +134,7 @@ export default function LoginForm() {
                       return;
                     }
 
-                    router.back();
+                    Router.push('/');
                   }
                 } catch (e) {
                   // eslint-disable-next-line no-console
