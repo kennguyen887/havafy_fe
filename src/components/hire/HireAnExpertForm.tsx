@@ -1,7 +1,6 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import clsx from 'clsx';
 // import { IoMdClose } from 'react-icons/io';
-import Link from 'next/link';
 import Router from 'next/router';
 import * as React from 'react';
 import {
@@ -56,13 +55,17 @@ export function HireAnExpertForm() {
     });
     setLoading(false);
     if (data && data.id) {
+      const redirect = `/admin/projects?linking=${data.id}`;
+
       if (!isAuthenticated) {
-        const redirect = `/admin/projects?add=${data.id}`;
         Router.push({
           pathname: '/user/login',
           query: { redirect },
         });
+        return;
       }
+
+      Router.push(redirect);
       return;
     }
   }, [executeRecaptcha, description, tags, isAuthenticated]);
@@ -82,17 +85,17 @@ export function HireAnExpertForm() {
       <div className={clsx('py-4')}>
         <div className='flex justify-between'>
           <h1>Get Started</h1>
-
-          <Link href='/'>
-            <button className={clsx('group mx-0 my-2')}>
-              <div className='flex items-center'>
-                <IoMdArrowBack className='mr-1 h-5 w-5 text-gray-600 group-hover:text-gray-900' />
-                <span className='text-sm font-semibold text-gray-600 group-hover:text-gray-900'>
-                  Back
-                </span>
-              </div>
-            </button>
-          </Link>
+          <button
+            className={clsx('group mx-0 my-2')}
+            onClick={() => Router.back()}
+          >
+            <div className='flex items-center'>
+              <IoMdArrowBack className='mr-1 h-5 w-5 text-gray-600 group-hover:text-gray-900' />
+              <span className='text-sm font-semibold text-gray-600 group-hover:text-gray-900'>
+                Back
+              </span>
+            </div>
+          </button>
         </div>
         <p className='max-w-lg py-4 text-sm text-gray-600'>
           It only takes a few minutes to kick off your first project. Then we'll

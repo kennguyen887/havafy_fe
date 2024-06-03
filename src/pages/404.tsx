@@ -1,17 +1,18 @@
 import * as React from 'react';
 import { RiAlarmWarningFill } from 'react-icons/ri';
 
+import BaseLayout from '@/components/layout/BaseLayout';
 import CustomLink from '@/components/links/CustomLink';
 import Seo from '@/components/Seo';
 
 export default function NotFoundPage() {
   return (
-    <>
+    <BaseLayout>
       <Seo templateTitle='Not Found' />
 
       <main>
         <section className='bg-dark'>
-          <div className='layout flex min-h-screen flex-col items-center justify-center text-center text-white'>
+          <div className='layout flex min-h-screen flex-col items-center justify-center text-center text-gray-500'>
             <RiAlarmWarningFill
               size={60}
               className='drop-shadow-glow animate-flicker text-yellow-300'
@@ -23,6 +24,6 @@ export default function NotFoundPage() {
           </div>
         </section>
       </main>
-    </>
+    </BaseLayout>
   );
 }

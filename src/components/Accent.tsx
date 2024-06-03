@@ -8,8 +8,8 @@ export default function Accent({ children, className }: AccentType) {
     <span
       className={clsx(
         className,
-        'inline-block from-gray-600 to-red-900',
-        'text-3xl text-gray-800'
+        'inline-block from-gray-600 to-red-900 uppercase',
+        'text-2xl text-gray-800'
       )}
     >
       {children}

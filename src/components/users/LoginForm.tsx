@@ -42,8 +42,8 @@ export default function LoginForm() {
         if (loadAuth) {
           loadAuth();
         }
-        if (redirectPath) {
-          Router.push(redirectPath as string);
+        if (redirect) {
+          Router.push(redirect as string);
           return;
         }
         router.back();
@@ -129,6 +129,12 @@ export default function LoginForm() {
                   if (data && loadAuth) {
                     setItem('auth', data.token);
                     loadAuth();
+
+                    if (redirect) {
+                      Router.push({ pathname: redirect });
+                      return;
+                    }
+
                     router.back();
                   }
                 } catch (e) {

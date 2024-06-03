@@ -6,7 +6,7 @@ import * as React from 'react';
 export default function BaseHeader() {
   return (
     <header>
-      <div className='layout items-centertransition-colors flex max-w-4xl flex-col justify-between px-5 py-2 lg:flex-row lg:items-center'>
+      <div className='layout mx-5 flex w-full flex-col justify-between px-5 py-2 transition-colors lg:mx-20'>
         <nav className={clsx('flex items-center')}>
           <div className='my-1 lg:my-0'>
             <Link href='/'>
