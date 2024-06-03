@@ -38,7 +38,7 @@ export default function HireAnExpertSection({
             retainers, big and small.
           </div>
           <div className='flex'>
-            <Link href='/hire/expert'>
+            <Link href='/admin/project-form'>
               <button className='my-10 bg-[#ede3db] px-2 py-2 font-semibold text-gray-800 hover:bg-[#edeae2] lg:px-8 lg:py-5'>
                 hire an expert
               </button>

@@ -1,7 +1,6 @@
 import Router from 'next/router';
 import React from 'react';
 
-import { isValidEmail } from '@/lib/email';
 import { putApi } from '@/lib/request';
 
 import Alert from '@/components/form/Alert';
@@ -10,7 +9,6 @@ import TextInput from '@/components/form/TextInput';
 import { User } from '@/domain/models';
 
 export default function Account({ user }: { user?: User }) {
-  const [email, setEmail] = React.useState<string>();
   const [lastName, setLastName] = React.useState<string>();
   const [firstName, setFirstName] = React.useState<string>();
   const [alert, setAlert] = React.useState<string>();
@@ -24,11 +22,8 @@ export default function Account({ user }: { user?: User }) {
         email?: string;
         lastName?: string;
         firstName?: string;
-      } | null = null;
+      } | null = {};
 
-      if (email && email !== data?.email) {
-        payload = { email };
-      }
       if (firstName && firstName !== data?.firstName) {
         payload = { ...payload, firstName };
       }
@@ -46,29 +41,19 @@ export default function Account({ user }: { user?: User }) {
         Router.push('/user/account');
       }
     },
-    [data, email, firstName, lastName]
+    [data, firstName, lastName]
   );
   return (
     <>
-      <form onSubmit={submitForm} noValidate className='max-w-md '>
+      <form onSubmit={submitForm} noValidate>
         <Alert content={alert} hidden={!alert} />
         <div className='group relative z-0 mb-5 w-full'>
-          <TextInput
-            name='Your email'
-            id='email'
-            type='email'
-            defaultValue={user?.email}
-            currentValue={(value) => setEmail(value)}
-            valueValidate={[
-              (value) => !isValidEmail(value),
-              'Your email is invalid',
-            ]}
-            disabled
-            className='mb-7'
-          />
+          <div className='my-1 text-sm font-medium'>Email</div>
+          <div className='bg-gray-100 px-4 py-2 text-sm'>{user?.email}</div>
         </div>
         <div className='grid md:grid-cols-2 md:gap-6'>
-          <div className='group relative z-0 mb-5 w-full'>
+          <div className='  z-0 mb-5 w-full'>
+            <div className='my-1 text-sm font-medium'>First name</div>
             <TextInput
               name='First name'
               id='firstName'
@@ -78,26 +63,25 @@ export default function Account({ user }: { user?: User }) {
                 (value) => value.length < 1,
                 'Please input your first name.',
               ]}
-              className='mb-7'
             />
           </div>
-          <div className='group relative z-0 mb-5 w-full'>
+          <div className='group z-0 mb-5 w-full'>
+            <div className='my-1 text-sm font-medium'>Last name</div>
             <TextInput
-              name='First name'
-              id='firstName'
+              name='Last name'
+              id='lastName'
               defaultValue={user?.lastName}
               currentValue={(value) => setLastName(value)}
               valueValidate={[
                 (value) => value.length < 1,
                 'Please input your last name.',
               ]}
-              className='mb-7'
             />
           </div>
         </div>
         <button
           type='submit'
-          className='rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold leading-5 text-white hover:bg-sky-700'
+          className='mt-3 rounded-full bg-sky-500 px-5 py-2 text-sm font-semibold leading-5 text-white hover:bg-sky-700'
         >
           Save
         </button>

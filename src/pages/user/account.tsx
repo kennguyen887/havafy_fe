@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import Router from 'next/router';
 import * as React from 'react';
+import { IoMdLogOut } from 'react-icons/io';
 
 import { getApi } from '@/lib/request';
 import useLoaded from '@/hooks/useLoaded';
@@ -52,21 +53,27 @@ export default function AccountPage() {
               </div>
 
               <div className='min-h-main max-w-lg grow'>
-                <h1 className='mb-5 mt-1'>
+                <div className='mb-5 mt-1'>
                   <Accent className='text-2xl'>Account</Accent>
-                </h1>
+                </div>
                 <div className='my-3 border-t border-slate-200'></div>
                 <div className='mt-10'>
                   <Account user={user} />
                 </div>
 
                 <div className='mt-8'>
-                  <h1 className=''>
-                    <h4 className='text-lg'>Change Password</h4>
-                  </h1>
-                  <div className='mt-10'>
-                    <Password />
-                  </div>
+                  <h4 className='mb-4 text-lg'>Change Password</h4>
+                  <Password />
+                </div>
+                <div
+                  className='my-3 flex rounded-md bg-gray-50 px-4 py-3 hover:bg-gray-100'
+                  role='button'
+                  onClick={() => resetAuth !== undefined && resetAuth()}
+                >
+                  <button>
+                    <IoMdLogOut className='h-5 w-5' />
+                  </button>
+                  <div className='ml-3 text-base'>Logout</div>
                 </div>
               </div>
             </div>

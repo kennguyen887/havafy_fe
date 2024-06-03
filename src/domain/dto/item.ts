@@ -12,7 +12,7 @@ export type GetItemDto = {
 
   title: string;
 
-  description: number;
+  description: string;
 
   type: ItemType;
 

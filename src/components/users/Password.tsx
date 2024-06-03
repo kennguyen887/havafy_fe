@@ -10,11 +10,11 @@ import TextInput from '@/components/form/TextInput';
 export function PasswordRules() {
   return (
     <div
-      className='mb-6 mt-10 flex rounded-lg bg-blue-50 p-4 text-xs text-gray-800 dark:bg-gray-800 dark:text-white'
+      className='dark:bg-gray-800 dark:text-white mb-6 mt-5 flex rounded-lg bg-blue-50 p-4 text-xs text-gray-800'
       role='alert'
     >
       <svg
-        className='me-3 inline h-4 w-4 flex-shrink-0'
+        className='me-3 inline h-4 w-4 flex-shrink-0 text-gray-500'
         aria-hidden='true'
         xmlns='http://www.w3.org/2000/svg'
         fill='currentColor'
@@ -61,11 +61,12 @@ export default function Password() {
   );
   return (
     <>
-      <form onSubmit={submitForm} noValidate className='max-w-md '>
+      <form onSubmit={submitForm} noValidate>
         <Alert content={alert} hidden={!alert} />
-        <div className='group relative z-0 mb-5 w-full'>
+        <div className=''>
+          <div className='my-1 text-sm font-medium'>New password</div>
           <TextInput
-            name='Your password'
+            name='New password'
             id='password'
             type='password'
             currentValue={(value) => setPassword(value)}
@@ -73,10 +74,11 @@ export default function Password() {
               (value) => !validatePassword(value),
               'Your password not match rules',
             ]}
-            className='mb-7'
+            className='mb-4'
           />
         </div>
-        <div className='group relative z-0 mb-5 w-full'>
+        <div className=''>
+          <div className='my-1 text-sm font-medium'>Re-password</div>
           <TextInput
             name='Repeat password'
             id='repeatPassword'
@@ -86,7 +88,7 @@ export default function Password() {
               (value) => value !== password,
               'Your password is not same.',
             ]}
-            className='mb-7'
+            className='mb-4'
           />
         </div>
         <button

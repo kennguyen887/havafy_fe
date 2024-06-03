@@ -43,9 +43,9 @@ export default function TextInput({
         onChange={onChangeInput}
         disabled={disabled}
         className={clsx(
+          'block h-10 w-full appearance-none border-2 border-gray-300 bg-gray-50 px-3 py-3 text-sm',
           className,
-          disabled ? 'bg-gray-100' : '',
-          'peer block w-full appearance-none border-2 border-gray-300 bg-gray-50 px-3 py-3 text-sm'
+          disabled ? 'bg-gray-100' : ''
         )}
         placeholder={placeholder}
       />

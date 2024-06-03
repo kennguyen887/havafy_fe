@@ -22,7 +22,7 @@ export default function FreelancerSlideSection({
           <span className='font-extralight  italic text-gray-500'>like</span>
         </h3>
         <div>
-          <Link href='/hire/expert'>
+          <Link href='/admin/project-form'>
             <ButtonCircle name='hire an expert' />
           </Link>
         </div>

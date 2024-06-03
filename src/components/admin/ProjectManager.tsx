@@ -36,7 +36,7 @@ export default function ProjectManager() {
         <p className=' my-2 text-sm text-gray-600'>
           Work with the same expert or connect with someone new
         </p>
-        <Link href='/hire/expert'>
+        <Link href='/admin/project-form'>
           <ButtonCircle name='New project' />
         </Link>
       </div>
@@ -52,7 +52,6 @@ export default function ProjectManager() {
                 <div>{item.title}</div>
                 <div>status</div>
               </div>
-              <div className='text-sm text-gray-600'>{item.description}</div>
             </div>
           ))}
         </div>

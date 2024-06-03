@@ -1,5 +1,4 @@
 import { useGoogleOneTapLogin } from '@react-oauth/google';
-import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -9,41 +8,26 @@ import { postApi } from '@/lib/request';
 import { useAuthState } from '@/contexts/AuthContext';
 
 function AuthenticatedMenuDropdown() {
-  const { resetAuth, user } = useAuthState();
+  const { user } = useAuthState();
   return (
     <div className='group'>
-      <button
-        className='dark:text-white dark:group-hover:text-blue-500 dark:group-hover:ring-gray-700 flex h-5 items-center rounded-full text-sm font-medium text-gray-900 group-hover:text-blue-600 group-hover:ring-4 group-hover:ring-gray-100 md:me-0'
-        type='button'
-      >
-        <span className='sr-only'>Open user menu</span>
-        <div className='mr-2 mt-1'>
-          <Image
-            className='h-6 w-6 rounded-full'
-            width={24}
-            height={24}
-            src={user?.avatar ? user?.avatar : '/images/user/user.png'}
-            alt='user photo'
-          />
-        </div>
-        <span className='text-xs'>{user?.firstName}</span>
-        <svg
-          className='ms-3 h-2.5 w-2.5'
-          aria-hidden='true'
-          xmlns='http://www.w3.org/2000/svg'
-          fill='none'
-          viewBox='0 0 10 6'
-        >
-          <path
-            stroke='currentColor'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            strokeWidth='2'
-            d='m1 1 4 4 4-4'
-          />
-        </svg>
-      </button>
-      <div className='mt-2'>
+      <Link href='/admin/projects'>
+        <button className='mr-5 flex  h-7 items-center rounded-full text-base font-medium text-gray-100'>
+          <div className='mr-2 mt-1'>
+            <Image
+              className='h-6 w-6 rounded-full'
+              width={24}
+              height={24}
+              src={user?.avatar ? user?.avatar : '/images/user/user.png'}
+              alt='user photo'
+            />
+          </div>
+          <span className='animated-underline py-1 text-sm font-medium text-white transition-colors'>
+            admin
+          </span>
+        </button>
+      </Link>
+      {/* <div className='mt-2'>
         <div
           className={clsx(
             'dark:divide-gray-600 dark:bg-gray-700 invisible  absolute z-10 w-44 divide-y divide-gray-100 rounded bg-white shadow group-hover:visible'
@@ -80,7 +64,7 @@ function AuthenticatedMenuDropdown() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -131,7 +115,7 @@ export default function LoginLink() {
           >
             become an expert
           </button>
-          <Link href='/hire/expert'>
+          <Link href='/admin/project-form'>
             <button className='block  bg-[#f0f0f0] px-4 py-2 text-sm font-semibold  text-gray-900'>
               hire an expert
             </button>

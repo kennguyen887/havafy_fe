@@ -22,7 +22,7 @@ export default function Sidebar() {
             <GoProjectRoadmap className='mr-4 h-5 w-5' />
             Projects
           </Link>
-          <Link href='/admin/experts' className={itemMenuClass}>
+          <Link href='/admin/project-forms' className={itemMenuClass}>
             <SiExpertsexchange className='mr-4 h-5 w-5' />
             Experts
           </Link>
