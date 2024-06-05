@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div id='skip-nav'>{children}</div>
       </PreloadProvider>
 
-      <div className='my-10 flex w-full space-x-4 text-sm text-gray-800 md:mx-20'>
+      <div className='my-10 flex w-full  text-sm text-gray-800 md:px-20'>
         <div className=''>© {new Date().getFullYear()} Havafy, Inc.</div>
 
         <div>privacy policy</div>

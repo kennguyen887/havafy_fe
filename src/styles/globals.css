@@ -261,3 +261,17 @@ select:focus {
   margin-block-start: 5px !important;
   margin-block-end: 5px !important;
 }
+
+.htmlEditViewer h3,
+.htmlEditViewer h4 {
+  @apply my-3 py-0 text-sm font-semibold;
+}
+
+.htmlEditViewer h4 {
+  @apply text-xs;
+}
+
+.htmlEditViewer h1,
+.htmlEditViewer h2 {
+  @apply text-base;
+}

@@ -44,15 +44,14 @@ export default function ProjectManager() {
         <h3>Active projects</h3>
         <div className='my-3'>
           {items?.map((item: GetItemDto) => (
-            <div
-              className='mb-6 w-[500px] cursor-pointer border border-gray-300 px-5 py-3 shadow-md hover:shadow-xl'
-              key={item.id}
-            >
-              <div className='flex justify-between'>
-                <div>{item.title}</div>
-                <div>status</div>
+            <Link href={`/admin/projects/${item.id}`} key={item.id}>
+              <div className='mb-6 w-[500px] cursor-pointer border border-gray-300 px-5 py-3 shadow-md hover:shadow-xl'>
+                <div className='flex justify-between'>
+                  <div>{item.title}</div>
+                  <div>status</div>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

@@ -43,9 +43,9 @@ export default function AccountPage() {
       <Seo templateTitle='Your projects' />
       <main>
         <section className={clsx(isLoaded && 'fade-in-start')}>
-          <div className='mx-5 mt-20 w-full justify-between md:mx-20'>
+          <div className=' mx-auto mt-20 flex  max-w-screen-xl'>
             <div className='flex '>
-              <div className='mr-10 mt-4'>
+              <div className='mt-4 pr-6'>
                 <Sidebar />
               </div>
               <div className='min-h-main'>

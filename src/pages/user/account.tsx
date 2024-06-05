@@ -43,12 +43,11 @@ export default function AccountPage() {
   return (
     <BaseLayout>
       <Seo templateTitle='Your profile' />
-
       <main>
         <section className={clsx(isLoaded && 'fade-in-start')}>
-          <div className='mx-3 mt-20 w-full justify-between before:py-20 md:mx-20'>
+          <div className='mx-2 mt-20 w-full justify-between md:mx-[20px] lg:mx-[90px]'>
             <div className='flex flex-row'>
-              <div className='mr-10 mt-4 flex-none'>
+              <div className='mt-4 flex-none pr-6'>
                 <Sidebar />
               </div>
 
