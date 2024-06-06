@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { fontFamily } = require('tailwindcss/defaultTheme');
-const colors = require('tailwindcss/colors');
+// const colors = require('tailwindcss/colors');
+// const withMT = require("@material-tailwind/react/utils/withMT");
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+module.exports = ({
+  content: ['./src/**/*.{js,jsx,ts,tsx}',
+  "./node_modules/@material-tailwind/react/components/**/*.{js,ts,jsx,tsx}",
+  "./node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}",
+  ],
   darkMode: 'false',
   daisyui: {
     themes: ["light", "cupcake"],
@@ -80,4 +84,4 @@ module.exports = {
     },
   },
   plugins: [ require('@tailwindcss/typography'), require("daisyui")],
-};
+});

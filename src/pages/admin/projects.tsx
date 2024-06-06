@@ -43,14 +43,12 @@ export default function AccountPage() {
       <Seo templateTitle='Your projects' />
       <main>
         <section className={clsx(isLoaded && 'fade-in-start')}>
-          <div className=' mx-auto mt-20 flex  max-w-screen-xl'>
-            <div className='flex '>
-              <div className='mt-4 pr-6'>
-                <Sidebar />
-              </div>
-              <div className='min-h-main'>
-                <ProjectManager />
-              </div>
+          <div className=' mx-auto mt-20 grid max-w-screen-xl grid-cols-12 items-start  gap-4'>
+            <div className='col-span-3 mt-4 pr-6'>
+              <Sidebar />
+            </div>
+            <div className='min-h-main col-span-8'>
+              <ProjectManager />
             </div>
           </div>
         </section>

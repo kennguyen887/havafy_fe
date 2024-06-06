@@ -1,3 +1,5 @@
+import { Option, Select } from '@material-tailwind/react';
+import { Card, Typography } from '@material-tailwind/react';
 import { useParams } from 'next/navigation';
 import React from 'react';
 import xss from 'xss';
@@ -20,77 +22,137 @@ export default function ProjectView() {
     });
   }, [params?.id]);
 
+  const TABLE_HEAD = ['Name', 'Job', 'Employed', ''];
+
+  const TABLE_ROWS = [
+    {
+      name: 'John Michael',
+      job: 'Manager',
+      date: '23/04/18',
+    },
+    {
+      name: 'Alexa Liras',
+      job: 'Developer',
+      date: '23/04/18',
+    },
+    {
+      name: 'Laurent Perrier',
+      job: 'Executive',
+      date: '19/09/17',
+    },
+    {
+      name: 'Michael Levi',
+      job: 'Developer',
+      date: '24/12/08',
+    },
+    {
+      name: 'Richard Gran',
+      job: 'Manager',
+      date: '04/10/21',
+    },
+  ];
+
   return (
-    <div className='flex flex-row'>
-      <div className='basis-2/3'>
+    <div className=' mx-auto grid max-w-screen-xl grid-cols-12 items-start  gap-4'>
+      <div className='col-span-6 lg:col-span-8'>
         <div className='my-5'>
           <h3 className='text-xl text-gray-800'>{item?.title}</h3>
         </div>
         <div className='my-6'>
           <h4 className='text-base text-gray-800'>Project detail</h4>
-          <div className='htmlEditViewer my-3 w-[500px] px-5 py-1 text-sm hover:bg-gray-100 hover:shadow'>
+          <div className='htmlEditViewer my-3 -ml-2 w-[90%] px-2 py-1 text-sm hover:bg-gray-100 hover:shadow'>
             <div
               dangerouslySetInnerHTML={{
                 __html: xss(item?.description as string),
               }}
             />
             <div className='mx-5'></div>
+
+            <Card className='h-full w-full overflow-scroll'>
+              <table className='w-full min-w-max table-auto text-left'>
+                <thead>
+                  <tr>
+                    {TABLE_HEAD.map((head) => (
+                      <th
+                        key={head}
+                        className='border-blue-gray-100 bg-blue-gray-50 border-b p-4'
+                      >
+                        <Typography
+                          variant='small'
+                          color='blue-gray'
+                          className='font-normal leading-none opacity-70'
+                        >
+                          {head}
+                        </Typography>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {TABLE_ROWS.map(({ name, job, date }, index) => {
+                    const isLast = index === TABLE_ROWS.length - 1;
+                    const classes = isLast
+                      ? 'p-4'
+                      : 'p-4 border-b border-blue-gray-50';
+
+                    return (
+                      <tr key={name}>
+                        <td className={classes}>
+                          <Typography
+                            variant='small'
+                            color='blue-gray'
+                            className='font-normal'
+                          >
+                            {name}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant='small'
+                            color='blue-gray'
+                            className='font-normal'
+                          >
+                            {job}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            variant='small'
+                            color='blue-gray'
+                            className='font-normal'
+                          >
+                            {date}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
+                          <Typography
+                            as='a'
+                            href='#'
+                            variant='small'
+                            color='blue-gray'
+                            className='font-medium'
+                          >
+                            Edit
+                          </Typography>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </Card>
           </div>
         </div>
       </div>
-      <div className='mt-10 basis-1/3 pl-5'>
-        <div className='hs-dropdown relative m-1 inline-flex [--trigger:hover]'>
-          <button
-            id='hs-dropdown-hover-event'
-            type='button'
-            className='hs-dropdown-toggle inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50'
-          >
-            Actions2
-            <svg
-              className='hs-dropdown-open:rotate-180 size-4'
-              xmlns='http://www.w3.org/2000/svg'
-              width='24'
-              height='24'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='2'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-            >
-              <path d='m6 9 6 6 6-6' />
-            </svg>
-          </button>
-
-          <div
-            className='hs-dropdown-menu duration hs-dropdown-open:opacity-100 min-w-60 mt-2 hidden rounded-lg bg-white p-2 opacity-0 shadow-md transition-[opacity,margin] before:absolute before:-top-4 before:start-0 before:h-4 before:w-full after:absolute after:-bottom-4 after:start-0 after:h-4 after:w-full'
-            aria-labelledby='hs-dropdown-hover-event'
-          >
-            <a
-              className='flex items-center gap-x-3.5 rounded-lg px-3 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none'
-              href='#'
-            >
-              Newsletter
-            </a>
-            <a
-              className='flex items-center gap-x-3.5 rounded-lg px-3 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none'
-              href='#'
-            >
-              Purchases
-            </a>
-            <a
-              className='flex items-center gap-x-3.5 rounded-lg px-3 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none'
-              href='#'
-            >
-              Downloads
-            </a>
-            <a
-              className='flex items-center gap-x-3.5 rounded-lg px-3 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none'
-              href='#'
-            >
-              Team Account
-            </a>
-          </div>
+      <div className='col-span-6 lg:col-span-4'>
+        <div className='w-72'>
+          <Select label='Select Version'>
+            <Option>Material Tailwind HTML</Option>
+            <Option>Material Tailwind React</Option>
+            <Option>Material Tailwind Vue</Option>
+            <Option>Material Tailwind Angular</Option>
+            <Option>Material Tailwind Svelte</Option>
+          </Select>
         </div>
 
         <div className='mt-5 w-[300px] border border-gray-200 text-xs'>
