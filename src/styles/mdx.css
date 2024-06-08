@@ -120,13 +120,13 @@ html.light pre {
 }
 
 [data-chars-id='v'] {
-  @apply border-b-pink-600 bg-rose-400/50 font-bold !text-pink-700;
+  @apply border-b-pink-600  font-bold !text-pink-700;
 }
 [data-chars-id='s'] {
-  @apply border-b-yellow-600 bg-yellow-400/50 font-bold !text-yellow-700;
+  @apply font-bold !text-yellow-700;
 }
 [data-chars-id='i'] {
-  @apply border-b-purple-600 bg-purple-400/50 font-bold !text-purple-700;
+  @apply border-b-purple-600 font-bold !text-purple-700;
 }
 
 code {

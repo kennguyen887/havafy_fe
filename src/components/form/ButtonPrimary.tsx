@@ -17,14 +17,14 @@ export default function ButtonPrimary({
     <button
       className={clsx(
         className,
-        'group relative inline-flex items-center  justify-start overflow-hidden rounded-none border bg-gray-800 py-4 pl-7 pr-12 text-xs font-semibold text-gray-100 transition-all duration-150 ease-in-out hover:bg-slate-100 hover:pl-10 hover:pr-6 lg:text-sm'
+        'hover:bg-slate-100 group relative inline-flex  items-center justify-start overflow-hidden rounded-none border bg-gray-800 py-4 pl-7 pr-12 text-xs font-semibold text-gray-100 transition-all duration-150 ease-in-out hover:pl-10 hover:pr-6 lg:text-sm'
       )}
       onClick={onClick}
     >
       <span className='absolute bottom-0 left-0 h-1 w-full bg-transparent transition-all duration-150 ease-in-out group-hover:h-full'></span>
       <span className='absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12'>
         <svg
-          className='h-5 w-5 text-gray-200'
+          className='h-5 w-5  text-gray-200'
           fill='none'
           stroke='currentColor'
           viewBox='0 0 24 24'
@@ -38,9 +38,9 @@ export default function ButtonPrimary({
           ></path>
         </svg>
       </span>
-      <span className='absolute left-0 -translate-x-12 pl-2.5 duration-200 ease-out group-hover:translate-x-0'>
+      <span className='absolute  left-0 -translate-x-12 pl-2.5 duration-200 ease-out group-hover:translate-x-0'>
         <svg
-          className='h-5 w-5 text-gray-600'
+          className='text-gray-10 h-5 w-5'
           fill='none'
           stroke='currentColor'
           viewBox='0 0 24 24'
@@ -54,7 +54,7 @@ export default function ButtonPrimary({
           ></path>
         </svg>
       </span>
-      <span className='relative flex w-full items-center justify-center text-center transition-colors duration-200 ease-in-out group-hover:text-gray-900'>
+      <span className='group-hover:text-gray-10 relative flex w-full items-center justify-center text-center transition-colors duration-200 ease-in-out'>
         {isLoading ? (
           <>
             <svg

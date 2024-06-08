@@ -17,6 +17,9 @@
 }
 
 @layer base {
+}
+
+@layer utilities {
   /* inter var - latin */
   @font-face {
     font-family: 'Inter';
@@ -90,9 +93,6 @@
   .accent-highlight {
     @apply bg-primary-300/50;
   }
-}
-
-@layer utilities {
   .animated-underline {
     background-image: linear-gradient(#33333300, #33333300),
       linear-gradient(to right, #fff, #ccc);

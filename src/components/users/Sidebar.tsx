@@ -3,6 +3,7 @@ import React from 'react';
 import { BiSupport } from 'react-icons/bi';
 import { GoProjectRoadmap } from 'react-icons/go';
 import { MdOutlineAccountCircle } from 'react-icons/md';
+import { RiProfileLine } from 'react-icons/ri';
 import { SiExpertsexchange } from 'react-icons/si';
 
 export default function Sidebar() {
@@ -22,15 +23,20 @@ export default function Sidebar() {
             <GoProjectRoadmap className='mr-4 h-5 w-5' />
             Projects
           </Link>
-          <Link href='/admin/project-forms' className={itemMenuClass}>
+          <Link href='/admin/experts' className={itemMenuClass}>
             <SiExpertsexchange className='mr-4 h-5 w-5' />
             Experts
+          </Link>
+
+          <Link href='/admin/profile' className={itemMenuClass}>
+            <RiProfileLine className='mr-4 h-5 w-5' />
+            My profile
           </Link>
           <Link href='/admin/support' className={itemMenuClass}>
             <BiSupport className='mr-4 h-5 w-5' />
             Support
           </Link>
-          <div className='my-3 border-t border-slate-200'></div>
+          <div className='border-slate-200 my-3 border-t'></div>
 
           <Link href='/user/account' className={itemMenuClass}>
             <MdOutlineAccountCircle className='mr-4 h-5 w-5' />
