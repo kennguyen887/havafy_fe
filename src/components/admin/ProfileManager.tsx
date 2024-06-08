@@ -2,11 +2,36 @@
 import { Avatar } from '@material-tailwind/react';
 import React from 'react';
 
+import { getApi, postApi } from '@/lib/request';
+
 import TextAbleEdit from '@/components/form/TextAbleEdit';
 import TextareaAbleEdit from '@/components/form/TextareaAbleEdit';
 import ExperienceForm from '@/components/profile/ExperienceForm';
 
+import { GetProfileDetailDto } from '@/domain/dto';
+
 export default function ProfileManager() {
+  const [profile, setProfile] = React.useState<GetProfileDetailDto>();
+
+  const getProfile = React.useCallback(async () => {
+    try {
+      const profileRes = await getApi('profiles');
+      if (profileRes) {
+        setProfile(profileRes.data);
+      }
+    } catch (e) {
+      await postApi('profiles', {});
+      const profileRes = await getApi('profiles');
+      if (profileRes) {
+        setProfile(profileRes.data);
+      }
+    }
+  }, []);
+
+  React.useEffect(() => {
+    getProfile();
+  }, [getProfile]);
+
   return (
     <>
       <div className='my-2'>
@@ -20,7 +45,7 @@ export default function ProfileManager() {
             <TextAbleEdit
               onChange={(value) => console.log(value)}
               className='text-xl font-semibold'
-              value='Your name'
+              value={profile?.title ?? 'Set your name'}
             />
             <div className=''>
               <TextAbleEdit
