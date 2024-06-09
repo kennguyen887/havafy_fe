@@ -2,13 +2,13 @@
 import { Avatar } from '@material-tailwind/react';
 import React from 'react';
 
-import { getApi, postApi } from '@/lib/request';
+import { getApi, postApi, putApi } from '@/lib/request';
 
 import TextAbleEdit from '@/components/form/TextAbleEdit';
 import TextareaAbleEdit from '@/components/form/TextareaAbleEdit';
 import ExperienceForm from '@/components/profile/ExperienceForm';
 
-import { GetProfileDetailDto } from '@/domain/dto';
+import { CreateProfileReqDto, GetProfileDetailDto } from '@/domain/dto';
 
 export default function ProfileManager() {
   const [profile, setProfile] = React.useState<GetProfileDetailDto>();
@@ -28,6 +28,11 @@ export default function ProfileManager() {
     }
   }, []);
 
+  const putProfile = async (payload: CreateProfileReqDto) => {
+    if (!profile) return;
+    await putApi(`profiles/${profile.id}`, { ...payload, id: profile.id });
+  };
+
   React.useEffect(() => {
     getProfile();
   }, [getProfile]);
@@ -43,22 +48,25 @@ export default function ProfileManager() {
           />
           <div className='pl-7'>
             <TextAbleEdit
-              onChange={(value) => console.log(value)}
+              placeholder='Set your name'
+              onBlur={(value) => putProfile({ fullname: value })}
               className='text-xl font-semibold'
-              value={profile?.title ?? 'Set your name'}
+              value={profile?.fullname ?? ''}
             />
             <div className=''>
               <TextAbleEdit
-                onChange={(value) => console.log(value)}
+                onBlur={(value) => putProfile({ title: value })}
                 className='text-base'
-                value='Write a headline'
+                placeholder='Write a headline'
+                value={profile?.title ?? ''}
               />
             </div>
             <div className='mt-2'>
               <TextAbleEdit
-                onChange={(value) => console.log(value)}
+                onBlur={(value) => putProfile({ city: value })}
                 className='text-sm'
-                value='Your location'
+                placeholder='Country/City'
+                value={profile?.city ?? ''}
               />
             </div>
           </div>
@@ -67,9 +75,10 @@ export default function ProfileManager() {
         <div className='mt-3 rounded-md bg-gray-100 p-2 px-3'>
           <h3 className='mb-2 ml-2 text-lg font-semibold'>About</h3>
           <TextareaAbleEdit
-            onChange={(value) => console.log(value)}
+            placeholder='Your years of experience, industry, or skills'
+            onBlur={(value) => putProfile({ about: value })}
             className='text-sm'
-            value='You can write about your years of experience, industry, or skills'
+            value={profile?.about ?? ''}
           />
         </div>
 

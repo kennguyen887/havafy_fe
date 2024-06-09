@@ -11,23 +11,26 @@ export default function ProfileManager() {
       <div className='my-2'>
         <div className=''>
           <TextAbleEdit
+            placeholder='Job title'
             onChange={(value) => console.log(value)}
             className='text-base font-semibold'
-            value='Job title'
+            value=''
           />
           <div className='flex'>
             <div className=''>
               <TextAbleEdit
+                placeholder='2021-07'
                 onChange={(value) => console.log(value)}
                 className='w-[90px] text-sm'
-                value='20203-01'
+                value=''
               />
             </div>
             <div className=''>
               <TextAbleEdit
+                placeholder='2023-12'
                 onChange={(value) => console.log(value)}
                 className='w-[90px] text-sm'
-                value='2024-12'
+                value=''
               />
             </div>
           </div>
@@ -38,7 +41,8 @@ export default function ProfileManager() {
           <TextareaAbleEdit
             onChange={(value) => console.log(value)}
             className='text-sm'
-            value='You can write about your years of experience, industry, or skills'
+            placeholder='Description about your this position.'
+            value=''
           />
         </div>
         <div>

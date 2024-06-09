@@ -117,6 +117,8 @@ export class CreateProfileReqDto {
 
   about?: string;
 
+  fullname?: string;
+
   type?: ProfileType;
 
   workplaceTypes?: WorkplaceType[];
@@ -152,6 +154,8 @@ export class GetProfileDetailDto {
   id!: string;
 
   userId!: string;
+
+  fullname!: string;
 
   verified!: boolean;
 
