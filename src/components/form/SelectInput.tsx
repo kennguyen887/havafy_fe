@@ -1,6 +1,4 @@
-/* eslint-disable simple-import-sort/imports */
-/* eslint-disable unused-imports/no-unused-vars */
-import { Select, Option } from '@material-tailwind/react';
+import clsx from 'clsx';
 import * as React from 'react';
 
 export default function SelectInput({
@@ -8,46 +6,36 @@ export default function SelectInput({
   format,
   onBlur,
   validate,
-  placeholder,
   className,
 }: {
   values: string[];
   placeholder: string;
-  className: string;
+  className?: string;
   format?: (value: string) => string;
   validate?: (value: string) => boolean;
   onBlur?: (value: string) => unknown;
 }) {
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const [inputValue, setInputValue] = React.useState('');
   const [isValid, setIsValid] = React.useState(true);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = format ? format(e.target.value) : e.target.value;
+  const handleChange = (input: string) => {
+    const value = format ? format(input) : input;
     validate && setIsValid(validate(value));
     setInputValue(value);
+    onBlur && onBlur(value);
   };
 
   return (
-    <div className='rounded-md px-2 hover:bg-gray-100'>
-      <Select label='' variant='standard'>
+    <div className={clsx(isValid ? '' : 'border border-red-200', className)}>
+      <select
+        onChange={(e) => handleChange(e.target.value)}
+        className='my-0 bg-transparent py-0'
+      >
         {values.map((value: string, key) => (
-          <Option key={key}>{value}</Option>
+          <option key={key}>{value}</option>
         ))}
-      </Select>
-      {/* <input
-        placeholder={placeholder}
-        defaultValue={values}
-        value={inputValue}
-        onBlur={() =>
-          onBlur && onBlur(inputValue)
-        }
-        onChange={handleChange}
-        className={clsx(
-          'inline-block h-auto w-[300px] px-2 py-1',
-          isValid ? '' : 'border border-red-200',
-          className
-        )}
-      /> */}
+      </select>
     </div>
   );
 }

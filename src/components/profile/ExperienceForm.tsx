@@ -22,8 +22,8 @@ export default function ProfileManager({
     <>
       <div className='my-2 px-2'>
         <div className='my-3 flex items-center'>
-          <label className='w-[90px] text-sm   font-semibold text-gray-700'>
-            Job title:{' '}
+          <label className='w-[140px] text-sm   font-semibold text-gray-700'>
+            Job title:
           </label>
           <TextAbleEdit
             placeholder='Job title'
@@ -33,19 +33,21 @@ export default function ProfileManager({
           />
         </div>
         <div className='my-3 flex items-center'>
-          <label className='w-[90px] text-sm   font-semibold text-gray-700'>
-            Job title:{' '}
+          <label className='w-[140px] text-sm   font-semibold text-gray-700'>
+            Employment type:
           </label>
           <SelectInput
+            className='pl-1'
             placeholder='Employment type'
-            onBlur={(value) => setPayload({ ...payload, title: value })}
-            className='text-base font-semibold'
+            onBlur={(value) =>
+              setPayload({ ...payload, employmentType: value as JobType })
+            }
             values={Object.values(JobType)}
           />
         </div>
         <div className='my-3 flex items-center'>
-          <label className='w-[90px] text-sm   font-semibold text-gray-700'>
-            Start date:{' '}
+          <label className='w-[140px] text-sm   font-semibold text-gray-700'>
+            Start date:
           </label>
           <div className=''>
             <TextAbleEdit
@@ -57,8 +59,8 @@ export default function ProfileManager({
               value=''
             />
           </div>
-          <label className='w-[90px] pl-3   text-sm font-semibold text-gray-700'>
-            End date:{' '}
+          <label className='w-[90px] pl-3 text-sm font-semibold text-gray-700'>
+            End date:
           </label>
           <div className=''>
             <TextAbleEdit
