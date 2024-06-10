@@ -1,15 +1,17 @@
-import clsx from 'clsx';
+/* eslint-disable simple-import-sort/imports */
+/* eslint-disable unused-imports/no-unused-vars */
+import { Select, Option } from '@material-tailwind/react';
 import * as React from 'react';
 
-export default function TextAbleEdit({
-  value,
+export default function SelectInput({
+  values,
   format,
   onBlur,
   validate,
   placeholder,
   className,
 }: {
-  value: string;
+  values: string[];
   placeholder: string;
   className: string;
   format?: (value: string) => string;
@@ -26,19 +28,26 @@ export default function TextAbleEdit({
   };
 
   return (
-    <div className='rounded-md hover:bg-gray-100'>
-      <input
+    <div className='rounded-md px-2 hover:bg-gray-100'>
+      <Select label='' variant='standard'>
+        {values.map((value: string, key) => (
+          <Option key={key}>{value}</Option>
+        ))}
+      </Select>
+      {/* <input
         placeholder={placeholder}
-        defaultValue={value}
+        defaultValue={values}
         value={inputValue}
-        onBlur={() => onBlur && onBlur(inputValue)}
+        onBlur={() =>
+          onBlur && onBlur(inputValue)
+        }
         onChange={handleChange}
         className={clsx(
           'inline-block h-auto w-[300px] px-2 py-1',
           isValid ? '' : 'border border-red-200',
           className
         )}
-      />
+      /> */}
     </div>
   );
 }

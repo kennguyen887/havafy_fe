@@ -35,9 +35,9 @@ export class ProfileExperienceItem {
 
   description!: string;
 
-  startDate!: Date;
+  startDate!: string;
 
-  endDate?: Date;
+  endDate?: string;
 }
 
 export class ProfileCertificationItem {

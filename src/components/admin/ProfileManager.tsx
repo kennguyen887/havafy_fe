@@ -8,7 +8,11 @@ import TextAbleEdit from '@/components/form/TextAbleEdit';
 import TextareaAbleEdit from '@/components/form/TextareaAbleEdit';
 import ExperienceForm from '@/components/profile/ExperienceForm';
 
-import { CreateProfileReqDto, GetProfileDetailDto } from '@/domain/dto';
+import {
+  CreateProfileReqDto,
+  GetProfileDetailDto,
+  ProfileExperienceItem,
+} from '@/domain/dto';
 
 export default function ProfileManager() {
   const [profile, setProfile] = React.useState<GetProfileDetailDto>();
@@ -27,6 +31,18 @@ export default function ProfileManager() {
       }
     }
   }, []);
+
+  const onSubmitExperienceForm = async (payload: ProfileExperienceItem) => {
+    if (!profile) return;
+    await putApi(`profiles/${profile.id}`, {
+      experience: {
+        data: [...(profile?.experience?.data ?? []), payload],
+      },
+      id: profile.id,
+    });
+
+    await getProfile();
+  };
 
   const putProfile = async (payload: CreateProfileReqDto) => {
     if (!profile) return;
@@ -84,7 +100,17 @@ export default function ProfileManager() {
 
         <div className='mt-3 rounded-md bg-gray-100 p-2 px-3'>
           <h3 className='mb-2 ml-2 text-lg font-semibold'>Experiences</h3>
-          <ExperienceForm />
+          <ExperienceForm
+            onSubmit={(paypload) => onSubmitExperienceForm(paypload)}
+          />
+        </div>
+
+        <div>
+          {profile?.experience?.data?.map((item, key) => (
+            <div key={key}>
+              <h3>{item.title}</h3>
+            </div>
+          ))}
         </div>
       </div>
     </>

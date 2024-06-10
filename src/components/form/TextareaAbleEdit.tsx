@@ -22,7 +22,7 @@ export default function TextareaAbleEdit({
         onChange={(e) => onChange && onChange(e.target.value)}
         onBlur={(e) => onBlur && onBlur(e.target.value)}
         className={clsx(
-          'inline-block h-auto w-full bg-transparent px-2 py-1',
+          'inline-block h-auto w-full bg-transparent px-0 py-1',
           className
         )}
       />
