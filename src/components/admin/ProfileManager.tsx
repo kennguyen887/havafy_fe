@@ -42,6 +42,8 @@ export default function ProfileManager() {
     });
 
     await getProfile();
+
+    (document?.getElementById('ExperienceForm') as HTMLDialogElement).close();
   };
 
   const putProfile = async (payload: CreateProfileReqDto) => {

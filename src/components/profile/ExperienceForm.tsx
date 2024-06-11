@@ -39,34 +39,54 @@ export default function ExperienceForm({
           </div>
 
           <div className=''>
-            <div className='my-5 flex items-center'>
-              <label className='w-[140px] text-sm   font-semibold text-gray-700'>
-                Job title:
+            <div className='my-5 grid grid-cols-12 items-center'>
+              <label className='col-span-3 text-sm  text-gray-700'>
+                Job title
               </label>
-              <TextAbleEdit
-                placeholder='Job title'
-                onBlur={(value) => setPayload({ ...payload, title: value })}
-                className='w-[300px]'
-                value=''
-              />
+              <div className='col-span-6'>
+                <TextAbleEdit
+                  placeholder='Job title'
+                  onBlur={(value) => setPayload({ ...payload, title: value })}
+                  className='w-full'
+                  value=''
+                />
+              </div>
             </div>
-            <div className='my-5 flex items-center'>
-              <label className='w-[140px] text-sm   font-semibold text-gray-700'>
-                Employment type:
+            <div className='my-5 grid grid-cols-12 items-center'>
+              <label className='col-span-3 text-sm    text-gray-700'>
+                Company or product
               </label>
-              <SelectInput
-                placeholder='Employment type'
-                onBlur={(value) =>
-                  setPayload({ ...payload, employmentType: value as JobType })
-                }
-                values={Object.values(JobType)}
-              />
+              <div className='col-span-6'>
+                <TextAbleEdit
+                  placeholder='Product name or Company'
+                  onBlur={(value) =>
+                    setPayload({ ...payload, productName: value })
+                  }
+                  className='w-[300px]'
+                  value=''
+                />
+              </div>
             </div>
-            <div className='my-5 flex items-center'>
-              <label className='w-[140px] text-sm   font-semibold text-gray-700'>
-                Start date:
+            <div className='my-5 grid grid-cols-12 items-center'>
+              <label className='col-span-3 text-sm    text-gray-700'>
+                Employment type
               </label>
-              <div className=''>
+              <div className='col-span-4'>
+                <SelectInput
+                  placeholder='Employment type'
+                  onBlur={(value) =>
+                    setPayload({ ...payload, employmentType: value as JobType })
+                  }
+                  values={Object.values(JobType)}
+                  className='w-[100px]'
+                />
+              </div>
+            </div>
+            <div className='my-5 grid grid-cols-12 items-center'>
+              <label className='col-span-3 text-sm    text-gray-700'>
+                Start date
+              </label>
+              <div className='col-span-2'>
                 <TextAbleEdit
                   placeholder='YYYY-MM'
                   format={(input: string) => formatDateString(input)}
@@ -74,14 +94,14 @@ export default function ExperienceForm({
                   onBlur={(value) =>
                     setPayload({ ...payload, startDate: value })
                   }
-                  className='w-[105px] text-sm'
+                  className='w-full text-sm'
                   value=''
                 />
               </div>
-              <label className='w-[90px] pl-3 text-sm font-semibold text-gray-700'>
-                End date:
+              <label className='col-span-2 pl-3 text-sm  text-gray-700'>
+                End date
               </label>
-              <div className=''>
+              <div className='col-span-2'>
                 <TextAbleEdit
                   placeholder='YYYY-MM'
                   format={(input: string) => formatDateString(input)}
@@ -94,9 +114,7 @@ export default function ExperienceForm({
             </div>
 
             <div className='rounded-md p-2 px-0 '>
-              <h3 className='mb-2 text-sm font-semibold text-gray-700'>
-                Description:
-              </h3>
+              <h3 className='mb-2 text-sm  text-gray-700'>Description:</h3>
               <TextareaAbleEdit
                 onBlur={(value) =>
                   setPayload({ ...payload, description: value })

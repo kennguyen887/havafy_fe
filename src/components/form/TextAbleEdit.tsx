@@ -26,7 +26,7 @@ export default function TextAbleEdit({
   };
 
   return (
-    <div className='inline-block rounded-md bg-gray-100 hover:bg-gray-200'>
+    <div className='rounded-md bg-gray-100 hover:bg-gray-200'>
       <input
         placeholder={placeholder}
         defaultValue={value}
@@ -34,7 +34,7 @@ export default function TextAbleEdit({
         onBlur={() => onBlur && onBlur(inputValue)}
         onChange={handleChange}
         className={twMerge(
-          'inline-block h-auto w-[150px] px-2 py-1',
+          'inline-block h-auto w-[150px] px-2 py-1 text-sm',
           isValid ? '' : 'rounded-md border border-red-200',
           className
         )}
