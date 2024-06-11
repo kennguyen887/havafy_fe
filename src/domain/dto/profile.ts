@@ -31,6 +31,8 @@ export enum ExpectedRatePer {
 export class ProfileExperienceItem {
   title!: string;
 
+  productName!: string;
+
   employmentType!: JobType;
 
   description!: string;

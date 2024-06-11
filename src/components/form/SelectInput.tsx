@@ -27,10 +27,17 @@ export default function SelectInput({
   };
 
   return (
-    <div className={clsx(isValid ? '' : 'border border-red-200', className)}>
+    <div
+      className={clsx(
+        'my-0 rounded bg-gray-100  px-2 py-1 pr-3 ',
+
+        isValid ? '' : 'border border-red-200',
+        className
+      )}
+    >
       <select
         onChange={(e) => handleChange(e.target.value)}
-        className='my-0 bg-transparent py-0'
+        className='bg-transparent text-sm'
       >
         {values.map((value: string, key) => (
           <option key={key}>{value}</option>

@@ -1,6 +1,4 @@
-/* eslint-disable unused-imports/no-unused-vars */
 import clsx from 'clsx';
-// import { IoMdClose } from 'react-icons/io';
 import Router from 'next/router';
 import * as React from 'react';
 import {
@@ -34,6 +32,7 @@ export function HireAnExpertForm() {
   const [title, setTitle] = React.useState<string>();
   const [description, setDescription] = React.useState(DEFAULT_ABOUT_PROJECT);
   const [tags, setTags] = React.useState<string[]>([]);
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const [loading, setLoading] = React.useState<boolean>(false);
   const { executeRecaptcha } = useGoogleReCaptcha();
   const { isAuthenticated } = useAuthState();
@@ -75,16 +74,6 @@ export function HireAnExpertForm() {
 
   return (
     <div className='max-w-4xl  px-6 py-2'>
-      {/* <button
-                className={clsx(
-                  'group btn m-0 border-0 bg-transparent p-0 shadow-none hover:bg-transparent hover:text-gray-950',
-                  stepTwo ? 'hidden' : ''
-                )}
-              >
-                <IoMdClose className='h-8 w-8 text-gray-400 group-hover:text-gray-700' />
-              </button>
-            */}
-
       <div className={clsx('py-4')}>
         <div className='flex justify-between'>
           <h1>Get Started</h1>

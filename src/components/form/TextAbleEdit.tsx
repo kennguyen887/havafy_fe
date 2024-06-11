@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import * as React from 'react';
+import { twMerge } from 'tailwind-merge';
 
 export default function TextAbleEdit({
   value,
@@ -26,16 +26,16 @@ export default function TextAbleEdit({
   };
 
   return (
-    <div className='rounded-md hover:bg-gray-100'>
+    <div className='inline-block rounded-md bg-gray-100 hover:bg-gray-200'>
       <input
         placeholder={placeholder}
         defaultValue={value}
         value={inputValue}
         onBlur={() => onBlur && onBlur(inputValue)}
         onChange={handleChange}
-        className={clsx(
-          'inline-block h-auto w-[300px] px-2 py-1',
-          isValid ? '' : 'border border-red-200',
+        className={twMerge(
+          'inline-block h-auto w-[150px] px-2 py-1',
+          isValid ? '' : 'rounded-md border border-red-200',
           className
         )}
       />
