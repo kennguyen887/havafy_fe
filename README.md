@@ -7,7 +7,7 @@
 
 ## API SERVICE 
 
-https://github.com/kennguyen887/nestjs-freelancer-example/tree/main
+https://github.com/kennguyen887/havafy_api
 
 ## Contributing & Project Setup
 
