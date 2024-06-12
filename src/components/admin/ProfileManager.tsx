@@ -1,6 +1,7 @@
 import { Avatar } from '@material-tailwind/react';
 import React from 'react';
 import { IoMdAdd } from 'react-icons/io';
+import { MdEditNote } from 'react-icons/md';
 
 import { getApi, postApi, putApi } from '@/lib/request';
 
@@ -16,6 +17,8 @@ import {
 
 export default function ProfileManager() {
   const [profile, setProfile] = React.useState<GetProfileDetailDto>();
+  const [experienceFormEditKey, setExperienceFormEditKey] =
+    React.useState<Nullable<number>>(null);
 
   const getProfile = React.useCallback(async () => {
     try {
@@ -32,11 +35,11 @@ export default function ProfileManager() {
     }
   }, []);
 
-  const onSubmitExperienceForm = async (payload: ProfileExperienceItem) => {
+  const onSubmitExperienceForm = async (items: ProfileExperienceItem[]) => {
     if (!profile) return;
     await putApi(`profiles/${profile.id}`, {
       experience: {
-        data: [...(profile?.experience?.data ?? []), payload],
+        data: items,
       },
       id: profile.id,
     });
@@ -49,6 +52,13 @@ export default function ProfileManager() {
   const putProfile = async (payload: CreateProfileReqDto) => {
     if (!profile) return;
     await putApi(`profiles/${profile.id}`, { ...payload, id: profile.id });
+  };
+
+  const showExperienceModal = (editKey: Nullable<number>) => {
+    setExperienceFormEditKey(editKey);
+    (
+      document?.getElementById('ExperienceForm') as HTMLDialogElement
+    ).showModal();
   };
 
   React.useEffect(() => {
@@ -104,13 +114,7 @@ export default function ProfileManager() {
           <div className='flex items-center justify-between'>
             <h3 className='mb-2 ml-2 text-lg font-semibold'>Experiences</h3>
             <button
-              onClick={() =>
-                (
-                  document?.getElementById(
-                    'ExperienceForm'
-                  ) as HTMLDialogElement
-                ).showModal()
-              }
+              onClick={() => showExperienceModal(null)}
               className='-mt-2 mr-4'
             >
               <IoMdAdd className='h-7 w-7' />
@@ -118,7 +122,9 @@ export default function ProfileManager() {
           </div>
 
           <ExperienceForm
-            onSubmit={(paypload) => onSubmitExperienceForm(paypload)}
+            editKey={experienceFormEditKey}
+            items={profile?.experience?.data ?? []}
+            onSubmit={() => onSubmitExperienceForm}
           />
 
           <div className='mt-5 px-3'>
@@ -127,7 +133,12 @@ export default function ProfileManager() {
                 key={key}
                 className='border-y border-t-0 border-gray-300 py-3'
               >
-                <h4 className='text-base'>{item.title}</h4>
+                <div className='flex justify-between'>
+                  <h4 className='text-base'>{item.title}</h4>
+                  <button onClick={() => showExperienceModal(key)}>
+                    <MdEditNote className='h-6 w-6 text-gray-600 hover:text-gray-900' />
+                  </button>
+                </div>
                 <div className='my-2 flex space-x-3 text-sm text-gray-600'>
                   <div className=''>{item.productName}</div>
                   <div>-</div>

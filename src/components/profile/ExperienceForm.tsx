@@ -1,4 +1,3 @@
-/* eslint-disable unused-imports/no-unused-vars */
 import clsx from 'clsx';
 import React from 'react';
 import { IoMdClose } from 'react-icons/io';
@@ -14,19 +13,33 @@ import { JobType, ProfileExperienceItem } from '@/domain/dto';
 
 export default function ExperienceForm({
   onSubmit,
+  editKey,
+  items,
 }: {
-  onSubmit?: (payload: ProfileExperienceItem) => unknown;
+  items: ProfileExperienceItem[];
+  editKey: Nullable<number>;
+  onSubmit?: (items: ProfileExperienceItem[]) => unknown;
 }) {
-  const [index, setIndex] = React.useState();
   const [payload, setPayload] = React.useState<ProfileExperienceItem>(
     new ProfileExperienceItem()
   );
   const employmentTypes = Object.values(JobType);
 
   React.useEffect(() => {
-    if (!payload) return;
-    setPayload({ ...payload, employmentType: employmentTypes[0] });
-  }, [employmentTypes, payload]);
+    if (!payload) {
+      setPayload({
+        title: '',
+        productName: '',
+        employmentType: employmentTypes[0],
+        description: '',
+        startDate: '',
+      });
+    }
+
+    if (editKey !== null) {
+      setPayload(items[editKey]);
+    }
+  }, [editKey, employmentTypes, items, payload]);
 
   const handleSubmit = () => {
     if (!payload) return;
@@ -40,7 +53,7 @@ export default function ExperienceForm({
       startDate?.length > 6
     ) {
       payload.startDate += '-01';
-      onSubmit && onSubmit(payload);
+      onSubmit && onSubmit(items);
     }
   };
   return (
@@ -71,7 +84,7 @@ export default function ExperienceForm({
                   validate={(value) => value.length > 2}
                   onBlur={(value) => setPayload({ ...payload, title: value })}
                   className='w-full'
-                  value=''
+                  value={payload.title}
                 />
               </div>
             </div>
@@ -87,7 +100,7 @@ export default function ExperienceForm({
                     setPayload({ ...payload, productName: value })
                   }
                   className='w-[300px]'
-                  value=''
+                  value={payload.productName}
                 />
               </div>
             </div>
@@ -101,6 +114,7 @@ export default function ExperienceForm({
                   onBlur={(value) =>
                     setPayload({ ...payload, employmentType: value as JobType })
                   }
+                  value={payload.employmentType}
                   values={employmentTypes}
                   className='w-[100px]'
                 />
@@ -119,7 +133,7 @@ export default function ExperienceForm({
                     setPayload({ ...payload, startDate: value })
                   }
                   className='w-full text-sm'
-                  value=''
+                  value={payload.startDate}
                 />
               </div>
               <label className='col-span-2 pl-3 text-sm  text-gray-700'>
@@ -132,7 +146,7 @@ export default function ExperienceForm({
                   validate={validateDate}
                   onBlur={(value) => setPayload({ ...payload, endDate: value })}
                   className='w-[105px] text-sm'
-                  value=''
+                  value={payload.endDate ?? ''}
                 />
               </div>
             </div>
@@ -146,7 +160,7 @@ export default function ExperienceForm({
                 className='h-28 text-sm'
                 validate={(value) => value.length > 5}
                 placeholder='Description about your this position.'
-                value=''
+                value={payload.description}
               />
             </div>
             <div className='mt-4'>

@@ -3,11 +3,13 @@ import * as React from 'react';
 
 export default function SelectInput({
   values,
+  value,
   format,
   onBlur,
   validate,
   className,
 }: {
+  value: string;
   values: string[];
   placeholder: string;
   className?: string;
@@ -16,7 +18,7 @@ export default function SelectInput({
   onBlur?: (value: string) => unknown;
 }) {
   // eslint-disable-next-line unused-imports/no-unused-vars
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue] = React.useState(value ?? '');
   const [isValid, setIsValid] = React.useState(true);
 
   const handleChange = (input: string) => {
@@ -36,6 +38,7 @@ export default function SelectInput({
       )}
     >
       <select
+        value={value}
         onChange={(e) => handleChange(e.target.value)}
         className='bg-transparent text-sm'
       >

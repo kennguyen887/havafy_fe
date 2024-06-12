@@ -16,7 +16,7 @@ export default function TextareaAbleEdit({
   validate?: (value: string) => boolean;
   onBlur?: (value: string) => unknown;
 }) {
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue] = React.useState(value ?? '');
   const [isValid, setIsValid] = React.useState(true);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
