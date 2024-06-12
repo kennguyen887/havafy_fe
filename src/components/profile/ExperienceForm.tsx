@@ -21,6 +21,28 @@ export default function ExperienceForm({
   const [payload, setPayload] = React.useState<ProfileExperienceItem>(
     new ProfileExperienceItem()
   );
+  const employmentTypes = Object.values(JobType);
+
+  React.useEffect(() => {
+    if (!payload) return;
+    setPayload({ ...payload, employmentType: employmentTypes[0] });
+  }, [employmentTypes, payload]);
+
+  const handleSubmit = () => {
+    if (!payload) return;
+
+    const { description, title, productName, startDate } = payload;
+
+    if (
+      description?.length > 10 ||
+      title?.length > 3 ||
+      productName?.length > 3 ||
+      startDate?.length > 6
+    ) {
+      payload.startDate += '-01';
+      onSubmit && onSubmit(payload);
+    }
+  };
   return (
     <>
       <dialog id='ExperienceForm' className='modal'>
@@ -46,6 +68,7 @@ export default function ExperienceForm({
               <div className='col-span-6'>
                 <TextAbleEdit
                   placeholder='Job title'
+                  validate={(value) => value.length > 2}
                   onBlur={(value) => setPayload({ ...payload, title: value })}
                   className='w-full'
                   value=''
@@ -59,6 +82,7 @@ export default function ExperienceForm({
               <div className='col-span-6'>
                 <TextAbleEdit
                   placeholder='Product name or Company'
+                  validate={(value) => value.length > 2}
                   onBlur={(value) =>
                     setPayload({ ...payload, productName: value })
                   }
@@ -77,7 +101,7 @@ export default function ExperienceForm({
                   onBlur={(value) =>
                     setPayload({ ...payload, employmentType: value as JobType })
                   }
-                  values={Object.values(JobType)}
+                  values={employmentTypes}
                   className='w-[100px]'
                 />
               </div>
@@ -120,13 +144,14 @@ export default function ExperienceForm({
                   setPayload({ ...payload, description: value })
                 }
                 className='h-28 text-sm'
+                validate={(value) => value.length > 5}
                 placeholder='Description about your this position.'
                 value=''
               />
             </div>
             <div className='mt-4'>
               <ButtonPrimary
-                onClick={() => onSubmit && onSubmit(payload)}
+                onClick={() => handleSubmit()}
                 className='py-2'
                 name='Add'
               />

@@ -21,17 +21,20 @@ export default function TextAbleEdit({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = format ? format(e.target.value) : e.target.value;
-    validate && setIsValid(validate(value));
     setInputValue(value);
   };
 
+  const handlelBlur = () => {
+    onBlur && onBlur(inputValue);
+    validate && setIsValid(validate(inputValue));
+  };
   return (
     <div className='rounded-md bg-gray-100 hover:bg-gray-200'>
       <input
         placeholder={placeholder}
         defaultValue={value}
         value={inputValue}
-        onBlur={() => onBlur && onBlur(inputValue)}
+        onBlur={handlelBlur}
         onChange={handleChange}
         className={twMerge(
           'inline-block h-auto w-[150px] px-2 py-1 text-sm',

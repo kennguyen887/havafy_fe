@@ -128,13 +128,12 @@ export default function ProfileManager() {
                 className='border-y border-t-0 border-gray-300 py-3'
               >
                 <h4 className='text-base'>{item.title}</h4>
-                <div className='my-2 flex space-x-2 text-sm text-gray-600'>
-                  <div className=''>{item.productName}</div> -
+                <div className='my-2 flex space-x-3 text-sm text-gray-600'>
+                  <div className=''>{item.productName}</div>
+                  <div>-</div>
                   <div className=''>{item.employmentType}</div>
                 </div>
-                <div className='text-base text-gray-900'>
-                  {item.description}
-                </div>
+                <div className='text-sm text-gray-900'>{item.description}</div>
               </div>
             ))}
           </div>
