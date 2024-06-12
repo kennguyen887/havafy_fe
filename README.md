@@ -3,6 +3,12 @@
   <p>💠 Offical website and blog made using Next.js, TypeScript, Tailwind CSS, MDX Bundler, Prisma, and SWR.</p>
 </div>
 
+
+
+## API SERVICE 
+
+https://github.com/kennguyen887/nestjs-freelancer-example/tree/main
+
 ## Contributing & Project Setup
 
 If you are interested in contributing or running this project on your local machine, please check the [contributing guide](CONTRIBUTING.md)
