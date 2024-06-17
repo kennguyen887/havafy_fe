@@ -37,14 +37,6 @@ export default function ExperienceForm({
     item ?? defaultValues
   );
 
-  // React.useEffect(() => {
-
-  //   console.log({ editKey, payload })
-  //   if (editKey !== null) {
-  //     setPayload(items[editKey]);
-  //   }
-  // }, [editKey, employmentTypes, items, payload]);
-
   const handleSubmit = () => {
     if (!payload) return;
 
@@ -56,7 +48,9 @@ export default function ExperienceForm({
       productName?.length > 3 ||
       startDate?.length > 6
     ) {
-      payload.startDate += '-01';
+      if (payload.endDate === '') {
+        payload.endDate = undefined;
+      }
       onSubmit && onSubmit(editKey, payload);
     }
   };
@@ -173,7 +167,7 @@ export default function ExperienceForm({
               <ButtonPrimary
                 onClick={() => handleSubmit()}
                 className='py-2'
-                name='Add'
+                name={editKey === null ? 'Add' : 'Save'}
               />
             </div>
           </div>

@@ -48,7 +48,7 @@ export default function ProfileManager() {
     if (editKey === null) {
       data = [...items, item];
     } else {
-      data[editKey] == item;
+      data[editKey] = item;
     }
 
     await putApi(`profiles/${profile.id}`, {
@@ -60,7 +60,9 @@ export default function ProfileManager() {
 
     await getProfile();
 
-    (document?.getElementById('ExperienceForm') as HTMLDialogElement).close();
+    (
+      document?.getElementById(`ExperienceForm-${editKey}`) as HTMLDialogElement
+    ).close();
   };
 
   const putProfile = async (payload: CreateProfileReqDto) => {
@@ -138,7 +140,7 @@ export default function ProfileManager() {
           <ExperienceForm
             editKey={null}
             item={null}
-            onSubmit={() => onSubmitExperienceForm}
+            onSubmit={onSubmitExperienceForm}
           />
 
           <div className='mt-5 px-3'>
@@ -155,7 +157,7 @@ export default function ProfileManager() {
                   <ExperienceForm
                     editKey={key}
                     item={item}
-                    onSubmit={() => onSubmitExperienceForm}
+                    onSubmit={onSubmitExperienceForm}
                   />
                 </div>
                 <div className='my-2 flex space-x-3 text-sm text-gray-600'>
