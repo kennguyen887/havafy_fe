@@ -19,6 +19,8 @@ export default function TextAbleEdit({
   const [inputValue, setInputValue] = React.useState(value ?? '');
   const [isValid, setIsValid] = React.useState(true);
 
+  // console.log({ placeholder, inputValue, })
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = format ? format(e.target.value) : e.target.value;
     setInputValue(value);
@@ -32,7 +34,6 @@ export default function TextAbleEdit({
     <div className='rounded-md bg-gray-100 hover:bg-gray-200'>
       <input
         placeholder={placeholder}
-        defaultValue={value}
         value={inputValue}
         onBlur={handlelBlur}
         onChange={handleChange}

@@ -36,7 +36,6 @@ export default function TextareaAbleEdit({
       )}
     >
       <textarea
-        defaultValue={value}
         value={inputValue}
         placeholder={placeholder}
         onBlur={handlelBlur}

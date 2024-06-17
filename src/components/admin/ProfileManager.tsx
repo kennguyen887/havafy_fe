@@ -17,6 +17,7 @@ import {
 
 export default function ProfileManager() {
   const [profile, setProfile] = React.useState<GetProfileDetailDto>();
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const [experienceFormEditKey, setExperienceFormEditKey] =
     React.useState<Nullable<number>>(null);
 
@@ -35,11 +36,24 @@ export default function ProfileManager() {
     }
   }, []);
 
-  const onSubmitExperienceForm = async (items: ProfileExperienceItem[]) => {
+  const onSubmitExperienceForm = async (
+    editKey: Nullable<number>,
+    item: ProfileExperienceItem
+  ) => {
     if (!profile) return;
+
+    const items = profile.experience?.data ?? [];
+    let data = items;
+
+    if (editKey === null) {
+      data = [...items, item];
+    } else {
+      data[editKey] == item;
+    }
+
     await putApi(`profiles/${profile.id}`, {
       experience: {
-        data: items,
+        data,
       },
       id: profile.id,
     });
@@ -57,7 +71,7 @@ export default function ProfileManager() {
   const showExperienceModal = (editKey: Nullable<number>) => {
     setExperienceFormEditKey(editKey);
     (
-      document?.getElementById('ExperienceForm') as HTMLDialogElement
+      document?.getElementById(`ExperienceForm-${editKey}`) as HTMLDialogElement
     ).showModal();
   };
 
@@ -122,8 +136,8 @@ export default function ProfileManager() {
           </div>
 
           <ExperienceForm
-            editKey={experienceFormEditKey}
-            items={profile?.experience?.data ?? []}
+            editKey={null}
+            item={null}
             onSubmit={() => onSubmitExperienceForm}
           />
 
@@ -138,6 +152,11 @@ export default function ProfileManager() {
                   <button onClick={() => showExperienceModal(key)}>
                     <MdEditNote className='h-6 w-6 text-gray-600 hover:text-gray-900' />
                   </button>
+                  <ExperienceForm
+                    editKey={key}
+                    item={item}
+                    onSubmit={() => onSubmitExperienceForm}
+                  />
                 </div>
                 <div className='my-2 flex space-x-3 text-sm text-gray-600'>
                   <div className=''>{item.productName}</div>
