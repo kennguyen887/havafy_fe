@@ -16,7 +16,9 @@ export default function TextAbleEdit({
   validate?: (value: string) => boolean;
   onBlur?: (value: string) => unknown;
 }) {
-  const [inputValue, setInputValue] = React.useState(value ?? '');
+  const [inputValue, setInputValue] = React.useState(
+    format ? format(value ?? '') : value
+  );
   const [isValid, setIsValid] = React.useState(true);
 
   // console.log({ placeholder, inputValue, })
@@ -28,7 +30,7 @@ export default function TextAbleEdit({
 
   const handlelBlur = () => {
     onBlur && onBlur(inputValue);
-    validate && setIsValid(validate(inputValue));
+    inputValue !== '' && validate && setIsValid(validate(inputValue));
   };
   return (
     <div className='rounded-md bg-gray-100 hover:bg-gray-200'>
